@@ -1,0 +1,54 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+<!-- 모달 영역 -->
+	<div id="findTfcEnfIdModal" class="modal fade top35" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" th:fragment="findTfcEnfIdModal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h2 th:text="#{inquirymng.findTfcEnfldLayer.title.findTfcEnfldLayer}" class="modal-title">Find Traffic enforcement ID</h2>
+				</div>
+				<div class="modal-body">
+					<div class="input-group">
+						<label th:text="#{inquirymng.findTfcEnfldLayer.content.driverLicenseId}" class="control-label" for="dvrLcenId">Driver license ID</label>
+                      	<input type="text" id="dvrLcenId" name="dvrLcenId" placeholder="" class="form-control">
+                 	</div>
+					<div class="input-group">
+						<label th:text="#{inquirymng.findTfcEnfldLayer.content.violatorName}" class="control-label" for="vioNm">Violator name</label>
+                        <input type="text" id="vioNm" name="vioNm" placeholder="" class="form-control">
+                   	</div>
+                  	<div class="mt10">
+						<span th:text="#{inquirymng.findTfcEnfldLayer.content.btn.find}" class="btn btn-default" id="findTrafficInfoBtn">Find</span>
+                   	</div>
+				</div>
+				<div class="mt20">
+					<table class="table table-striped">
+						<colgroup>
+							<col width="15%">
+							<col width="40%">
+							<col width="40%">
+						</colgroup>
+						<thead>
+							<tr>
+								<th th:text="#{inquirymng.findTfcEnfldLayer.content.no}">No</th>
+								<th th:text="#{inquirymng.findTfcEnfldLayer.content.lawName}">Law Name</th>
+								<th th:text="#{inquirymng.findTfcEnfldLayer.content.trafficEnforcementId}">Traffic Enforcement ID</th>
+							</tr>
+						</thead>
+						<tbody id="tbody">
+							<tr class="txt-c">
+								<td colspan="3" th:text="#{inquirymng.findTfcEnfldLayer.content.noResult}">No Result</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" id="closeModalBtn" th:text="#{inquirymng.findTfcEnfldLayer.content.cancel}">취소</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</html>

@@ -1,0 +1,40 @@
+
+<div class="fines-list-div">
+	<h1 th:text="#{finesmng.searchFinesInquiryList.title}">Fines List</h1>
+	<table class="table table-striped">
+		<colgroup>
+			<col width="5%">
+			<col width="*%">
+			<col width="20%">
+			<col width="20%">
+			<col width="15%">
+		</colgroup>
+		<thead>
+			<tr>
+				<th th:text="#{finesmng.searchFinesInquiryList.tableNumber}">No</th>
+				<th th:text="#{finesmng.searchFinesInquiryList.trafficEnforcementId}">Traffic Enforcement ID</th>
+				<th th:text="#{finesmng.searchFinesInquiryList.lawName}">Law Name</th>
+				<th th:text="#{finesmng.searchFinesInquiryList.vehicleNumber}">Vehicle Number</th>
+				<th th:text="#{finesmng.searchFinesInquiryList.paymentStatus}">Payment Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="cursor-pointer" th:each="list, i : ${finesList}" th:onclick="fnFinesInfoDetail([[${list.vioId}]])">
+				<td th:text="${list.rnum}"></td>
+				<td th:text="${list.tfcEnfId}"></td>
+				<td th:text="${list.tfcLwInfo.lawNm}"></td>
+				<td th:text="${list.vhRegNo}"></td>
+				<td th:if="${list.finePymntInfo.pymntStts == 'N'}">
+					<a href="#" class="color-red" th:text="#{finesmng.searchFinesInquiryList.notPaid}">Not Paid</a>
+				</td>
+				<td th:unless="${list.finePymntInfo.pymntStts == 'N'}" th:text="#{finesmng.searchFinesInquiryList.paid}">Paid</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="finesPagination">
+		<th:block th:replace="tags/pagingTag :: pagingTag"></th:block>
+	</div>
+</div>
+<form id="finesDetailForm" name="finesDetailForm">
+	<input type="hidden" id="vioId" name="vioId">
+</form>

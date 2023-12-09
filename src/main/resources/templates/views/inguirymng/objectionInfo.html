@@ -1,0 +1,149 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+
+	<div layout:fragment="content">
+		<div class="breadclumbs">
+			<ul>
+				<li><a href="">HOME</a></li>
+				<li><a href="">범칙금 조회</a></li>
+				<li><a href="">이의제기</a></li>
+			</ul>
+		</div>
+		<div class="page-header">
+	        <div class="container">
+	            <div class="">
+	                <div class="">
+	                    <div class="page-caption">
+	                        <h2 th:text="#{inquirymng.objectionInfo.title.objectionInfo}" class="page-title">Objection Inquiry</h2>
+	                    </div>
+	                    
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    <div class="page-breadcrumb">
+	        <div class="container">
+	            
+	        </div>
+	    </div>
+	    <div class="content">
+	        <div class="container">
+	            <div class="">
+	                <div class="">
+	                    <div class="">
+	                        <div class="">
+	                        <h1 th:text="#{inquirymng.objectionInfo.title}">Objection Register</h1>
+	                        <p th:text="#{inquirymng.objectionInfo.content.subExplain}"> Please enter the information and click the registration button.</p>
+	                        <form id="objectionForm" name="objectionForm" method="post">
+	                            <div class="">
+	                                <div class="">
+	                                    <label th:text="#{inquirymng.objectionInfo.content.TrafficEnforcementId}" class="control-label" for="tfcEnfId">Traffic enforcement ID</label>
+	                                	<div class="input-group">
+		                                    <input type="text" id="tfcEnfId" name="tfcEnfId" placeholder="" class="form-control" readonly="readonly">
+		                                    <span class="input-group-btn">
+												<span th:text="#{inquirymng.objectionInfo.content.btn.find}" class="btn btn-default" id="findTfcEnfIdLayerBtn">Find</span>
+									      	</span>
+	                                	</div>
+	                                </div>
+	                                <div class="">
+	                                    <label th:text="#{inquirymng.objectionInfo.content.category}" class="control-label" for="cateCd">Category</label>
+	                                    <select class="form-control" id="cateCd" name="cateCd">
+	                                    	<option>select</option>
+	                                    	<option th:each="objectionCdList : ${objectionCdList}" th:value="${objectionCdList.cdId}" th:text="${objectionCdList.cdNm}"></option>
+	                                    </select>
+	                                </div>
+									<div class="">
+	                                    <label th:text="#{inquirymng.objectionInfo.content.title}" class="control-label" for="postTtl">Title</label>
+	                                    <input type="text" id="postTtl" name="postTtl" placeholder="" class="form-control">
+	                                </div>
+	                                <div class="">
+	                                    <label th:text="#{inquirymng.objectionInfo.content.email}" class="control-label" for="wrtrEmail">email</label>
+	                                    <input type="text" id="wrtrEmail"  name="wrtrEmail" placeholder="" class="form-control">
+	                                </div>
+	                                <div class="">
+	                                        <div class="form-group">
+	                                            <label th:text="#{inquirymng.objectionInfo.content.content}" class="control-label" for="postCn">Content</label>
+	                                            <textarea class="form-control" id="postCn" name="postCn" rows="6" placeholder=""></textarea>
+	                                        </div>
+	                                    </div>
+	                                    <div class="">
+	                                        <div class="form-group">
+	                                        	<input type="button" class="btn btn-default" id="fnObjectionRegBtn"value="Register" th:value="#{inquirymng.objectionInfo.content.btn.regist}">
+	                                        </div>
+	                                    </div>
+	                            	</div>
+	                        	</form>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <th:block th:replace="views/inguirymng/findTfcEnfIdLayer :: findTfcEnfIdModal"></th:block>
+	        </div>
+	    </div>
+	</div>
+</html>
+<script type="text/javascript" th:inline="javascript">
+	var message = /*[[${resultMsg}]]*/;
+    if(message != null && message != ' '){
+		swal({
+			  title: /*[[${resultMsgType}]]*/,
+			  text: message,
+			  icon: /*[[${resultMsgType}]]*/,
+			  button: "Confirm",
+			});
+	}
+
+	
+    $("#fnObjectionRegBtn").on("click",function(){
+		var form = document.getElementById("objectionForm");
+    	form.action="/inquirymng/objectionmng/objectionInquiryRegister";
+    	form.method="POST";
+    	form.submit();
+    })
+    	
+	// 모달 버튼에 이벤트를 건다.
+    $('#findTfcEnfIdLayerBtn').on('click', function(){
+    	$('#findTfcEnfIdModal').modal('show');
+    });
+    
+ 	// 모달 안의 취소 버튼에 이벤트를 건다.
+    $('#closeModalBtn').on('click', function(){
+    	$('#findTfcEnfIdModal').modal('hide');
+    });
+	
+    $("#findTrafficInfoBtn").on("click",function(){
+    	var data = {"dvrLcenId" : $("#dvrLcenId").val(), "vioNm" : $("#vioNm").val()};
+    	$.ajax({
+			url: "/inquirymng/objectionmng/searchTrafficList",
+			data: data,
+			success: function(data){
+				var tbody = $("#tbody");
+				tbody.empty();
+				$.each(data,function(idx, val) {
+					tbody.append(
+									'<tr class="cursor-pointer" onclick="fnSelectTfcEnfId('+val.tfcEnfId+');">'+
+										'<td>'+(idx+1)+'</td>'+
+										'<td>'+val.lawNm+'</td>'+
+										'<td>'+val.tfcEnfId+'</td>'+
+									'</tr>'
+							)
+						
+				});
+			},
+			error: function(args){
+				swal({
+					  title: "Failed",
+					  text: "Please check the fine information.",
+					  icon: "warning",
+					  button: "Confirm",
+				});
+			}
+		});
+    })
+	
+    function fnSelectTfcEnfId(tfcEnfId){
+    	$("#tfcEnfId").val(tfcEnfId);
+    	$('#findTfcEnfIdModal').modal('hide');
+    }
+</script>

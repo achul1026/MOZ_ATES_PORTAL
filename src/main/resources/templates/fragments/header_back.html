@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	
+    <div th:fragment="headerFragment" class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <a th:href="@{/}"><img th:src="@{/images/mozambique-flag.png}" alt=""></a>
+                </div>
+                <div class="txt-r mr25">
+                    <select class="" id="langCd" name="langCd">
+                    	<option value="eng" >English</option>
+                    	<option value="por">Portugal</option>
+                    </select>
+                </div>
+                <div class="col-lg-8 col-md-4 col-sm-12 col-xs-12">
+                     <div class="navigation">
+                        <div id="navigation">
+                            <ul>
+                                <li class="active"><a th:href="@{/finesmng/finesInquiryList}" title="Fines Inquiry" th:text="#{main.header.finesInquiry}">Fines Inquiry</a></li>
+                                <li class="active"><a th:href="@{/paymentmng/paymentCnfrm}" title="Payment" th:text="#{main.header.payment}">Payment</a></li>
+                                <li class="has-sub"><a th:href="@{/inquirymng/complainmng/complainInfo}" title="Complaints Inquiry" th:text="#{main.header.complaintsInquiry}">Complaints Inquiry</a>
+                                	<ul>
+                                        <li><a th:href="@{/inquirymng/complainmng/complainInfo}" title="Complaints Inquiry" th:text="#{main.header.cisubComplaintsInquiry}">Complaints Inquiry</a></li>
+                                        <li><a th:href="@{/inquirymng/objectionmng/objectionInfo}" title="Objection Inquiry" th:text="#{main.header.cisubObjectionInquiry}">Objection Inquiry</a></li>
+                                    </ul>
+                                </li>
+                                <li class="has-sub"><a th:href="@{/customer/service/trafficSafeInfo}" title="Customer Service" th:text="#{main.header.customerService}">Customer Service</a>
+                                    <ul>
+                                        <li><a th:href="@{/customer/service/trafficSafeInfo}" title="Traffic Safety Info" th:text="#{main.header.cssubTrafficSafetyInfo}">Traffic Safety Info</a></li>
+                                        <li><a th:href="@{/customer/service/trafficSafeTraingPrgm}" title="Traffic Safety Training Program" th:text="#{main.header.cssubTrafficSafetyTrainingProgram}">Traffic Safety Training Program</a></li>
+                                        <li><a th:href="@{/customer/service/facilitiesInfo}" title="Facilities Info" th:text="#{main.header.cssubFacilitiesInfo}">Facilities Info</a></li>
+                                        <li><a th:href="@{/customer/service/faqList}" title="FAQ" th:text="#{main.header.cssubFaq}">FAQ</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                   	</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</html>

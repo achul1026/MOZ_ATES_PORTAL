@@ -1,0 +1,150 @@
+<html xmlns:th="http://www.thymeleaf.org"  
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+
+
+<div layout:fragment="content" >
+	<div class="hero-section">
+	    <div class="container">
+	        <div class="row">
+	            <div class="col-md-5">
+	                <h1 class="hero-title" th:text="${#messages.msg('main.main.mozambiquegovportal')}">
+<!-- 	                Mozambique Government Portal -->
+	                </h1>
+	                <p class="hero-text" th:text="#{main.main.mgpContent}">This site provides services such as inquiring about fines and filing complaints.</p>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<div class="space-medium">
+	    <div class="container">
+	        <div class="row">
+	            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 cursor-pointer" th:onclick="'location.href=\''+ @{/finesmng/finesInquiryList} + '\''">
+	                <div class="service-block">
+	                    <!-- service block -->
+	                    <div class="service-img mb20">
+	                        <!-- service img -->
+	                        <img th:src="@{/images/service-4.jpg}" alt="" class="img-responsive">
+	                    </div>
+	                    <!-- service img -->
+	                    <div class="service-content">
+	                        <!-- service content -->
+	                        <h2 th:text="#{main.main.serviceFinesInquiry}">Fines Inquiry</h2>
+	                        <p th:text="#{main.main.sfiContent}">You can inquire fine information.</p>
+	                    </div>
+	                    <!-- service content -->
+	                </div>
+	                <!-- /.service block -->
+	            </div>
+	            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" th:onclick="'location.href=\''+ @{/paymentmng/paymentCnfrm} + '\''">
+	                <div class="service-block">
+	                    <!-- service block -->
+	                    <div class="service-img mb20">
+	                        <!-- service img -->
+	                        <a href="#"><img th:src="@{/images/service-4.jpg}" alt="" class="img-responsive"></a>
+	                    </div>
+	                    <!-- service img -->
+	                    <div class="service-content">
+	                        <!-- service content -->
+	                        <h2><a href="#" class="title" th:text="#{main.main.servicePayment}">Payment</a></h2>
+	                        <p th:text="#{main.main.paymentContent}">Write your service content here and describe more in readmore ongue ia malesuada urna sodales veliteu.</p>
+	                    </div>
+	                    <!-- service content -->
+	                </div>
+	                <!-- /.service block -->
+	            </div>
+	            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" th:onclick="'location.href=\''+ @{/inquirymng/complainmng/complainInfo} + '\''">
+	                <div class="service-block">
+	                    <!-- service block -->
+	                    <div class="service-img mb20">
+	                        <!-- service img -->
+	                        <a href="#"><img th:src="@{/images/service-4.jpg}" alt="" class="img-responsive"></a>
+	                    </div>
+	                    <!-- service img -->
+	                    <div class="service-content">
+	                        <!-- service content -->
+	                        <h2><a href="#" class="title" th:text="#{main.main.serviceComplaintsInquiry}">Complaints Inquiry</a></h2>
+	                        <p th:text="#{main.main.ciContent}">Write your service content here and describe more in readmore ongue ia malesuada urna sodales veliteu.</p>
+	                    </div>
+	                    <!-- service content -->
+	                </div>
+	                <!-- /.service block -->
+	            </div>
+	            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" th:onclick="'location.href=\''+ @{/inquirymng/objectionmng/objectionInfo} + '\''">
+	                <div class="service-block">
+	                    <!-- service block -->
+	                    <div class="service-img mb20">
+	                        <!-- service img -->
+	                        <a href="#"><img th:src="@{/images/service-4.jpg}" alt="" class="img-responsive"></a>
+	                    </div>
+	                    <!-- service img -->
+	                    <div class="service-content">
+	                        <!-- service content -->
+	                        <h2><a href="#" class="title" th:text="#{main.main.serviceObjectionInquiry}">Objection Inquiry</a></h2>
+	                        <p th:text="#{main.main.oiContent}">Write your service content here and describe more in readmore ongue ia malesuada urna sodales veliteu.</p>
+	                    </div>
+	                    <!-- service content -->
+	                </div>
+	                <!-- /.service block -->
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<div class="space-medium backcolor-gray">
+	    <div class="container">
+	        <div class="row">
+	            <div class="col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-sm-12 col-xs-12">
+	                <div class="section-title mb40 text-center">
+	                    <!-- section title start-->
+	                    <h1 th:text="#{main.main.subtitle}">Customer Service</h1>
+	                </div>
+	                <!-- /.section title start-->
+	            </div>
+	        </div>
+	        <div class="row">
+	            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+	                <div class="post-block">
+	                    <!-- post block -->
+	                    <div class="post-img">
+	                        <a href="#"><img th:src="@{/images/post-img.jpg}" alt="" class="img-responsive"></a>
+	                    </div>
+	                    <div class="post-content">
+	                        <h2><a href="#" class="title" th:text="#{main.main.serviceTrafficSafetyInfo}"> Traffic Safety Info</a></h2>
+	                        <p th:text="#{main.main.tsiContent}">Fusce sed erat libasellus id orci quis ligula pretium congue idet imodo lectus velit, a malesuada urna sodales eu.</p>
+	                        <a th:href="@{/customer/service/trafficSafeInfo}" class="btn btn-default" th:text="#{main.main.tsiButton}">Read More</a> </div>
+	                </div>
+	                <!-- /.post block -->
+	            </div>
+	            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+	                <div class="post-block">
+	                    <!-- post block -->
+	                    <div class="post-img">
+	                        <a href="#"><img th:src="@{/images/post-img-1.jpg}" alt="" class="img-responsive"></a>
+	                    </div>
+	                    <div class="post-content">
+	                        <h2><a href="#" class="title" th:text="#{main.main.serviceTrafficSafetyTrainingProgram}"> Traffic Safety Training Program</a></h2>
+	                        <p th:text="#{main.main.tstpContent}">Proin fringilla turpis dui, ut semper sem cursus id. Nam id massa commodo, viverra nibh a, iaculis velit.</p>
+	                        <a th:href="@{/customer/service/trafficSafeTraingPrgm}" class="btn btn-default" th:text="#{main.main.tsiButton}">Read More</a> </div>
+	                </div>
+	                <!-- /.post block -->
+	            </div>
+	            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+	                <div class="post-block">
+	                    <!-- post block -->
+	                    <div class="post-img">
+	                        <a href="#"><img th:src="@{/images/post-img-2.jpg}" alt="" class="img-responsive"></a>
+	                    </div>
+	                    <div class="post-content">
+	                        <h2><a href="#" class="title" th:text="#{main.main.facilitiesInfo}">Facilities Info</a></h2>
+	                        <p th:text="#{main.main.fiContent}">Suspendisse quis ultrices felis. Nunc dictum justo sed libero cursus mattis. Phasellus vestibulum eleifend velit id ultricies.</p>
+	                        <a th:href="@{/customer/service/facilitiesInfo}" class="btn btn-default" th:text="#{main.main.fiButton}">Read More</a> </div>
+	                </div>
+	                <!-- /.post block -->
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	
+	
+</div>
+</html>

@@ -1,0 +1,107 @@
+<html xmlns:th="http://www.thymeleaf.org"  
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+	
+<div layout:fragment="content">	
+    <div class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="page-caption">
+                        <h2 class="page-title" th:text="#{paymentmng.paymentInfoCmplt.maintitle}">Payment</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-breadcrumb">
+        <div class="container">
+            <div class="col-lg-12">
+                <ol class="breadcrumb">
+                    <li><a href="#" th:text="#{paymentmng.paymentInfoCmplt.subheaderfirst}">Payment</a></li>
+                    <li class="active" th:text="#{paymentmng.paymentInfoCmplt.subheadersecond}">Payment Complete</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	                        <h1 th:text="#{paymentmng.paymentInfoCmplt.subtitle}">Payment Complete</h1>
+	                        <p th:text="#{paymentmng.paymentInfoCmplt.subcontent}">You have completed the payment. Please check your payment completion information.</p>
+	                        <form>
+	                            <div class="row">
+									<div class="col-md-6">
+	                                    <label class="control-label" for="vhRegNo" th:text="#{paymentmng.paymentInfoCmplt.contentVehicleRegistrationNumber}">Vehicle Registration Number</label>
+	                                    <span class="form-control common-span" id="vhRegNo">
+	                                    	<strong th:text="${paymentInfo.vhRegNo}"></strong> 
+	                                    </span>
+	                                </div>
+									<div class="col-md-6">
+	                                    <label class="control-label" for="lawNm" th:text="#{paymentmng.paymentInfoCmplt.contentLawName}">Law name</label>
+	                                    <span class="form-control common-span" id="lawNm">
+	                                    	<strong th:text="${paymentInfo.tfcLwInfo.lawNm}"></strong>
+	                                    </span>
+	                                </div>
+									<div class="col-md-6">
+	                                    <label class="control-label" for="vioInfo" th:text="#{paymentmng.paymentInfoCmplt.contentViolationInformation}">Violation Information</label>
+	                                    <span class="form-control common-span" id="vioInfo"> 
+			                                    	Speed limit : <strong th:text="${paymentInfo.spdLmt}"></strong> <br/>
+				                                    Violation speed : <strong th:text="${paymentInfo.vioSpd}"></strong> <br/>
+				                                    Over Speed : <strong th:text="${paymentInfo.overSpd}"></strong>  
+	                                    </span>
+	                                </div>
+									<div class="col-md-6">
+	                                    <label class="control-label" for="payerNm" th:text="#{paymentmng.paymentInfoCmplt.contentPayerName}">Payer Name</label>
+	                                    <span class="form-control common-span" id="payerNm">
+	                                    	<strong th:text="${paymentInfo.finePymntInfo.payerNm}"></strong>
+	                                    </span>
+	                                </div>
+	                                <div class="col-md-6">
+	                                    <label class="control-label" for="pymntPrice" th:text="#{paymentmng.paymentInfoCmplt.contentPaymentPrice}">Payment Price</label>
+	                                    <span class="form-control common-span" id="pymntPrice">
+	                                    	<strong th:text="${paymentInfo.finePymntInfo.pymntPrice}"></strong>
+	                                    </span>
+	                                    
+	                                </div>
+									<div class="col-md-6">
+	                                    <label class="control-label" for="pymntDdln" th:text="#{paymentmng.paymentInfoCmplt.contentPaymentDeadline}">Payment Deadline</label>
+	                                    <span class="form-control common-span" id="pymntDdln">
+	                                    	<strong th:text="${paymentInfo.finePymntInfo.pymntDdln}"></strong>
+	                                    </span>
+	                                </div>
+	                                <div class="col-md-6">
+	                                    <label class="control-label" for="pymntMethod" th:text="#{paymentmng.paymentInfoCmplt.contentPaymentMethod}">Payment method</label>
+	                                    <span class="form-control common-span" id="pymntMethod">
+	                                    	<strong th:text="${paymentInfo.finePymntInfo.pymntMethod}"></strong>
+	                                    </span>
+	                                </div>
+	                                <div class="col-md-12">
+	                                    <div class="form-group">
+	                                    	<input class="btn btn-default" value="Home" th:onclick="'location.href=\''+ @{/} + '\''">
+	                                    </div>
+	                                </div>
+                            	</div>
+                        	</form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
+<script type="text/javascript" th:inline="javascript">
+	var message = /*[[${resultMsg}]]*/;
+    if(message != null && message != ' '){
+		swal({
+			  title: "Success",
+			  text: message,
+			  icon: "success",
+			  button: "Confirm",
+			});
+	}
+</script>

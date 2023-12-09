@@ -1,0 +1,200 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+
+	<div layout:fragment="content">
+		 <div class="page-breadcrumb">
+	            <div class="page-breadcrumb-left">
+	                <ol class="breadcrumb">
+	                    <li th:text="#{inquirymng.common.index.ci}"><a href="#">Complain Inquiry</a></li>
+	                    <li th:text="#{inquirymng.common.index.cir}" class="active"><a href="">Complain Inquiry Register</a></li>
+	                </ol>
+	            </div>
+	            
+	    </div>
+	    <div class="content">
+	        <div class="container">
+				<div class="">
+					<div class="page-caption">
+				       <h2 th:text="#{inquirymng.complainInfo.title.complainInfo}" class="page-title">Complain Inquiry</h2>
+				    </div>
+				    <div class="btn_wrap">
+						<select class="form-control wd49" id="cateCd" name="cateCd">
+					     	<option>select</option>
+					        <option th:each="complainCdList : ${complainCdList}" th:value="${complainCdList.cdId}" th:text="${complainCdList.cdNm}"></option>
+					    </select>
+						<input type="text">
+						<input type="submit" value="조회">
+					</div>
+			    </div>
+				<div class="info-wrap">
+					<h1 th:text="#{inquirymng.complainInfo.title}">이의제기 신청인 정보</h1>
+					<form th:action="@{/inquirymng/complainmng/complnInquiryRegister}" method="post">
+						<div class="search-wrap">
+							<div class="search">
+								<dl>
+									<dt>
+										<label th:text="#{inquirymng.complainInfo.content.title}" class="control-label"
+									for="postTtl">성 명</label>
+									</dt>
+									<dd>
+										<input type="text" id="postTtl" name="postTtl" placeholder="" class="form-control">
+									</dd>
+								</dl>
+							</div>
+							<div class="search">
+								<dl>
+									<dt>
+										<label th:text="#{inquirymng.complainInfo.content.email}" class="control-label"
+									for="wrtrEmail">휴대폰 번호</label>
+									</dt>
+									<dd>
+										<input type="text" id="wrtrEmail" name="wrtrEmail" placeholder="" class="form-control">
+									</dd>
+								</dl>
+							</div>
+							<div class="search">
+								<dl>
+									<dt>
+										<label th:text="#{inquirymng.complainInfo.content.email}" class="control-label"
+									for="wrtrEmail">휴대폰 번호</label>
+									</dt>
+									<dd>
+										<input type="text" id="wrtrEmail" name="wrtrEmail" placeholder="" class="form-control">
+									</dd>
+								</dl>
+							</div>
+							<div class="search">
+								<dl>
+									<dt>
+										<label th:text="#{inquirymng.complainInfo.content.email}" class="control-label"
+									for="wrtrEmail">휴대폰 번호</label>
+									</dt>
+									<dd>
+										<input type="text" id="wrtrEmail" name="wrtrEmail" placeholder="" class="form-control">
+									</dd>
+								</dl>
+							</div>
+							<div class="search">
+								<dl>
+									<dt>
+										<label th:text="#{inquirymng.complainInfo.content.email}" class="control-label"
+									for="wrtrEmail">휴대폰 번호</label>
+									</dt>
+									<dd>
+										<input type="text" id="wrtrEmail" name="wrtrEmail" placeholder="" class="form-control">
+									</dd>
+								</dl>
+							</div>
+						</div>
+					</form>
+				</div>
+				
+				<div class="info-wrap">
+					<h1 th:text="#{inquirymng.complainInfo.title}">결과 수신</h1>
+					<form th:action="@{/inquirymng/complainmng/complnInquiryRegister}" method="post">
+						<div class="search-wrap flex-center check-wrap">
+							<div class="check-title">
+								답변수신결과
+							</div>
+							<div class="search">
+								<input type="checkbox" id="postTtl" name="postTtl" placeholder="" class="form-control">
+								<label th:text="#{inquirymng.complainInfo.content.title}" class="control-label"
+									for="postTtl">이메일</label>
+							</div>
+							
+							<div class="search">
+								<input type="checkbox" id="wrtrEmail" name="wrtrEmail" placeholder="" class="form-control">
+								<label th:text="#{inquirymng.complainInfo.content.email}" class="control-label"
+									for="wrtrEmail">문자</label>
+							</div>
+							
+						</div>
+					</form>
+				</div>
+				
+				<div class="info-wrap">
+					<h1 th:text="#{inquirymng.complainInfo.title}">이의제기 신청 정보</h1>
+					<form th:action="@{/inquirymng/complainmng/complnInquiryRegister}" method="post">
+						<div class="search-wrap">
+							<div class="search">
+								<dl>
+									<dt>
+										<label th:text="#{inquirymng.complainInfo.content.email}" class="control-label"
+									for="wrtrEmail">휴대폰 번호</label>
+									</dt>
+									<dd>
+										<input type="text" id="wrtrEmail" name="wrtrEmail" placeholder="" class="form-control">
+									</dd>
+								</dl>
+							</div>
+							
+							<div class="search">
+								<dl>
+									<dt>
+										<label th:text="#{inquirymng.complainInfo.content.email}" class="control-label"
+									for="wrtrEmail">휴대폰 번호</label>
+									</dt>
+									<dd>
+										<input type="text" id="wrtrEmail" name="wrtrEmail" placeholder="" class="form-control">
+									</dd>
+								</dl>
+							</div>
+							<div class="search">
+								<dl>
+									<dt class="textarea-top">
+										<label th:text="#{inquirymng.complainInfo.content.content}" class="control-label"
+										for="postCn">Content</label>
+									</dt>
+									<dd>
+										<textarea class="form-control" id="postCn" name="postCn" rows="6" placeholder=""></textarea>
+									</dd>
+								</dl>
+							</div>
+							<div class="search">
+								<dl>
+									<dt class="textarea-top">
+										<label th:text="#{inquirymng.complainInfo.content.content}" class="control-label"
+										for="postCn">Content</label>
+									</dt>
+									<dd class="file">
+										<input class="upload-name" value="첨부파일" placeholder="첨부파일">
+										 <label for="file">파일찾기</label> 
+										<input type="file" id="file" name="wrtrEmail" placeholder="" class="form-control">
+										<p class="file-text">
+											*파일첨부는 n개까지 가능, 총 (n)MB이하로 첨부하여 주세요. 첨부 가능 확장자 (*hwp,hwpx,…)
+										</p>
+									</dd>
+								</dl>
+							</div>
+							
+						
+							
+						</div>
+					</form>
+				</div>
+				
+				<div class="search-wrap btn-wrap">
+					<div class="form-group">
+						<input type="submit" class="btn sub-btn btn-default" value="목록"
+							th:value="#{inquirymng.complainInfo.content.btn.regist}">
+							
+						<input type="submit" class="btn btn-default" value="신청">
+					</div>
+				</div>
+	        </div>
+	    </div>
+	</div>
+</html>
+<script type="text/javascript" th:inline="javascript">
+	var message = /*[[${resultMsg}]]*/;
+    if(message != null && message != ' '){
+		swal({
+			  title: /*[[${resultMsgType}]]*/,
+			  text: message,
+			  icon: /*[[${resultMsgType}]]*/,
+			  button: "Confirm",
+			});
+	}
+    
+</script>
