@@ -1,0 +1,168 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+
+<div layout:fragment="content">
+<!--	<div id="breadcrumb">-->
+<!--		<ul>-->
+<!--			<li>-->
+<!--				<a th:href="@{/}">-->
+<!--					<img th:src="@{/images/home.png}" alt="메인 페이지">-->
+<!--				</a>-->
+<!--			</li>-->
+<!--			<li>-->
+<!--				<img th:src="@{/images/arrow-right.png}" alt="다음">-->
+<!--			</li>-->
+<!--			<li>-->
+<!--				<a th:href="@{/complain/list.do}" th:text="#{reception.complainInfo.title.complainInfo}">-->
+<!--					서브페이지-->
+<!--				</a>-->
+<!--			</li>-->
+<!--			<li>-->
+<!--				<img th:src="@{/images/arrow-right.png}" alt="다음">-->
+<!--			</li>-->
+<!--			<li>-->
+<!--				<a onclick="window.location.reload();" th:text="#{reception.complainDetail.title}">-->
+<!--					서브페이지-->
+<!--				</a>-->
+<!--			</li>-->
+<!--		</ul>-->
+<!--	</div>-->
+	<div id="container">
+		<h2 id="page-title" th:text="#{reception.complainDetail.title}">민원</h2>
+		<div class="cm-info-wrap">
+			<h1 th:text="#{reception.complainDetail.detail.txt.title}">민원 내용</h1>
+			<div class="cm-input-wrap cm-detail-input-wrap">
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.complainDetail.detail.title}">
+							제목
+						</dt>
+						<dd class="" th:text="${complaintsDetail.postTtl}">
+							Request to paint vehicle entry guide lines
+						</dd>
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.complainDetail.detail.category}">
+							카테고리
+						</dt>
+						<dd class="" th:text="${complaintsDetail.cmCd.cdNm}">
+							facility
+						</dd>
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.complainDetail.detail.person}">
+							민원인
+						</dt>
+						<dd class="" th:text="${complaintsDetail.wrtrNm}">
+							Inki Moon
+						</dd>
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.complainDetail.detail.date}">
+							등록일
+						</dt>
+						<dd class="" th:text="${#dates.format(complaintsDetail.crDt, 'yyyy-MM-dd')}">
+							2012-08-08
+						</dd>
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.complainDetail.detail.state}">
+							처리상태
+						</dt>
+						<dd class="" 
+							th:text="${complaintsDetail.ansStts} == 'Y' ? #{reception.complainDetail.detail.completed} : #{reception.complainDetail.detail.incompleted}">
+							complete
+						</dd>
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.complainDetail.detail.file}">
+							첨부파일
+						</dt>
+						<dd class="">
+							Announcement (traffic enforcement pilot project).hwp
+						</dd>
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.complainDetail.detail.txt}">
+							내용
+						</dt>
+						<dd class="" th:text="${complaintsDetail.postCn}">
+							Request that vehicle access ramps be painted at intersections.
+						</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+		
+		<div th:if="${complaintsDetail.ansStts == 'Y'}" class="cm-info-wrap">
+			<h1 th:text="#{reception.complainDetail.result.title}">민원 답변</h1>
+			<div class="cm-input-wrap">
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.complainDetail.result.department}">
+							담당부서
+						</dt>
+						<dd class="" th:text="${complaintsDetail.webOprtr.oprtrDeptNm}">
+							Maputo Facilities Management Corporation Facility Manager
+						</dd>
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.complainDetail.result.answer.date}">
+							답변일자
+						</dt>
+						<dd class="" th:text="${#dates.format(complaintsDetail.ansCrDt, 'yyyy-MM-dd')}">
+							2023-08-28
+						</dd>
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.complainDetail.result.answer.title}">
+							내용
+						</dt>
+						<dd class="" th:text="${complaintsDetail.ansContents}">
+							Hello citizen, how are you?<br>
+							First of all, we apologize for any inconvenience caused when using the automobile-only road.<br>
+							We will respond to the citizen's request to paint the intersection access road guide lines.
+						</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+		
+		<div th:unless="${complaintsDetail.ansStts == 'Y'}" class="cm-info-wrap">
+			<h1 th:text="#{reception.complainDetail.result.title}">민원 답변</h1>
+			<div class="cm-input-wrap" th:text="#{reception.complainDetail.result.yet}">
+				YET
+			</div>
+		</div>
+
+
+		<div class="btn-wrap-end">
+			<th:block th:if="${complaintsDetail.ansStts == 'N'}">
+				<button type="button" class="main-btn out-btn" th:onclick="|location.href='@{/complain/update.do}'|"
+					th:text="Modify">Modify</button>
+			</th:block>
+			<button type="button" class="sub-btn out-btn" th:onclick="|location.href='@{/complain/list.do}'|"
+				th:text="#{reception.common.list.more}">List</button>
+		</div>
+	</div>
+</div>
+
+</html>
+<script type="text/javascript" th:inline="javascript">
+</script>

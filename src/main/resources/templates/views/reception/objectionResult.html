@@ -1,0 +1,160 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+
+	<div layout:fragment="content">
+<!--		 <div id="breadcrumb">-->
+<!--			<ul>-->
+<!--				<li>-->
+<!--					<a href="">-->
+<!--						<img th:src="@{/images/home.png}" alt="메인 페이지">-->
+<!--					</a>-->
+<!--				</li>-->
+<!--				<li>-->
+<!--					<img th:src="@{/images/arrow-right.png}" alt="다음">-->
+<!--				</li>-->
+<!--				<li>-->
+<!--					<a href="">-->
+<!--						서브페이지-->
+<!--					</a>-->
+<!--				</li>-->
+<!--				<li>-->
+<!--					<img th:src="@{/images/arrow-right.png}" alt="다음">-->
+<!--				</li>-->
+<!--				<li>-->
+<!--					<a href="">-->
+<!--						서브페이지-->
+<!--					</a>-->
+<!--				</li>-->
+<!--			</ul>-->
+<!--		</div>-->
+	  
+	        <div id="container">
+				<h2 id="page-title" th:text="#{reception.objectionResult}">이의제기</h2>
+				<div class="cm-info-wrap">
+					<h1 th:text="#{reception.objectionResult.txt}">이의제기 내용</h1>
+					<form th:action="@{/inquirymng/complainmng/complnInquiryRegister}" method="post">
+						<div class="cm-input-wrap">
+							<div class="cm-input-list">
+								<dl>
+									<dt>
+										<label class="control-label" for="wrtrEmail" th:text="#{reception.objectionResult.bill.number}">고지서 일련번호</label>
+									</dt>
+									<dd class="cm-detail-border">
+										M1318-2023-900018984
+									</dd>
+								</dl>
+							</div>
+							<div class="cm-input-list">
+								<dl>
+									<dt>
+										<label class="control-label" for="wrtrEmail" th:text="#{reception.objectionResult.date}">신청일자</label>
+									</dt>
+									<dd class="cm-detail-border">
+										2023-08-08
+									</dd>
+								</dl>
+							</div>
+							<div class="cm-input-list">
+								<dl>
+									<dt>
+										<label class="control-label" for="wrtrEmail" th:text="#{reception.objectionResult.title}">제목</label>
+									</dt>
+									<dd class="cm-detail-border">
+										title content
+									</dd>
+								</dl>
+							</div>
+							<div class="cm-input-list">
+								<dl>
+									<dt>
+										<label  class="control-label" for="wrtrEmail" th:text="#{reception.objectionResult.category}">카테고리</label>
+									</dt>
+									<dd  class="cm-detail-border">
+										penalty
+									</dd>
+								</dl>
+							</div>						
+							<div class="cm-input-list">
+								<dl>
+									<dt class="textarea-top">
+										<label class="control-label" for="postCn" th:text="#{reception.objectionResult.file}">첨부파일</label>
+									</dt>
+									<dd class="file cm-detail-border">
+										file
+									</dd>
+								</dl>
+							</div>
+							<div class="cm-input-list">
+								<dl>
+									<dt class="textarea-top">
+										<label class="control-label" for="postCn" th:text="#{reception.objectionResult.textarea.txt}">내용</label>
+									</dt>
+									<dd>
+										<textarea class="form-control base-textarea" id="postCn" name="postCn" rows="6"></textarea>
+									</dd>
+								</dl>
+							</div>
+						</div>
+					</form>
+				</div>
+				
+				<div class="cm-info-wrap">
+					<h1 th:text="#{reception.objectionResult.answer}">이의제기 답변</h1>
+					<form th:action="@{/inquirymng/complainmng/complnInquiryRegister}" method="post">
+						<div class="cm-input-wrap">
+							<div class="cm-input-list">
+								<dl>
+									<dt>
+										<label class="control-label" for="wrtrEmail" th:text="#{reception.objectionResult.department}">담당부서</label>
+									</dt>
+									<dd class="cm-detail-border">
+										Manager
+									</dd>
+								</dl>
+							</div>
+							<div class="cm-input-list">
+								<dl>
+									<dt>
+										<label class="control-label" for="wrtrEmail" th:text="#{reception.objectionResult.result.date}">답변일자</label>
+									</dt>
+									<dd class="cm-detail-border">
+										2023-08-08
+									</dd>
+								</dl>
+							</div>
+							<div class="cm-input-list">
+								<dl>
+									<dt>
+										<label class="control-label" for="wrtrEmail" th:text="#{reception.objectionResult.textarea.txt}">내용</label>
+									</dt>
+									<dd class="cm-detail-border">
+										Content
+									</dd>
+								</dl>
+							</div>
+						</div>
+					</form>
+				</div>
+				
+				<div class="search-wrap btn-wrap">
+					<div class="form-group">
+						<input type="button" class="btn sub-btn" th:value="#{reception.common.list.more}">
+					</div>
+				</div>
+	        </div>
+	  
+	</div>
+</html>
+<script type="text/javascript" th:inline="javascript">
+	var message = /*[[${resultMsg}]]*/;
+    if(message != null && message != ' '){
+		swal({
+			  title: /*[[${resultMsgType}]]*/,
+			  text: message,
+			  icon: /*[[${resultMsgType}]]*/,
+			  button: "Confirm",
+			});
+	}
+    
+</script>

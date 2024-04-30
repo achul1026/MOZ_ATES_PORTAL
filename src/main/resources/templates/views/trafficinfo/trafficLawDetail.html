@@ -1,0 +1,128 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+
+<div layout:fragment="content">
+<!--	<div id="breadcrumb">-->
+<!--		<ul>-->
+<!--			<li>-->
+<!--				<a href="">-->
+<!--					<img th:src="@{/images/home.png}" alt="메인 페이지">-->
+<!--				</a>-->
+<!--			</li>-->
+<!--			<li>-->
+<!--				<img th:src="@{/images/arrow-right.png}" alt="다음">-->
+<!--			</li>-->
+<!--			<li>-->
+<!--				<a href="">-->
+<!--					서브페이지-->
+<!--				</a>-->
+<!--			</li>-->
+<!--			<li>-->
+<!--				<img th:src="@{/images/arrow-right.png}" alt="다음">-->
+<!--			</li>-->
+<!--			<li>-->
+<!--				<a href="">-->
+<!--					서브페이지-->
+<!--				</a>-->
+<!--			</li>-->
+<!--		</ul>-->
+<!--	</div>-->
+	<div id="container">
+		<h2 id="page-title" th:text="#{trafficinfo.trafficLawDetail.title}">교통법규 정보</h2>
+		
+		<div class="cm-info-wrap">
+			<div id="cm-notice-wrap">
+				<div id="cm-notice-title" th:text="#{trafficinfo.trafficLawDetail.title.detail}">교통법규 상세</div>
+				<div class="cm-notice-info">
+					<dl class="cm-notice-info-list">
+						<dt th:text="${tfcLwInfoDetail.lawArticleNo}">Transportation Administration</dt>
+<!--						<dd th:text="${tfcLwInfoDetail.lawArticleNo}">Mr.Hoon</dd>-->
+					</dl>
+					<div id="cm-notice-info-date">
+						<dl class="cm-notice-info-list">
+							<dt th:text="#{trafficinfo.trafficLawDetail.prmgtnDate}">공포일자</dt>
+							<dd  th:text="${#dates.format(tfcLwInfoDetail.prmgtnDe, 'yyyy-MM-dd')}">2023-01-01</dd>
+						</dl>
+						<dl class="cm-notice-info-list">
+							<dt th:text="#{trafficinfo.trafficLawDetail.prmgtnDate}">공포일자</dt>
+							<dd  th:text="${#dates.format(tfcLwInfoDetail.prmgtnDe, 'yyyy-MM-dd')}">2023-01-01</dd>
+						</dl>
+					</div>
+				</div>
+				<div class="cm-notice-info">
+					<dl class="cm-notice-info-list">
+						<dt th:text="#{trafficinfo.trafficLawDetail.name.law}">법규명</dt>
+						<dd th:text="${tfcLwInfoDetail.lawNm}">2023.08.13</dd>
+					</dl>
+				</div>
+				<div id="cm-notice-con" th:text="${tfcLwInfoDetail.lawNm}">
+					공지사항 입니다.
+				</div>
+			</div>
+		</div>
+		
+		
+<!--		<div class="cm-info-wrap">-->
+<!--			<h1 th:text="#{trafficinfo.trafficLawDetail.title.detail}">교통법규 상세</h1>-->
+<!--			<div class="cm-input-wrap">-->
+<!--				<div class="cm-input-list">-->
+<!--					<dl>-->
+<!--						<dt>-->
+<!--							<div class="control-label" th:text="#{trafficinfo.trafficLawDetail.provisions}">법령조항</div>-->
+<!--						</dt>-->
+<!--						<dd class="cm-detail-border" th:text="${tfcLwInfoDetail.lawArticleNo}">-->
+<!--							Article 19 of the Road Traffic Act-->
+<!--						</dd>-->
+<!--					</dl>-->
+<!--				</div>-->
+<!--				<div class="cm-input-list">-->
+<!--					<dl>-->
+<!--						<dt>-->
+<!--							<div class="control-label" th:text="#{trafficinfo.trafficLawDetail.name.law}">법규명</div>-->
+<!--						</dt>-->
+<!--						<dd class="cm-detail-border" th:text="${tfcLwInfoDetail.lawNm}">-->
+<!--							Secure safe distance-->
+<!--						</dd>-->
+<!--					</dl>-->
+<!--				</div>-->
+<!--				<div class="cm-input-list">-->
+<!--					<dl>-->
+<!--						<dt>-->
+<!--							<div class="control-label" th:text="#{trafficinfo.trafficLawDetail.prmgtnDate}">공포일자</div>-->
+<!--						</dt>-->
+<!--						<dd class="cm-detail-border" th:text="${#dates.format(tfcLwInfoDetail.prmgtnDe, 'yyyy-MM-dd')}">-->
+<!--							2023-08-18-->
+<!--						</dd>-->
+<!--					</dl>-->
+<!--				</div>-->
+<!--				<div class="cm-input-list">-->
+<!--					<dl>-->
+<!--						<dt>-->
+<!--							<div class="control-label" th:text="#{trafficinfo.trafficLawDetail.enforcementDate}">시행일자</div>-->
+<!--						</dt>-->
+<!--						<dd class="cm-detail-border" th:text="${#dates.format(tfcLwInfoDetail.eftvDe, 'yyyy-MM-dd')}">-->
+<!--							2023-08-18-->
+<!--						</dd>-->
+<!--					</dl>-->
+<!--				</div>-->
+<!--				<div class="cm-input-list">-->
+<!--					<dl>-->
+<!--						<dt class="textarea-top">-->
+<!--							<div class="control-label" th:text="#{trafficinfo.trafficLawDetail.details}">내용</div>-->
+<!--						</dt>-->
+<!--						<dd>-->
+<!--							<textarea class="form-control base-textarea"-->
+<!--								rows="6" readonly th:text="${tfcLwInfoDetail.lawNm}"></textarea>-->
+<!--						</dd>-->
+<!--					</dl>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--		</div>-->
+		<div class="btn-wrap-end">
+			<button type="button" class="sub-btn out-btn" 
+				th:text="#{trafficinfo.common.list}" th:onclick="|location.href='@{/traffic/info/lawinfo/list.do}'|"></button>
+		</div>
+	</div>
+</div>
+
+</html>

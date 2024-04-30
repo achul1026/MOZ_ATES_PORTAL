@@ -1,0 +1,188 @@
+@charset 'utf-8';
+#billContainer {
+
+	width:750px;
+	margin:auto;
+	border:1px solid #efefef;
+	position: relative;
+}
+#billTitle {
+	padding: 20px;
+	background: #00967A;
+	text-align: center;
+}
+#billTitle h1 {
+	font-weight: 600;
+	font-size:18px;
+	color: #fff;
+}
+#billContent {
+	padding: 20px;
+}
+#billInfo {
+	display: flex;
+	flex-wrap:wrap;
+	border-top:2px solid #00967A;
+}
+#billInfo dl {
+	display: table;
+	width:50%;
+}
+#billInfo dl dt {
+	display: table-cell;
+	padding: 16px;
+	width:30%;
+	background: #f9f9f9;
+	border-bottom:1px solid #efefef;
+
+	font-weight: 500;
+	vertical-align: middle;
+	word-break: break-word;
+	white-space: normal;
+	text-align: center;
+}
+#billInfo dl dd {
+	display: table-cell;
+	padding: 16px;
+	width:70%;
+	border-right:1px solid #efefef;
+	border-bottom:1px solid #efefef;
+	vertical-align: middle;
+}
+#billInfo dl:first-child dd {
+	border-top:1px solid #efefef;
+}
+#billInfo dl:nth-child(2) dd {
+	border-top:1px solid #efefef;
+}
+#billDetailInfo {
+	margin-top:20px;
+}
+#billDetailInfo dl dt {
+	padding: 16px;
+	background: #f9f9f9;
+	font-weight: 600;
+}
+#billDetailInfo dl dd {
+	padding: 20px;
+	margin-top:10px;
+	background: #fff;
+	letter-spacing: 0.5px;
+    line-height: 20px;
+    border:1px solid #c3c3c3;
+}
+#billDepartmentContainer {
+	margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#billDepartment p {
+	font-weight: 500;
+	margin-bottom: 8px;
+	font-size: 14px;
+}
+#billDepartment p:last-child {
+	margin-bottom: 0px;
+}
+#billLogo {
+	width:100px;
+}
+
+#billAccount {
+	padding: 20px;
+    background: #f9f9f9;
+    margin-top: 20px;
+    line-height: 21px;
+}
+#printBtnWrap {
+	margin-top:20px;
+	text-align: center;
+}
+#PrintBtn {
+		padding: 10px;
+		border:none;
+		background: #00967A;
+		min-width: 90px;
+		color: #fff;
+		margin:auto;
+		cursor: pointer;
+}
+/*인쇄화면*/
+@media print {
+	@page {
+	    size: auto;  /* auto is the initial value */
+	    margin: 0;  /* this affects the margin in the printer settings */
+	}
+	#billContainer {
+	     margin-top:00px;
+		min-height:1080px;
+	}
+	#fixLine {
+		position: absolute;
+		bottom: 20px;
+	}
+	#PrintBtn {
+		display: none;
+	}
+ }
+
+/*테블릭*/
+@media all and (max-width: 1150px){
+	.category {
+		display: none;
+	}
+	
+	/* list common */
+	#infoTableMobile {
+		display:table-row-group;
+	}
+	#infoTablePc {
+		display:none;
+	}
+	.box-item {
+		height:140px;
+	}
+	.submit-btn {
+		margin-bottom: 8px;
+	}
+	.cm-info-wrap {
+		margin-top:30px !important;
+	}
+}
+/*모바일*/
+@media all and (max-width: 767px) {
+	#billContainer {
+		width: 100%;
+	}
+	#billInfo dl {
+		display: inline-table;
+		width: 100%;
+	}
+	#billInfo dl dt {
+		width: 30%;
+	}
+	#billInfo dl dd {
+		width: 70%;
+	}
+	.main-btn {
+		padding: 16px 0;
+		font-size:15px;
+		font-weight: 500;
+		width:100%;
+	}
+	.sub-btn {
+		padding: 18px 0;
+		font-size:15px;
+		font-weight: 500;
+		width:100%;
+	}
+	.btn-wrap-end {
+		margin-top:20px;
+		display: flex;
+		gap:8px;
+		justify-content: end;
+		flex-wrap:wrap;
+	}
+	
+}

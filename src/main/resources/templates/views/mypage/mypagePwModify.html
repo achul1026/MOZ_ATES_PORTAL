@@ -1,0 +1,97 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+	
+	<div layout:fragment="content">
+		<div id="container">
+			<div id="wrap">
+				<h2 id="mainTitle" th:text="#{myPage.mypagePwModify.myInfo}"></h2>
+				<div class="box-wrap">
+					<div class="box-title">
+						<h3 th:text="#{myPage.mypagePwModify.changePassword}"></h3>
+					</div>
+					<div class="clearfix">
+						<table class="info-table">
+							<tbody id="infoTablePc">
+								<tr>
+									<th th:text="#{myPage.mypagePwModify.name}"></th>
+									<td>Inki Moon</td>
+									<th th:text="#{myPage.mypagePwModify.id}"></th>
+									<td>pop123</td>
+								</tr>
+								<tr>
+									<th th:text="#{myPage.mypagePwModify.birthday}"></th>
+									<td>1994-09-15</td>
+									<th th:text="#{myPage.mypagePwModify.tel}"></th>
+									<td>
+										<span>
+											<span>
+												010-1234-5678
+											</span>
+										</span>
+									</td>
+								</tr>
+								<tr>
+									<th th:text="#{myPage.mypagePwModify.licenseNumber}"></th>
+									<td>14-19-123456</td>
+									<th th:text="#{myPage.mypagePwModify.existingPassword}"></th>
+									<td><input type="password" th:placeholder="#{myPage.mypagePwModify.placeholder.enterExistingPassword}"></td>
+								</tr>
+								<tr>
+									<th th:text="#{myPage.mypagePwModify.newPassword}"></th>
+									<td><input type="password" th:placeholder="#{myPage.mypagePwModify.placeholder.enterNewPassword}"></td>
+									<th th:text="#{myPage.mypagePwModify.newPasswordChk}"></th>
+									<td><input type="password" th:placeholder="#{myPage.mypagePwModify.placeholder.enterNewPassword}"></td>
+								</tr>
+							</tbody>
+							<tbody id="infoTableMobile">
+								<tr>
+									<th th:text="#{myPage.mypagePwModify.name}"></th>
+									<td>Inki Moon</td>								
+								</tr>
+								<tr>
+									<th th:text="#{myPage.mypagePwModify.id}"></th>
+									<td>pop123</td>								
+								</tr>
+								<tr>
+									<th th:text="#{myPage.mypagePwModify.birthday}"></th>
+									<td>1994-09-15</td>								
+								</tr>
+								<tr>
+									<th th:text="#{myPage.mypagePwModify.tel}"></th>
+									<td>
+										<span>
+											<span>
+												010-1234-5678
+											</span>
+										</span>
+									</td>								
+								</tr>
+								<tr>
+									<th th:text="#{myPage.mypagePwModify.licenseNumber}"></th>
+									<td>14-19-123456</td>								
+								</tr>
+								<tr>
+									<th th:text="#{myPage.mypagePwModify.existingPassword}"></th>
+									<td><input type="password" th:placeholder="#{myPage.mypagePwModify.placeholder.enterExistingPassword}"></td>								
+								</tr>
+								<tr>
+									<th th:text="#{myPage.mypagePwModify.newPassword}"></th>
+									<td><input type="password" th:placeholder="#{myPage.mypagePwModify.placeholder.enterNewPassword}"></td>								
+								</tr>
+								<tr>
+									<th th:text="#{myPage.mypagePwModify.newPasswordChk}"></th>
+									<td><input type="password" th:placeholder="#{myPage.mypagePwModify.placeholder.enterNewPassword}"></td>								
+								</tr>
+
+							</tbody>
+						</table>
+						<div class="modify-button-set">
+							<a th:href="@{/mypage}" class="is-basic-button mr8" th:text="#{myPage.mypagePwModify.changeToNext}"></a>
+							<a th:href="@{/mypage}" class="is-key-button" th:text="#{myPage.mypagePwModify.modify}"></a>
+						</div>
+					</div>
+				</div>					
+			</div>		
+		</div>
+	</div>
+</html>

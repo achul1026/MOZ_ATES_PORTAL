@@ -15,14 +15,13 @@ import com.moz.ates.traffic.common.entity.common.MozCmCd;
 public interface CommonService {
 	
 	/**
-	 * @Method 		: getCommonCdList
-	 * @Author 		: NK.KIM
-	 * @Return 		: List<Map<String,Object>>
-	 * @Description : 공통코드 조회
-	 * <PRE>
-	 * 2022. 3. 10. kim : 최초 작성
-	 * </PRE>
-	 */
-	public List<MozCmCd> getCommonCdList(Map<String,Object> paramMap);
+	  * @Method Name : getCommonCdList
+	  * @Date : 2024. 3. 29.
+	  * @Author : IK.MOON
+	  * @Method Brief : 공통 코드 조뢰
+	  * @param cdGroupId
+	  * @return
+	  */
+	public List<MozCmCd> getCdList(String cdGroupId);
 	
 }

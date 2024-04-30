@@ -9,28 +9,38 @@
 		    <meta name="description" content="Flower is free physiotherapy website template that perfectly designed for therapy center, physical therapy program courses, physiotherapy clinic and physician.">
 		    <meta name="keywords" content="best free website templates, html5 template, free responsive website templates,website layout,html5 website templates,template for website design, medical HTML5 templates">
 		    <title>Government Portal</title>
-		    <!-- Bootstrap -->
-		   <!-- <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">-->
-		    <!-- Google Fonts -->
-		    <link th:href="@{https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i}" rel="stylesheet">
-		    <!-- Font Awesome -->
-		    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet">
+			
+			 <!--파비콘-->
+			<link rel="icon" th:href="@{/images/favilogo2.png}">
 		    <!-- Style -->
 		    <link th:href="@{/css/common.css}" rel="stylesheet">
-		    <link th:href="@{/css/layout.css}" rel="stylesheet">
-		    <link th:href="@{/css/base.css}" rel="stylesheet">
+		    <link th:href="@{/css/main.css}" rel="stylesheet">
 		    <link th:href="@{/css/reset.css}" rel="stylesheet">
-		    <link th:href="@{/css/font.css}" rel="stylesheet">
+		    <link th:href="@{/css/fonts.css}" rel="stylesheet">
+		    <link th:href="@{/css/sub.css}" rel="stylesheet">
+		    <link th:href="@{/css/style.css}" rel="stylesheet">
+			<link th:href="@{/css/mapbox-gl.css}" rel="stylesheet">
 		    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 			<script th:src="@{/js/jquery.min.js}"></script>
 			<script th:src="@{/js/jquery.cookie.min.js}"></script>
 			<!-- Include all compiled plugins (below), or include individual files as needed -->
-			<script th:src="@{/js/bootstrap.min.js}"></script>
 			<script th:src="@{/js/menumaker.js}"></script>
 			<script th:src="@{/js/jquery.sticky.js}"></script>
-			<script th:src="@{/js/sticky-header.js}"></script>
+			<!--<script th:src="@{/js/sticky-header.js}"></script>-->
+			<script th:src="@{/js/mozates.map.js}"></script>
+			<script th:src="@{/js/mapbox-gl.js}"></script>
+			<script th:src="@{/js/chart.min.js}"></script>
 			<script th:src="@{/js/common.js}"></script>
+			<script th:src="@{/js/moz_modal.js}"></script>
+			<script th:src="@{/js/validation.js}"></script>
+			<script th:src="@{/js/driver_api_search.js}"></script>
 			<script th:src="@{https://unpkg.com/sweetalert/dist/sweetalert.min.js}"></script>
+			
+			<link id="contextPathHolder" th:data-contextPath="${#httpServletRequest.getContextPath()}"/>
+			<script type="text/javascript">
+			    var __contextPath__ = $('#contextPathHolder').attr('data-contextPath');
+			    if(isNull(__contextPath__)) __contextPath__ = '';  
+			</script>
 		</head>
 	</th:block>
 </html>

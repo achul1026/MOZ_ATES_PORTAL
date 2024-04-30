@@ -1,0 +1,110 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+	
+	<div layout:fragment="content">
+		<div id="container">
+			<div id="wrap">
+				<h2 id="page-title" th:text="#{inquiry.licneceDetail.title}">면허현황</h2>
+				<div class="detail-info-wrap detail-info-wrap">
+					<div class="detail-title">
+						<h3 th:text="#{inquiry.licneceDetail.sub.title.enfDetail}">면허 단속 이력 상세 정보</h3>
+						<div>
+							<span id="billNumber" th:text="#{inquiry.licneceDetail.enforcementId}"></span>
+							<span>M1318-2023-90010893</span>
+						</div>
+					</div>
+				 	<div class="detail-table detail-table-7">
+						<dl>
+							<dt th:text="#{inquiry.licneceDetail.driver.number}"></dt>
+							<dd>CA 688-566</dd>
+						</dl>
+						<dl>
+							<dt th:text="#{inquiry.licneceDetail.violator}"></dt>
+							<dd>Inki Moon</dd>
+						</dl>
+						<dl>
+							<dt th:text="#{inquiry.licneceDetail.place.violation}"></dt>
+							<dd>Street 50</dd>
+						</dl>
+						<dl>
+							<dt th:text="#{inquiry.licneceDetail.violation.date}"></dt>
+							<dd>23-01-25 11:20:19</dd>
+						</dl>
+						<dl>
+							<dt th:text="#{inquiry.licneceDetail.violation.category}"></dt>
+							<dd>Speeding</dd>
+						</dl>
+						<dl>
+							<dt th:text="#{inquiry.licneceDetail.violation.statute}"></dt>
+							<dd>Article 13, Paragraph 7 of the Road Traffic Act</dd>
+						</dl>
+						<dl class="detail-content">
+							<dt th:text="#{inquiry.licneceDetail.violation.content}"></dt>
+							<dd>Speed ​​(speed limit 80km/h, driving speed 120km/h, speed exceeding 40km/h)</dd>
+						</dl>
+					</div>
+				</div>					
+				<div class="detail-info-wrap">
+					<div class="detail-title">
+						<h3 th:text="#{inquiry.licneceDetail.paymentAndPeriod}">납부금액 및 기간</h3>
+					</div>
+					<div class="detail-table">
+						<dl>
+							<dt th:text="#{inquiry.licneceDetail.pay.1st.deadline}"></dt>
+							<dd>CA 688-566</dd>
+						</dl>
+						<dl>
+							<dt th:text="#{inquiry.licneceDetail.date.pay}"></dt>
+							<dd><span class="comma"></span>Won</dd>
+						</dl>
+						<dl>
+							<dt th:text="#{inquiry.licneceDetail.pay.2nd.deadline}"></dt>
+							<dd>Street 50</dd>
+						</dl>
+						<dl>
+							<dt th:text="#{inquiry.licneceDetail.plus.pay}">asd</dt>
+							<dd><span class="comma"></span>Won</dd>
+						</dl>
+						<dl>
+							<dt th:text="#{inquiry.licneceDetail.pay}"></dt>
+							<dd><span class="comma"></span>Won</dd>
+						</dl>
+						<dl>
+							<dt th:text="#{inquiry.licneceDetail.name}"></dt>
+							<dd>asd</dd>
+						</dl>
+						<dl>
+							<dt th:text="#{inquiry.licneceDetail.payment.date}"></dt>
+							<dd>asdasd</dd>
+						</dl>
+						<dl>
+							<dt th:text="#{inquiry.licneceDetail.payment.bank}"></dt>
+							<dd>123</dd>
+						</dl>
+					</div>
+				</div>					
+				<div class="detail-info-wrap">
+					<div class="detail-title">
+						<h3 th:text="#{inquiry.licneceDetail.title2}">단속 차량 사진</h3>
+					</div>
+					<div class="fines-inquiry">
+							<div class="fines-inquiry-item"><img th:src="@{/images/slide_img1.png}" alt="가상이미지"></div>
+							<div class="fines-inquiry-item"><img th:src="@{/images/slide_img2.png}" alt="가상이미지"></div>
+							<div class="fines-inquiry-item"><img th:src="@{/images/slide_img3.png}" alt="가상이미지"></div>
+							<div class="fines-inquiry-item"><img th:src="@{/images/slide_img4.png}" alt="가상이미지"></div>
+							<div class="fines-inquiry-item"><img th:src="@{/images/slide_img5.png}" alt="가상이미지"></div>
+							<div class="fines-inquiry-item"><img th:src="@{/images/slide_img2.png}" alt="가상이미지"></div>
+							<div class="fines-inquiry-item"><img th:src="@{/images/slide_img3.png}" alt="가상이미지"></div>
+					</div>
+				</div>				
+				<div class="btn-wrap-end">
+<!--					<a th:href="@{/inquiry/licencestatus/search.do}" class="sub-btn out-btn" th:text="#{inquiry.licneceDetail.list}">목록</a>-->
+					<a onclick="history.back()" class="sub-btn out-btn" th:text="#{inquiry.licneceDetail.list}">목록</a>
+				</div>	
+			</div>		
+		</div>
+	</div>
+</html>
+<script type="text/javascript">
+    
+</script>

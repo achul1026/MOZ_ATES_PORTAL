@@ -1,0 +1,97 @@
+<html xmlns:th="http://www.thymeleaf.org"  
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+	
+<div layout:fragment="content">
+<!--	<div id="breadcrumb">-->
+<!--		<ul>-->
+<!--			<li>-->
+<!--				<a href="">-->
+<!--					<img th:src="@{/images/home.png}" alt="메인 페이지">-->
+<!--				</a>-->
+<!--			</li>-->
+<!--			<li>-->
+<!--				<img th:src="@{/images/arrow-right.png}" alt="다음">-->
+<!--			</li>-->
+<!--			<li>-->
+<!--				<a href="">-->
+<!--					서브페이지-->
+<!--				</a>-->
+<!--			</li>-->
+<!--			<li>-->
+<!--				<img th:src="@{/images/arrow-right.png}" alt="다음">-->
+<!--			</li>-->
+<!--			<li>-->
+<!--				<a href="">-->
+<!--					서브페이지-->
+<!--				</a>-->
+<!--			</li>-->
+<!--		</ul>-->
+<!--	</div>-->
+	<div id="container">
+		<div id="wrap">
+			<h2 id="page-title" th:text="#{notification.penalty.title}">범칙금 납부처</h2>
+			<div id="filterBox">
+				<dl>
+					<dt th:text="#{notification.common.search}">Search</dt>
+					<dd>
+						<form id="plPymntForm" method="get">
+							<input type="text" name="searchTxt" class="base-search" 
+								th:value="${plPymntInfo.searchTxt}"
+								th:placeholder="#{notification.common.search.placeholder}">
+							<input type="hidden" id="hdnStart" name="start" th:value="${plPymntInfo.start}">
+							<input type="hidden" id="page" name="page" value="1">
+							<button type="submit" class="main-btn" th:text="#{notification.common.search.button}"></button>
+						</form>
+					</dd>
+				</dl>
+			</div>
+			<div id="list-table-wrap"  th:object="${plPymntList}">
+				<div th:if="${not #object.isEmpty()}">
+					<div id="listSearchTableOpiton">
+						<div id="listSearchTotal"><p th:text="#{notification.penaltyPlaceList.total}"></p> <span th:text='|"${pagination.totalListCnt}"|'>"546465"</span></div>
+					</div>
+					
+					<div id="base-table">
+						<ul class="base-table-th base-table-cm">
+							<li th:text="#{notification.common.number}"></li>
+							<li th:text="#{notification.common.payment}"></li>
+							<li th:text="#{notification.common.address}"></li>
+							<li th:text="#{notification.common.time}"></li>
+							<li th:text="#{notification.common.closedDays}">Closed Days</li>
+						</ul>
+						<ul>	
+							<li th:each="plPymntItm : ${plPymntList}">
+								<ul class="base-table-td base-table-cm penalty-table"
+										th:onclick="|location.href='@{/info/penaltyplace/detail.do(placePymntId=${plPymntItm.placePymntId})}'|">
+									<li class="TableNumber" th:text="${plPymntItm.rnum}">1</li>
+									<li class="TablePolice" th:text="${plPymntItm.placePymntNm}">Mabuto Police</li>
+									<li class="TableAddress" th:text="${plPymntItm.placePymntAddr}">Torres Rani 7 Andar, Maputo, Mozambique</li>
+									<li class="TableTime" th:text="|${plPymntItm.operStrTm} ~ ${plPymntItm.operEndTm}|">weekday (09:00am~05:00pm)</li>
+									<li class="TableWork" th:text="${plPymntItm.clsdDt}">weekday (09:00am~05:00pm)</li>
+								</ul>
+							</li>
+						</ul>
+				  </div>
+					<div class="page_wrap">
+						<div th:insert="tags/pagingTag :: pagingTag"></div>
+					</div>
+				</div>
+				<div th:unless="${not #object.isEmpty()}">
+					<span th:text="#{notification.search.notFound}">등록된 범칙금 납부처가 없습니다.</span>
+				</div>
+			</div>			
+		</div>		
+	</div>    
+</div>
+</html>
+<script type="text/javascript">
+	function fnPageMove(pageToMove) {
+		let pageElmnt = document.getElementById("page");
+		let plPymntForm = document.getElementById("plPymntForm");
+		pageElmnt.value = pageToMove;
+		
+		plPymntForm.submit();
+	}
+</script>
+

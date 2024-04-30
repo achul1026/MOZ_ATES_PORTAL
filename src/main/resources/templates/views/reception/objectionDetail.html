@@ -1,0 +1,134 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+
+<div layout:fragment="content">
+	<div id="container">
+		<h2 id="page-title" th:text="#{reception.objectionResult}">이의제기</h2>
+		<div class="cm-info-wrap">
+			<h1 th:text="#{reception.objectionResult.txt}">이의제기 내용</h1>
+			<div class="cm-input-wrap cm-detail-input-wrap">
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.objectionResult.bill.number}">
+							고지서 일련번호
+						</dt>
+						<dd class="" th:text="${objRegDetail.fineNtcInfo.tfcEnfId}">
+							M1318-2023-900018984
+						</dd>
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.objectionResult.date}">
+							신청일자
+						</dt>
+						<dd class="" th:text="${#dates.format(objRegDetail.crDt, 'yyyy-MM-dd')}">
+							2023-08-08
+						</dd>
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.objectionResult.title}">
+							제목
+						</dt>
+						<dd class="" th:text="${objRegDetail.postTtl}">
+							title content
+						</dd>
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.objectionResult.category}">
+							카테고리
+						</dt>
+						<dd class="" th:text="${objRegDetail.cmCd.cdNm}">
+							penalty
+						</dd>
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.objectionResult.file}">
+							첨부파일
+						</dt>
+						<dd class="">
+							file
+						</dd>
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.objectionResult.textarea.txt}">
+							내용
+						</dt>
+						<dd>
+							<div th:text="${objRegDetail.postCn}"></div>
+						</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+
+		<div class="cm-info-wrap">
+			<h1 th:text="#{reception.objectionResult.answer}">이의제기 답변</h1>
+			<div class="cm-input-wrap" th:if="${objRegDetail.ansStts == 'Y'}">
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.objectionResult.department}">
+							담당부서
+						</dt>
+						<dd class="" th:text="${objRegDetail.webOprtr.oprtrDeptNm}">
+							Manager
+						</dd>
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.objectionResult.result.date}">
+							답변일자
+						</dt>
+						<dd class="" th:text="${#dates.format(objRegDetail.ansCrDt, 'yyy-MM-dd')}">
+							2023-08-08
+						</dd>
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.objectionResult.textarea.txt}">
+							내용
+						</dt>
+						<dd class="" th:text="${objRegDetail.ansContents}">
+							Content
+						</dd>
+					</dl>
+				</div>
+			</div>
+
+			<div class="cm-input-wrap" th:unless="${objRegDetail.ansStts == 'Y'}">
+				YET
+			</div>
+		</div>
+
+
+		<div class="search-wrap btn-wrap">
+			<div class="form-group btn-wrap-between">
+				<button type="button" class="sub-btn out-btn" th:onclick="|location.href='@{/objection/list.do}'|"
+					th:text="#{reception.common.list.more}">List</button>
+				<div class="">
+					<th:block th:if="${objRegDetail.ansStts == 'N'}">
+						<button type="button" class="main-btn out-btn" onclick="moveUpdatePage()" th:text="#{reception.objectionDetail.modify}">Modify</button>
+						<button type="button" class="delete-btn out-btn" th:text="#{reception.objectionDetail.delete}">Delete</button>
+					</th:block>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</html>
+<script type="text/javascript" th:inline="javascript">
+	function moveUpdatePage() {
+		location.href = "/objection/update.do";
+	}    
+</script>

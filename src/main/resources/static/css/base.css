@@ -38,6 +38,9 @@ button {
 .center {
     text-align: center;
 }
+.right {
+	text-align:right;
+}
 /* float 설계 */
 .float-left {
     float: left !important;

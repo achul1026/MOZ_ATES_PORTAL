@@ -1,0 +1,100 @@
+<html xmlns:th="http://www.thymeleaf.org"  
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+	
+	<div layout:fragment="content">
+<!--		<div id="breadcrumb">-->
+<!--			<ul>-->
+<!--				<li>-->
+<!--					<a href="">-->
+<!--						<img th:src="@{/images/home.png}" alt="메인 페이지">-->
+<!--					</a>-->
+<!--				</li>-->
+<!--				<li>-->
+<!--					<img th:src="@{/images/arrow-right.png}" alt="다음">-->
+<!--				</li>-->
+<!--				<li>-->
+<!--					<a href="">-->
+<!--						서브페이지-->
+<!--					</a>-->
+<!--				</li>-->
+<!--				<li>-->
+<!--					<img th:src="@{/images/arrow-right.png}" alt="다음">-->
+<!--				</li>-->
+<!--				<li>-->
+<!--					<a href="">-->
+<!--						서브페이지-->
+<!--					</a>-->
+<!--				</li>-->
+<!--			</ul>-->
+<!--		</div>-->
+		<div id="container">
+			<div id="wrap">
+				<h2 id="page-title" th:text="#{trafficinfo.trafficLawList.title}">교통법규 정보</h2>
+				<div id="filterBox">
+					<dl>
+						<dt th:text="#{trafficinfo.common.search}">Search</dt>
+						<dd>
+							<form id="trafficLawInfoSearchForm" method="get">
+								<input type="text" class="base-search" name="searchTxt" 
+									th:value="${tfcLwInfo.searchTxt}" th:placeholder="#{trafficinfo.trafficLawList.search.placeholder}">
+								<input type="hidden" name="start" th:value="${tfcLwInfo.start}">
+								<input type="hidden" name="page" id="page" value="1">
+								<button type="submit" class="sub-btn" th:text="#{trafficinfo.common.search.button}">Search</button>
+							</form>
+						</dd>
+					</dl>
+				</div>
+				<div id="list-table-wrap" th:object="${tfcLwInfoList}">
+					
+					<th:block th:if="${not #object.isEmpty()}">
+						<div id="listSearchTableOpiton">
+							<div id="listSearchTotal"> 
+								<p th:text="#{trafficinfo.trafficLawList.total}"></p> <span th:text='|"${pagination.totalListCnt}"|'>"546465"</span>
+							</div>
+						</div>
+						
+						<div id="base-table">
+							<ul class="base-table-th base-table-cm">
+								<li th:text="#{trafficinfo.common.number}">No.</li>
+								<li th:text="#{trafficinfo.trafficLawList.legal.provisions}">Legal Provisions</li>
+								<li th:text="#{trafficinfo.trafficLawList.name.law}">Law Name</li>
+								<li th:text="#{trafficinfo.trafficLawList.date}">Date</li>
+							</ul>
+							<ul>	
+								<li th:each="tfcLwInfoItm : ${tfcLwInfoList}">
+									<ul class="base-table-td base-table-cm laws-table" th:onclick="|location.href='@{/traffic/info/lawinfo/detail.do(tfcLawId=${tfcLwInfoItm.tfcLawId})}'|">
+										<li class="TableNumber" th:text="${tfcLwInfoItm.rnum}">1</li>
+										<li class="TableTitle" th:text="${tfcLwInfoItm.lawArticleNo}">도로교통법 제17조 3항</li>
+										<li class="TableSubTitle" th:text="${tfcLwInfoItm.lawNm}">속도제한 및 안전거리 확보</li>
+										<li class="TableCmDate" th:text="${#dates.format(tfcLwInfoItm.eftvDe, 'yyyy-MM-dd')}">2023-12-25</li>
+									</ul>
+								</li>
+							</ul>
+					  </div>
+  					<div class="page_wrap">
+							<div th:insert="tags/pagingTag :: pagingTag"></div>
+						</div>
+					</th:block>
+					
+					<th:block th:unless="${not #object.isEmpty()}">
+						<span th:text="#{notification.search.notFound}">등록된 공지사항이 없습니다.</span>
+					</th:block>
+					
+				</div>			
+			</div>		
+		</div>    
+	</div>
+</html>
+<script type="text/javascript">
+	
+	function fnPageMove(pageToMove) {
+		let pageElmnt = document.getElementById("page");
+		let noticeSearchForm = document.getElementById("trafficLawInfoSearchForm");
+		pageElmnt.value = pageToMove;
+		
+		noticeSearchForm.submit();
+	}
+	
+</script>
+

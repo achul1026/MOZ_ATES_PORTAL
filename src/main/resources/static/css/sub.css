@@ -1,0 +1,990 @@
+@charset "UTF-8";
+.cm-info-wrap {
+	margin-top:56px;
+}
+.cm-info-wrap h1 {
+	padding-left:20px;
+	margin-bottom: 20px;
+	font-size:20px;
+	font-weight: 600;
+	position: relative;
+	color:#00bba3;
+}
+.cm-info-wrap h1::before {
+	content: '';
+	position: absolute;
+	left:0;
+	top:5px;
+	width:7px;
+	height:7px;
+	background: #00bba3;
+	border-radius: 20px;
+}
+.cm-input-list dl {
+	margin-bottom: 20px;
+    display: table;
+    max-width: 1200px;
+   
+}
+.cm-input-list dl dt {
+	padding-right: 2%;
+	width:140px;
+	display: table-cell;
+	word-break: break-all;
+	vertical-align: middle;
+}
+.cm-input-list dl dd {
+	width:1060px;
+	display: table-cell;
+	border-radius: 6px;
+}
+.cm-input-list .base-textarea {
+	border-color: #e2e5eb ;
+	width:100%;
+	padding: 10px;
+	height: 200px;
+	border-radius: 6px;
+}
+.cm-detail-input-list {
+	 border-bottom: 1px solid #efefef;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+.cm-detail-input-list > dl {
+	margin:0 !important;
+}
+.cm-detail-input-list > dl dt {
+	font-weight: 500;
+}
+.cm-detail-border {
+	padding:10px;
+	border:1px solid #e2e5ed;
+}
+.cm-input-list select {
+	 background:#fff url('/images/arrow-select.png') no-repeat 99% 50%;
+	 width:100%;
+}
+/*공통 서브 테이블*/
+#page-title {
+	padding-bottom:16px;
+	font-size:24px;
+	font-weight:600;
+	border-bottom:1px solid #e0e0e0;
+}
+.detail-info-wrap {
+	position:relative;
+	margin-top:28px;
+	padding:28px;
+	border:1px solid #e2e5eb;
+	overflow:hidden;
+}
+.detail-title {
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+	margin-bottom:12px;
+}
+.detail-info-wrap h3 {
+	font-weight:600;
+	color:#00b795;
+	position: relative;
+	padding-left: 13px;
+}
+.detail-info-wrap h3::after {
+	content: '';
+	width:5px;
+	height:5px;
+	background:#00b795;
+	border-radius: 20px;
+	position: absolute;
+	top:6px;
+	left:0;
+}
+.detail-table {
+	display: flex;
+	flex-wrap: wrap;
+}
+.detail-table dl {
+	display: table;
+	align-items: center;
+	width:50%;
+	border:1px solid #ededed;
+	border-bottom: none;
+}
+.detail-table dl:last-child dt {
+	border-bottom:1px solid #fff;
+}
+.detail-table dl:last-child dd {
+	border-bottom:1px solid #ededed;
+}
+.detail-table dl dt dd {
+	width:60%;
+}
+.detail-table dl dt {
+	width:40%;
+	display: table-cell;
+	background-color:#ededed;
+	text-align:center;
+	border-bottom:1px solid #fff;
+	padding:16px;
+	vertical-align: middle;
+}
+.detail-table dl dd {
+	padding:16px;
+	display: table-cell;
+	vertical-align: middle;
+}
+.detail-table .detail-content {
+	width:100%;
+}
+.detail-table-7 dl:last-child dt {
+	width:19.999% ;
+}
+.detail-table-7 dl:last-child dd {
+	width:80.11%;
+}
+.detail-table-7 .detail19 {
+	width:19.999% ;
+}
+.detail-table-7 .detail80 {
+	width:80.11%;
+}
+.box-content {
+	display:flex;
+	gap:2%;
+}
+.box-item {
+	position:relative;
+	width:32%;
+	height:220px;
+	background-color:#f3f3f3;
+}
+.box-txt {
+	padding:18px;
+}
+.box-total {
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform:translate(-50%, -50%);
+}
+.box-total span {
+	font-size:40px;
+	font-weight:600;
+	color:#00967a;
+}
+#base-table > ul > li {
+	border-bottom:1px solid #dee2e4;
+	text-align:center;
+	font-weight: 500;
+}
+.base-table-cm {
+	display: table;
+	table-layout: fixed;
+	width:100%;
+}
+.base-table-cm li {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	padding:24px;
+}
+.base-table-th {
+	border-top:3px solid #00967a;
+	background: #f9f9f9;
+}
+.base-table-td:hover {
+	background: #f9f9f9;
+}
+.baseCmTable > li {
+	border-bottom:1px solid #dee2e4;
+}
+/*공통테이블 끝*/
+
+
+/*공지사항,faq,교통안전정보,교통안정교육 공통*/
+#cm-notice-wrap {
+	margin-bottom:16px;
+	width:100%;
+	border-top:3px solid #00967a;
+}
+#cm-notice-title {
+	padding: 20px 0;
+	text-align: center;
+	font-size:20px;
+	font-weight: 500;
+	background:#f9f9f9;
+}
+.cm-notice-info {
+	padding: 20px;;
+	display: flex;
+	justify-content: space-between;
+	border-bottom:1px solid #e0e0e0;
+}
+.cm-notice-info-list {
+	display: flex;
+	gap:12px;
+}
+#cm-notice-info-date {
+	display: flex;
+	gap:16px;
+}
+.cm-notice-info-list dt {
+	padding-left:12px;
+	font-weight: 400;
+	position: relative;
+	color: #8d8d8d;
+}
+.cm-notice-info-list dt::after {
+	content: '';
+	width:5px;
+	height:5px;
+	background: #8d8d8d;
+	border-radius: 30px;
+	position: absolute;
+	top:5px;
+	left:0px;
+}
+.cm-notice-info-list dd {
+	font-weight: 400;
+	color: #8d8d8d;
+}
+#cm-notice-con {
+	padding: 32px;
+	border-bottom:1px solid #e0e0e0;
+}
+/*공지사항,faq,교통안전정보,교통안정교육 공통끝*/
+
+
+.table-vertical {
+	vertical-align:top !important;
+}
+.textarea-top {
+	padding-top:16px ;
+	vertical-align: top !important;
+}
+.check-wrap .search {
+	margin-right:16px;
+}
+.check-title {
+	margin-right:32px;
+}
+#file-wrap .upload-name {
+	padding:10px;
+	border:1px solid #e2e5eb;
+	width:100%;
+	vertical-align: middle;
+	border-radius: 6px;
+}
+#file-wrap .fileUpBtn {
+    padding: 10px ;
+    display: inline-block;
+	border:1px solid #e2e5eb;
+    vertical-align: middle;
+    cursor: pointer;
+    font-size:16px;
+    border-radius: 6px;
+}
+.file-inner {
+	display: flex;
+	gap: 8px;
+}
+#file-wrap input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0; 
+}
+.file-text {
+	margin-top:16px;
+	font-size:14px;
+	color:#9a9a9a;
+}
+/*이의제기 끝*/
+
+
+#listSearchTableOpiton {
+	display: flex;
+	justify-content: space-between;
+	align-items: end;
+	margin-bottom: 8px;
+}
+.modify-button-set {
+	float:right;
+	margin-top:28px;
+}
+
+.info-table input[type="text"], .info-table input[type="password"] {
+	display:inline-block;
+	width:200px;
+	padding:0;
+	font-weight:200;
+	border:none;
+	outline:none;
+}
+#infoTableMobile {
+	display:none;
+}
+#infoTablePc {
+	display:table-row-group;
+}
+#filterBox {
+	padding: 24px;
+	margin-top:16px;
+	background:#f9f9f9;
+	border:1px solid #ebebeb;
+}
+#filterBox dl {
+	display: flex;
+	gap:24px;
+	align-items: center;
+	margin-bottom:14px;
+}
+
+/*추후 폼테그 씌워지면 삭제해야됨*/
+#filterBox dd {
+	display: flex;
+	gap:8px;
+	align-items: center;
+}
+/*추후 폼테그 씌워지면 삭제해야됨*/
+
+#filterBox dd form {
+	display: flex;
+	gap:8px;
+	align-items: center;
+}
+#filterBox dl:last-child {
+	margin-bottom:0px;
+}
+#filterBox dt {
+	padding-left:15px;
+	position: relative;
+    width: 80px
+}
+#filterBox dt::before {
+	content: '';
+	width:5px;
+	height:5px;
+	background: #000;
+	border-radius: 20px;
+	position: absolute;
+	left:0;
+	top:6px;
+}
+.filterBoxRong {
+	width:220px !important;
+}
+#linkBox label {
+	margin-right:6px;
+}
+#linkBox label input[type="radio"]{
+	display:none;
+}
+#listSearchSelect {
+	display: flex;
+	gap:8px;
+}
+#searchBox {
+	display: flex;
+	gap:8px;
+	align-items: center;
+}
+#searchBox input:nth-last-child(1) {
+	margin-right:0;
+}
+#list-table-wrap {
+	margin-top:60px;
+}
+#listTableOpiton {
+	display:flex;
+	justify-content:space-between;
+	align-items:end;
+	margin-bottom:16px;
+}
+#listSearchTotal {
+	display: flex;
+	gap:4px;
+	font-size:14px;
+}
+#listSearchTotal span {
+	color:#ff0000;
+	font-weight: 600;
+}
+.detail-page:hover {
+	opacity:0.6;
+	cursor:pointer;
+}
+#billNumber {
+	font-weight:600;
+}
+.fines-inquiry {
+	width: 100%;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    gap: 16px;
+    padding-bottom: 10px;
+}
+.fines-inquiry-item {
+	scroll-snap-align: start;
+}
+/*.swiper-arrow-right {*/
+/*	position:absolute;*/
+/*	top:50%;*/
+/*	right:16px;*/
+/*	z-index:2;*/
+/*}*/
+/*.swiper-arrow-left {*/
+/*	position:absolute;*/
+/*	top:50%;*/
+/*	left:16px;*/
+/*	z-index:2;*/
+/*}*/
+#backLinkBox {
+	margin-top:24px;
+	text-align:right;
+}
+.bank-title {
+	margin-bottom:28px;
+	font-size:20px !important;
+	text-align:center;
+	font-weight: 500;
+}
+#receiptDateBox {
+	margin-top:16px;
+	color: #00c19d;
+}
+#bankPaymentBox {
+	margin-top:24px;
+	margin-bottom:60px;
+}
+#approvalBox {
+	float: right;
+	width:160px;
+	border:1px solid #dee2e4;
+	text-align:center;
+}
+#approval {
+	padding:16px 0;
+	border-bottom:1px solid #dee2e4;
+}
+#stamp {
+	height:120px;
+}
+
+#mapChartContainer {
+	display:flex;
+	gap:1%;
+	margin-top:32px;
+}
+#mapWrap {
+	width:49.5%;
+}
+#chartWrap {
+	width:49.5%;
+}
+.map-chart-title {
+	margin-bottom:10px;
+}
+.chart-bigbox {
+	display:flex;
+	gap:8px;
+	width:100%;
+}
+.chart-box {
+	width:49.5%;
+	height:230px;
+	padding:10px;
+	border:1px solid #ededed;
+}
+.chart-title {
+	margin:16px 0;
+	text-align:center;
+}
+#map {
+	width:100%;
+	height:500px;
+}
+.uploadWrap {
+	margin-top:20px;
+}
+#uploadListContainer {
+	display: flex;
+	gap:8px;
+	flex-wrap:wrap;
+	max-width: 1000px;
+}
+.uploadList {
+	display: flex;
+	gap: 8px;
+}
+.listItem {
+	padding: 10px;
+	border-radius:6px;
+	display: flex;
+	gap:8px;
+	background: #efefef;
+	align-items: center;
+}
+.fileList {
+	max-width: 100px;
+	font-size:14px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.pwCheckWrap {
+	margin: 10px;
+	padding: 10px;
+    display: none;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    background: #f9f9f9;
+}
+#pwCheckWrapErrorMsg {
+	color:#ff0000;
+	display: none;
+	width: 100%;
+	text-align: center;
+}
+.dateSign {
+	float: left;
+	display: flex;
+	gap:60px;
+	width:100%;
+	justify-content: center;
+    position: relative;
+    top: 80px;
+}
+.dateSign span {
+	color: #00c19d;
+	font-weight: 500;
+}
+
+.detailFile {
+	display: flex;
+    gap: 12px;
+    align-items: center;
+    background: #e7e7e7;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.download {
+	background:url('/images/download.png') no-repeat center / cover;
+	width:14px;
+	height: 14px;
+}
+.cm-detail-input-wrap {
+	margin-top:25px;	 
+}
+/*테블릭*/
+@media all and (max-width: 1150px){
+	.fines-inquiry {
+		width:95%;
+		margin:auto;
+	}
+	.cm-input-list dl {
+		margin-bottom: 15px;
+		display: block;
+		width:100%;
+	}
+	.cm-input-list dl dt {
+		display: block;
+		width:100%;
+		margin-bottom: 10px;
+	}
+	.cm-input-list dl dd {
+		width:100%;
+		display: block;
+	}
+	.textarea-top {
+		padding:0;
+	}
+}
+
+@media all and (max-width: 767px) {
+	.detail-title {
+		display: block;
+	}
+	#billNumber {
+		margin-top:20px;
+	}
+	.nt-detail-info-wrap {
+		margin-top:0;
+	}
+	.detail-table dl {
+		display: block;
+		width:100%;
+	}
+	.detail-table dl dt {
+		border:none;
+		display: block;
+		width:100%;
+		text-align: left;
+	}
+	.detail-table dl dd {
+		display: block;
+		text-align: left;
+	}
+	.detail-table-7 dl:nth-child(7) dt {
+		width:100%;
+	}
+	.detail-table-7 dl:nth-child(7) dd {
+		width:100%;
+	}
+	#filterBox dl {
+		display: block !important;
+	}
+	#filterBox dt {
+		width:100%;
+		margin-bottom: 8px;
+	}
+	#page-title {
+		font-size:18px;
+	}
+	.cm-info-wrap h1 {
+		font-size:18px;
+	}
+	#cm-notice-title {
+		font-size:18px;
+	}
+	.cm-notice-info-list dt {
+		font-size:14px;
+		font-weight: 400;
+	}
+	.cm-notice-info-list dd {
+		font-size:14px;
+		font-weight: 400;
+	}
+	
+	/*여기도 지워야됨 추후 폼테그*/
+	#filterBox dd {
+		flex-wrap:wrap;
+		padding: 0;
+		width:100%;
+	}
+	/*여기도 지워야됨 추후 폼테그*/
+	#filterBox dd form {
+		flex-wrap:wrap;
+		padding: 0;
+		width:100%;
+	}
+	#filterBox dd select, input {
+		width:100%;
+	}
+	#listRegistBtn a {
+/*		margin-top:16px;*/
+		display: block;
+		width:100%;
+	} 
+	#listSearchTableOpiton {
+
+	}
+	#listRegistBtn {
+		width:36%;
+	}
+	#listRegistBtn a {
+		font-size:15px;
+	}
+	#listSearchTotal {
+		margin-bottom: 16px;
+	}
+	#listSearchSelect select {
+		width:100%;
+	}
+	.base-table-th {
+		display: none !important;
+	}
+	#base-table {
+		margin-top:16px;
+	}
+	#base-table > ul {
+		border-top:1px solid #b9b9b9;
+	}
+	.ob-regist-base-table {
+		margin-top:0 !important;
+	}
+	.TableTitle {
+		font-weight: 600;
+		white-space: nowrap;
+	    text-overflow: ellipsis;
+	    overflow: hidden;
+	}
+	.TableNumber {
+		display: none !important;
+	}
+	.TableCmNumber {
+		width:40% !important;
+		font-weight: 600;
+		order:5;
+		text-align: right !important;
+	}
+	.TableBillNumber {
+		width:60%;
+		font-weight: 600;
+		order:4;
+		text-align: left !important;
+	}
+	.TableType {
+		width:20%;
+		background:#00967a;
+		border-radius: 20px;
+		font-weight: 500;
+		color:#fff;
+		order:1;
+	}
+	.TableState {
+		width:20%;
+		color:#ff0000;
+		font-weight: 600;
+		order:2;
+	}
+	.TableCmDate {
+		width:60%;
+		color:#c1c0c0;
+		order:3;
+		text-align: right;
+	}
+	.base-table-complaints .TableType {
+		order:1;
+		width:30%;
+	}
+	.base-table-complaints .TableTitle {
+		width:70%;
+		text-align: left;
+		order:2;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+	.base-table-complaints .TableCmDate {
+		width:30%;
+		order:3;
+		text-align: right;
+	}
+	.base-table-complaints .TableStatus {
+		order:4;
+	}
+	.base-table-objections .TableType {
+		order:1;
+		width:22%;
+	}
+	.base-table-objections .TableTitle {
+		order:2;
+		width:70%;
+		text-align: left;
+	}
+	.base-table-objections .TableCmDate {
+		order:4;
+		width:70%;
+		text-align: right;
+	}
+	.base-table-objections .TableStatus {
+		order:3;
+		width:30%;
+		text-align: left;
+	}
+	.driver-table .TableCmDate {
+		text-align: right;
+	}
+	.payment-table .TableCmDate {
+		text-align: right;
+	}
+	.fineinquiry .TableCmDate {
+		text-align: right;
+	}
+	.notice-table .TableTitle {
+		order:1;
+		width:50%;
+		text-align: left;
+	}
+	.notice-table .TableCmDate {
+		order:2;
+		width:50%;
+		text-align: right;
+	}
+	.notice-table .TableView {
+		order:3;
+		width:20%;
+		text-align: left;
+		color:#c1c0c0;
+	}
+	.faq-table .TableNumber {
+		display:none ;
+	}
+	.faq-table .TableTitle {
+		order:2;
+		width:70%;
+		text-align: left;
+	}
+	.faq-table .TableCmDate {
+		order:3;
+		width:30%;
+		text-align: right;
+	}
+	.faq-table .TableView {
+		order:4;
+		width:100%;
+		text-align: left;
+		color:#c1c0c0;
+	}
+	.qna-table .TableType {
+		order:1;
+		width:20%;
+	}
+	.qna-table .TableTitle {
+		order:2;
+		width:80%;
+		text-align: left;
+	}
+	.qna-table .TableCmDate {
+		order:4;
+		width: 50%;
+		text-align: right;
+	}
+	.qna-table .TableStatus {
+		order:3;
+		width:50%;
+		text-align: left;
+	}
+	.laws-table .TableTitle {
+		order:1;
+		width:50%;
+		text-align: left;
+	}
+	.laws-table .TableSubTitle {
+		order:2;
+		width:50%;
+		text-align: right;
+		white-space: nowrap;
+	    text-overflow: ellipsis;
+	    overflow: hidden;
+	}
+	.laws-table .TableCmDate {
+		width:100%;
+		text-align: right;
+	}
+	.penalty-table .TableAddress {
+		order: 1;
+		width:100%;
+		text-align: left;
+		font-weight: 600;
+	}
+	.penalty-table .TablePolice {
+		order: 2;
+		width:50%;
+		text-align: left;
+		font-weight: 600;
+		color: #00967a;
+	}
+	.penalty-table .TableTime {
+		order: 3;
+		width:50%;
+		text-align: right;
+		color: #c1c0c0;
+	}
+	.penalty-table .TableWork {
+		order: 4;
+		width:50%;
+		text-align: left;
+		color: #c1c0c0;
+	}
+	.ob-regist-table .TableCmType {
+		order: 1;
+		width:20%;
+		color: #ff0000;
+		border: 1px solid #ff0000;
+		border-radius: 30px;
+	}
+	.ob-regist-table .TableStatus {
+		order: 2;
+		width:20%;
+		color: #ff0000;
+	}
+	.ob-regist-table .TableObNumber {
+		order: 3;
+		font-weight: 600;
+		width:60%;
+		text-align: right;
+	}
+	.ob-regist-table .TableCheck {
+		order: 4;
+		width:20%;
+		text-align: left;
+	}
+	.ob-regist-table .TableCheck input {
+		width: auto;
+	}
+	.ob-regist-table .TableCarNumber {
+		order: 5;
+		font-weight: 600;
+		width:30%;
+		text-align:left;
+	}
+	
+	.cm-input-list select {
+		background:#fff url('/images/arrow-select.png') no-repeat 97% 50%
+	}
+	.base-select {
+		background: #fff url('/images/arrow-select.png') no-repeat 95% 50%
+	}
+	#cm-notice-info-date {
+		display: flex;
+		flex-wrap:wrap;
+		gap:10px;
+	}
+	.cm-notice-info {
+		flex-wrap:wrap;
+		gap:10px;
+	}
+	.cm-notice-info-list {
+		width:100%;
+		flex-wrap:wrap;
+	}
+	.base-table-td {
+		display: flex;
+		flex-wrap:wrap;
+		padding:10px 0;
+	}
+	.base-table-cm li {
+		padding: 10px !important;		
+		font-size:14px;
+	}
+	.fines-inquiry {
+		width:100%;
+	}
+	.swiper-wrapper {
+		margin:0;
+	}
+	.swiper-arrow-left {
+		display: none;
+	}
+	.swiper-arrow-right {
+		display: none;
+	}
+	#backLinkBox a {
+		width:100%;
+		padding:16px 0;
+		font-size:20px;
+		font-weight: 600;
+	}
+	#pagination {
+		margin-top:40px;
+	}
+	#approvalBox {
+		float: none;
+		margin:auto;
+	}
+	.dateSign {
+		margin:60px 0;
+		float: none;
+		top:0;
+		width: auto;
+	}
+}

@@ -1,0 +1,231 @@
+<html xmlns:th="http://www.thymeleaf.org"  
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+	
+	<div layout:fragment="content">
+
+		<div id="container">
+			<div id="wrap">
+				<h2 id="page-title" th:text="#{statisticsmng.common.title}">통계분석</h2>
+				<div id="filterBox">
+					<dl>
+						<dt th:text="#{statisticsmng.common.type}">Type</dt>
+						<dd>
+							<a href="#" class="filter-btn" th:text="#{statisticsmng.statistics.crackdown}">단속통계</a>
+							<a href="#" class="filter-btn" th:text="#{statisticsmng.statistics.accident}">사고통계</a>
+						</dd>
+					</dl>
+					<dl>
+						<dt th:text="#{statisticsmng.statistics.date.select}">Date</dt>
+						<dd>
+							<label class="filter-btn" th:text="#{statisticsmng.statistics.date.month}">
+								<input type="checkbox" class="none">
+								월간
+							</label>
+							<label class="filter-btn" th:text="#{statisticsmng.statistics.date.weekly}">
+								<input type="checkbox" class="none">
+								주간
+							</label>
+							<label class="filter-btn" th:text="#{statisticsmng.statistics.date.daily}">
+								<input type="checkbox" class="none">
+								일간
+							</label>
+						</dd>
+					</dl>
+					<dl>
+						<dt th:text="#{statisticsmng.common.search}">Search</dt>
+						<dd>
+							<input type="text" class="base-search" th:placeholder="#{notification.common.search.placeholder}">
+							<input type="button" class="main-btn" th:value="#{notification.common.search.button}"/>
+						</dd>
+					</dl>
+				</div>
+				<div id="mapChartContainer">
+					<div id="mapWrap">
+						<div id="map"></div>
+					</div>
+					<div id="chartWrap">
+						<div>
+							<div class="chart">
+								<div class="chart-bigbox">
+									<div class="chart-box">
+										<div>
+											<div class="chart-title">Enforcement statistics by law violation in December 2022</div>
+											<div>
+												<canvas id="chart1"></canvas>
+											</div>									
+										</div>
+									</div>
+									<div class="chart-box">
+										<div>
+											<div class="chart-title">Enforcement statistics by vehicle type in December 2022</div>
+											<div>
+												<canvas id="chart2"></canvas>
+											</div>									
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="chart mt16">
+								<div class="map-chart-title" th:text="#{statisticsmng.statistics.pattern}">패턴 분석</div>
+								<div class="chart-bigbox">
+									<div class="chart-box">
+										<div>
+											<div class="chart-title">Enforcement statistics by vehicle type in December 2022</div>
+											<div>
+												<canvas id="chart3"></canvas>
+											</div>									
+										</div>
+									</div>
+									<div class="chart-box">
+										<div>
+											<div class="chart-title">Enforcement statistics by vehicle type in December 2022</div>
+											<div>
+												<canvas id="chart4"></canvas>
+											</div>									
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>		
+		</div>    
+	</div>
+</html>
+<script type="text/javascript">
+	
+	
+	
+	////TODO 좌표값 확인하기
+	const lng = 22;
+	const lat = 60;
+	let map = new MozAtesMap({
+		elementId : 'map',
+		center_lng : lng,
+		center_lat : lat,
+		isInitDrawCenterMarker : true
+	});
+
+	new Chart(document.getElementById("chart1"), {
+	    type: 'bar',
+	    data: {
+	      labels: ["spot", "crackdown", "detective"],
+	      datasets: [
+	        {
+	          label: '',
+	          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
+	          data: [2478,5267,734]
+	        },
+	        
+	      ]
+	    },
+	    options: {
+	      legend: {
+	    	  display:false
+	      },
+          plugins: {
+              legend: {
+	        	  display:false,
+              },
+          },
+	    },
+	});
+	
+	new Chart(document.getElementById("chart2"), {
+	    type: 'bar',
+	    data: {
+	      labels: ["spot", "crackdown", "detective"],
+	      datasets: [
+	        {
+	          label: '',
+	          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
+	          data: [2478,5267,734]
+	        },
+	        
+	      ]
+	    },
+	    options: {
+	      legend: {
+	    	  display:false
+	      },
+          plugins: {
+              legend: {
+	        	  display:false,
+              },
+          },
+	    },
+	});
+	new Chart(document.getElementById("chart3"), {
+	    type: 'bar',
+	    data: {
+	      labels: ["spot", "crackdown", "detective"],
+	      datasets: [
+	        {
+	          label: '',
+	          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
+	          data: [2478,5267,734]
+	        },
+	        
+	      ]
+	    },
+	    options: {
+	      legend: {
+	    	  display:false
+	      },
+          plugins: {
+              legend: {
+	        	  display:false,
+              },
+          },
+	    },
+	});
+	
+	new Chart(document.getElementById("chart4"), {
+	    type: 'bar',
+	    data: {
+	      labels: ["spot", "crackdown", "detective"],
+	      datasets: [
+	        {
+	          label: '',
+	          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
+	          data: [2478,5267,734]
+	        },
+	        
+	      ]
+	    },
+	    options: {
+	      legend: {
+	    	  display:false
+	      },
+          plugins: {
+              legend: {
+	        	  display:false,
+              },
+          },
+	    },
+	});
+	
+	/*$('.filter-btn').click(function(){
+		$(this).addClass('on');
+		$(this).not().siblings().removeClass('on');
+	})*/
+	
+	const filterBtn = document.querySelectorAll('.filter-btn');
+	
+	filterBtn.forEach(filterBtn => {
+	    filterBtn.addEventListener('click', function() {
+	        
+	        this.classList.add('on');
+	        const siblings = this.parentNode.children;
+	        for (let sibling of siblings) {
+	            if (sibling !== this) {
+	                sibling.classList.remove('on');
+	            }
+	        }
+	    });
+	});
+	
+</script>
+

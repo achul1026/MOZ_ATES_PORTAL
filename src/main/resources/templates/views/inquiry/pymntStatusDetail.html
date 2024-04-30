@@ -1,0 +1,139 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+
+<div layout:fragment="content">
+	<div id="container">
+		<div id="wrap">
+			<div class="detail-info-wrap nt-detail-info-wrap">
+				<div class="detail-title">
+					<h3 th:text="#{inquiry.pymntStatusDetail.paymentDeail}"></h3>
+					<div>
+						<span th:text="#{inquiry.pymntStatusSearch.enforcementNo}" id="billNumber"></span>
+						<span th:text="${pymntStatusDetail.tfcEnfId}">M1318-2023-90010893</span>
+					</div>
+				</div>
+				<div class="detail-table detail-table-7">
+					<dl>
+						<dt th:text="#{inquiry.pymntStatusDetail.vehicleNumber}"></dt>
+						<dd th:text="${pymntStatusDetail.vhRegNo}">CA 688-566</dd>
+					</dl>
+					<dl>
+						<dt th:text="#{inquiry.pymntStatusDetail.violatorName}"></dt>
+						<dd th:text="${pymntStatusDetail.vioInfo.vioNm}">Inki Moon</dd>
+					</dl>
+					<dl>
+						<dt th:text="#{inquiry.pymntStatusDetail.violationPlace}"></dt>
+						<dd th:text="${pymntStatusDetail.roadAddr}">Street 50</dd>
+					</dl>
+					<dl>
+						<dt th:text="#{inquiry.pymntStatusDetail.violationDate}"></dt>
+						<dd th:text="${#dates.format(pymntStatusDetail.tfcEnfDt, 'yyyy-MM-dd')}">23-01-25 11:20:19</dd>
+					</dl>
+					<!--					<dl>-->
+					<!--						<dt th:text="#{inquiry.pymntStatusDetail.violationType}"></dt>-->
+					<!--						<dd>Speeding</dd>-->
+					<!--					</dl>-->
+					<dl class="detail-content">
+						<dt class="detail19" th:text="#{inquiry.pymntStatusDetail.violationLaw}"></dt>
+						<dd class="detail80">
+							<th:block th:each="tfcLwInfo : ${pymntStatusDetail.tfcLwInfoList}">
+								<div th:text="|[${tfcLwInfo.cdNm}] ${tfcLwInfo.lawArticleNo}|">
+									Article 13, Paragraph 7 of the Road Traffic Act
+								</div>
+							</th:block>
+						</dd>
+					</dl>
+					<dl class="detail-content">
+						<dt th:text="#{inquiry.pymntStatusDetail.violationContent}"></dt>
+						<dd th:text="${pymntStatusDetail.tfcEnfDetail}">Speed ​​(speed limit 80km/h, driving speed 120km/h, speed
+							exceeding 40km/h)</dd>
+					</dl>
+				</div>
+			</div>
+			<div class="detail-info-wrap">
+				<div class="detail-title">
+					<h3 th:text="#{inquiry.pymntStatusDetail.paymentAndPeriod}">Pay</h3>
+				</div>
+				<div class="detail-table">
+					<dl>
+						<dt th:text="#{inquiry.pymntStatusDetail.firstPaymentDueDate}"></dt>
+						<dd th:text="${#dates.format(pymntStatusDetail.fineNtcInfo.firstFineNtcDdln, 'yyyy-MM-dd')}">01.01.2024</dd>
+					</dl>
+					<dl>
+						<dt th:text="#{inquiry.pymntStatusDetail.amountWithinDueDate}"></dt>
+						<dd
+							th:text="${@mozatesCommonUtils.priceFmt(pymntStatusDetail.fineNtcInfo.firstFineNtcPrice ,'MOZAMBIQUE_METICAL')}">
+							500 MT</dd>
+					</dl>
+
+					<dl>
+						<dt th:text="#{inquiry.pymntStatusDetail.secondPaymentDueDate}"></dt>
+						<th:block th:if="${pymntStatusDetail.fineNtcInfo.secondFineNtcDdln == null}">
+							<dd>-</dd>
+						</th:block>
+						<th:block th:unless="${pymntStatusDetail.fineNtcInfo.secondFineNtcDdln == null}">
+							<dd th:text="${#dates.format(pymntStatusDetail.fineNtcInfo.secondFineNtcDdln, 'yyyy-MM-dd')}">
+							</dd>
+						</th:block>
+					</dl>
+					<dl>
+						<dt th:text="#{inquiry.pymntStatusDetail.additionalAmount}"></dt>
+						<dd
+							th:text="${@mozatesCommonUtils.priceFmt(pymntStatusDetail.fineNtcInfo.secondFineNtcPrice ,'MOZAMBIQUE_METICAL')}">
+							500 MT</dd>
+					</dl>
+
+					<dl>
+						<dt th:text="#{inquiry.pymntStatusDetail.paymentAmount}"></dt>
+						<dd
+							th:text="${pymntStatusDetail.finePymntInfo.pymntStts == 'Y' ? @mozatesCommonUtils.priceFmt(pymntStatusDetail.finePymntInfo.totalPrice ,'MOZAMBIQUE_METICAL') : '-'}">
+							>500 MT</dd>
+					</dl>
+					<dl>
+						<dt th:text="#{inquiry.pymntStatusDetail.payerName}"></dt>
+						<dd
+							th:text="${pymntStatusDetail.finePymntInfo.pymntStts == 'Y' ? pymntStatusDetail.finePymntInfo.payerNm : '-'}">
+							payer name</dd>
+					</dl>
+					<dl>
+						<dt th:text="#{inquiry.pymntStatusDetail.paymentDate}"></dt>
+						<dd
+							th:text="${pymntStatusDetail.finePymntInfo.pymntStts == 'Y' ? #dates.format(pymntStatusDetail.finePymntInfo.pymntDt, 'dd.MM.yyyy') : '-'}">
+							01.01.2024</dd>
+					</dl>
+					<dl>
+						<dt th:text="#{inquiry.pymntStatusDetail.payerAgency}"></dt>
+						<dd th:text="${pymntStatusDetail.finePymntInfo.pymntStts == 'Y' ? pymntStatusDetail.cmCd.cdNm : '-'}">Cash
+						</dd>
+					</dl>
+				</div>
+
+			</div>
+		</div>
+		<div class="btn-wrap-end">
+			<a th:href="@{/inquiry/pymntstatus/search.do}" class="sub-btn out-btn"
+				th:text="#{inquiry.pymntStatusDetail.list}"></a>
+			<th:block
+				th:if="${pymntStatusDetail.fineNtcInfo.ntcTy == 'NTT002' and pymntStatusDetail.finePymntInfo.pymntStts == 'N'}">
+				<button type="button" id="paymentButton" class="main-btn out-btn"
+					th:text="#{inquiry.pymntStatusDetail.paymentApplication}" onclick="viewModal()"></button>
+			</th:block>
+		</div>
+	</div>
+</div>
+</div>
+
+</html>
+<script th:inline="javascript">
+	function viewModal() {
+		new ModalBuilder()
+			.init(/*[[#{inquiry.pymntStatusDetail.paymentApplication.title}]]*/)
+			.ajaxBody("/common/modal/fines/payment")
+			.footer(1, '', function (button, modal) { }).open();
+	}
+
+	function pageMoveBankPayment() {
+		let url = /*[[@{/inquiry/pymntstatus/bank/detail.do}]]*/;
+		location.href = url;
+	}
+</script>

@@ -1,0 +1,105 @@
+<html xmlns:th="http://www.thymeleaf.org"  
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+	
+	<div layout:fragment="content">
+<!--		<div id="breadcrumb">-->
+<!--			<ul>-->
+<!--				<li>-->
+<!--					<a href="">-->
+<!--						<img th:src="@{/images/home.png}" alt="메인 페이지">-->
+<!--					</a>-->
+<!--				</li>-->
+<!--				<li>-->
+<!--					<img th:src="@{/images/arrow-right.png}" alt="다음">-->
+<!--				</li>-->
+<!--				<li>-->
+<!--					<a href="">-->
+<!--						서브페이지-->
+<!--					</a>-->
+<!--				</li>-->
+<!--				<li>-->
+<!--					<img th:src="@{/images/arrow-right.png}" alt="다음">-->
+<!--				</li>-->
+<!--				<li>-->
+<!--					<a href="">-->
+<!--						서브페이지-->
+<!--					</a>-->
+<!--				</li>-->
+<!--			</ul>-->
+<!--		</div>-->
+		
+		<div id="container">
+			<div id="wrap">
+				<h2 id="page-title" th:text="#{trafficinfo.training.title}">교통안전 교육</h2>
+				<div id="filterBox">
+					<dl>
+						<dt th:text="#{trafficinfo.common.search}">Search</dt>
+						<dd>
+							<form id="trfcSftyEduForm" method="get">
+								<input type="text" class="base-search" name="searchTxt"
+									th:value="${tfcSftyEdctn.searchTxt}"
+									th:placeholder="#{trafficinfo.common.search.placeholder}">
+								<input type="hidden" id="start" name="start" th:value="${tfcSftyEdctn.start}">
+								<input type="hidden" id="page" name="page" value="1">
+								<input type="submit" class="sub-btn" th:value="#{trafficinfo.common.search.button}"/>
+							</form>
+						</dd>
+					</dl>
+				</div>
+				<div id="list-table-wrap" th:object="${tfcSftyEdctnList}">
+					
+					<div th:if="${not #object.isEmpty()}">
+						<div id="listSearchTableOpiton">
+							<div id="listSearchTotal"> 
+								<p th:text="#{trafficinfo.trafficSafeEduList.total}"></p> <span th:text='|"${pagination.totalListCnt}"|'>"546465"</span>
+							</div>
+						</div>
+						
+						<div id="base-table">
+							<ul class="base-table-th base-table-cm">
+								<li th:text="#{trafficinfo.common.number}"></li>
+								<li th:text="#{trafficinfo.common.title}"></li>
+								<li th:text="#{trafficinfo.common.add.date}"></li>
+								<li th:text="#{trafficinfo.common.hits}"></li>
+							</ul>
+							<ul>	
+								<li th:each="tfcSftyEdctnItm : ${tfcSftyEdctnList}">
+									<ul class="base-table-td base-table-cm notice-table" 
+										th:onclick="|location.href='@{/traffic/info/edu/detail.do(tfcSftyEdctnId = ${tfcSftyEdctnItm.tfcSftyEdctnId})}'|">
+										<li class="TableNumber" th:text="${tfcSftyEdctnItm.rnum}">1</li>
+										<li class="TableTitle" th:text="${tfcSftyEdctnItm.postTtl}">주차 개선 요청</li>
+										<li class="TableCmDate" th:text="${#dates.format(tfcSftyEdctnItm.crDt, 'yyyy-MM-dd')}">2023-12-25</li>
+										<li class="TableView" th:text="${tfcSftyEdctnItm.viewCnt}">256</li>
+									</ul>
+								</li>
+							</ul>
+					  </div>
+					  
+						<div class="page_wrap">
+							<div th:insert="tags/pagingTag :: pagingTag"></div>
+						</div>
+					  
+					</div>
+					
+					<div th:unless="${not #object.isEmpty()}">
+						<span th:text="#{notification.search.notFound}">Nothing found.</span>
+					</div>
+					
+				</div>			
+			</div>		
+		</div>    
+	</div>
+</html>
+<script type="text/javascript">
+	
+	function fnPageMove(pageToMove) {
+		let pageElmnt = document.getElementById("page");
+		let noticeSearchForm = document.getElementById("trfcSftyEduForm");
+		pageElmnt.value = pageToMove;
+		
+		noticeSearchForm.submit();
+	}
+	
+</script>
+

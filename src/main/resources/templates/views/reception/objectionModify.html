@@ -1,0 +1,124 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+
+	<div layout:fragment="content">
+<!--		<div id="breadcrumb">-->
+<!--			<ul>-->
+<!--				<li>-->
+<!--					<a href="">-->
+<!--						<img th:src="@{/images/home.png}" alt="메인 페이지">-->
+<!--					</a>-->
+<!--				</li>-->
+<!--				<li>-->
+<!--					<img th:src="@{/images/arrow-right.png}" alt="다음">-->
+<!--				</li>-->
+<!--				<li>-->
+<!--					<a href="">-->
+<!--						서브페이지-->
+<!--					</a>-->
+<!--				</li>-->
+<!--				<li>-->
+<!--					<img th:src="@{/images/arrow-right.png}" alt="다음">-->
+<!--				</li>-->
+<!--				<li>-->
+<!--					<a href="">-->
+<!--						서브페이지-->
+<!--					</a>-->
+<!--				</li>-->
+<!--			</ul>-->
+<!--		</div>-->
+        <div id="container">
+	        <h2 id="page-title" th:text="#{reception.objectionModify}">이의제기</h2>
+			<div class="cm-info-wrap">
+				<h1 th:text="#{reception.objectionModify.txt}">이의제기 내용</h1>
+				<form th:action="@{/inquirymng/complainmng/complnInquiryRegister}" method="post">
+					<div class="cm-input-wrap">
+						<div class="cm-input-list">
+							<dl>
+								<dt>
+									<label class="control-label" for="wrtrEmail" th:text="#{reception.objectionModify.bill.number}">고지서 일련번호</label>
+								</dt>
+								<dd>
+									<input type="text" class="detail-input">
+								</dd>
+							</dl>
+						</div>
+						<div class="cm-input-list">
+							<dl>
+								<dt>
+									<label class="control-label" for="wrtrEmail" th:text="#{reception.objectionModify.date}">신청일자</label>
+								</dt>
+								<dd>
+									<input type="date" class="detail-input">
+								</dd>
+							</dl>
+						</div>
+						<div class="cm-input-list">
+							<dl>
+								<dt>
+									<label class="control-label" for="wrtrEmail" th:text="#{reception.objectionModify.title}">제목</label>
+								</dt>
+								<dd>
+									<input type="text" class="detail-input form-control" id="wrtrEmail" name="wrtrEmail" placeholder="" >
+								</dd>
+							</dl>
+						</div>
+						<div class="cm-input-list">
+							<dl>
+								<dt>
+									<label  class="control-label" for="wrtrEmail" th:text="#{reception.objectionModify.category}">카테고리</label>
+								</dt>
+								<dd>
+									<select class="base-select">
+										<option>선택</option>
+										<option>text1</option>
+										<option>text2</option>
+									</select>
+								</dd>
+							</dl>
+						</div>						
+						<div class="cm-input-list">
+							<dl>
+								<dt class="textarea-top">
+									<label class="control-label" for="postCn" th:text="#{reception.objectionModify.file}">첨부파일</label>
+								</dt>
+								<dd id="file-wrap">
+									<div class="file-inner">
+										<input class="upload-name" th:value="#{reception.objectionModify.file}" th:placeholder="#{reception.objectionModify.file}">
+										 <label for="file" th:text="#{reception.objectionModify.file.search}">파일찾기</label> 
+										<input type="file" id="file" name="wrtrEmail" placeholder="" class="form-control">
+									</div>
+										<p class="file-text" th:text="#{reception.objectionModify.file.rules}">
+											*파일첨부는 n개까지 가능, 총 (n)MB이하로 첨부하여 주세요. 첨부 가능 확장자 (*hwp,hwpx,…)
+										</p>
+									
+								</dd>
+							</dl>
+						</div>
+						<div class="cm-input-list">
+							<dl>
+								<dt class="textarea-top">
+									<label class="control-label" for="postCn" th:text="#{reception.objectionModify.textarea.txt}">내용</label>
+								</dt>
+								<dd>
+									<textarea class="form-control base-textarea" id="postCn" name="postCn" rows="6" th:placeholder="#{reception.objectionModify.textarea.placeholder.txt}"></textarea>
+								</dd>
+							</dl>
+						</div>
+					</div>
+				</form>
+			</div>
+			
+			<div class="btn-wrap-between">
+				<input type="button" class="sub-btn out-btn" th:value="#{reception.common.list.more}">
+				<div>
+					<input type="button" class="main-btn out-btn" th:value="#{reception.common.modify}">
+					<input type="button" class="red-btn out-btn" th:value="#{reception.common.remove}">
+				</div>
+			</div>
+        </div>
+	</div>
+</html>
+<script type="text/javascript" th:inline="javascript">
+</script>

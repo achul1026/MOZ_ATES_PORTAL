@@ -1,0 +1,123 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+
+<div layout:fragment="content">
+<!--	<div id="breadcrumb">-->
+<!--		<ul>-->
+<!--			<li>-->
+<!--				<a href="">-->
+<!--					<img th:src="@{/images/home.png}" alt="메인 페이지">-->
+<!--				</a>-->
+<!--			</li>-->
+<!--			<li>-->
+<!--				<img th:src="@{/images/arrow-right.png}" alt="다음">-->
+<!--			</li>-->
+<!--			<li>-->
+<!--				<a href="">-->
+<!--					서브페이지-->
+<!--				</a>-->
+<!--			</li>-->
+<!--			<li>-->
+<!--				<img th:src="@{/images/arrow-right.png}" alt="다음">-->
+<!--			</li>-->
+<!--			<li>-->
+<!--				<a href="">-->
+<!--					서브페이지-->
+<!--				</a>-->
+<!--			</li>-->
+<!--		</ul>-->
+<!--	</div>-->
+	
+  <div id="container">
+		<h2 id="page-title" th:text="#{notification.penalty.title}">범칙금 납부처</h2>
+		<div class="cm-info-wrap">
+			<h1	th:text="#{notification.penalty.title.detail}">범칙금 납부처 상세</h1>
+				<div class="cm-input-wrap">
+					<div class="cm-input-list cm-detail-input-list">
+						<dl>
+							<dt>
+								<label class="control-label" th:text="#{notification.common.payment}">납부처명</label>
+							</dt>
+							<dd class="" th:text="${plPymntDetail.placePymntNm}">
+								Maputo Police Station
+							</dd>
+						</dl>
+					</div>
+					<div class="cm-input-list cm-detail-input-list">
+						<dl>
+							<dt>
+								<label class="control-label" th:text="#{notification.common.address}">주소</label>
+							</dt>
+							<dd class="" th:text="${plPymntDetail.placePymntAddr}">
+								Mozambique
+							</dd>
+						</dl>
+					</div>
+<!--					<div class="cm-input-list">-->
+<!--						<dl>-->
+<!--							<dt>-->
+<!--								<label class="control-label">Payment Location Type</label>-->
+<!--							</dt>-->
+<!--							<dd class="cm-detail-border" th:text="${plPymntDetail.cmCd.cdNm}">-->
+<!--								Mozambique-->
+<!--							</dd>-->
+<!--						</dl>-->
+<!--					</div>-->
+					<div class="cm-input-list cm-detail-input-list">
+						<dl>
+							<dt>
+								<label class="control-label" th:text="#{notification.penalty.contact}">연락처</label>
+							</dt>
+							<dd class="" th:text="${plPymntDetail.placePymntCntc}">
+								Mozambique
+							</dd>
+						</dl>
+					</div>
+					<div class="cm-input-list cm-detail-input-list">
+						<dl>
+							<dt>
+								<label class="control-label" th:text="#{notification.penalty.pay.manager}">수납 담당자</label>
+							</dt>
+							<dd class="" th:text="${plPymntDetail.placePymntRprsvNm}">
+								Victor
+							</dd>
+						</dl>
+					</div>
+					<div class="cm-input-list cm-detail-input-list">
+						<dl>
+							<dt>
+								<label class="control-label" th:text="#{notification.penalty.payment.vailable.time}">납부가능 시간</label>
+							</dt>
+							<dd class="" th:text="|${plPymntDetail.operStrTm} ~ ${plPymntDetail.operEndTm}|">
+								09:00~17:00
+							</dd>
+						</dl>
+					</div>
+					<div class="cm-input-list cm-detail-input-list">
+						<dl>
+							<dt>
+								<label class="control-label" th:text="#{notification.penalty.payment.vailable.time}">Closed Days</label>
+							</dt>
+							<dd class="" th:text="${plPymntDetail.clsdDt}">
+								Sunday, Holidays
+							</dd>
+						</dl>
+					</div>
+					<div class="cm-input-list cm-detail-input-list">
+						<dl>
+							<dt>
+								<label class="control-label" th:text="#{notification.penalty.map}">찾아오시는 길</label>
+							</dt>
+							<dd class="">
+							</dd>
+						</dl>
+					</div>				
+				</div>
+			</div>
+		<div class="btn-wrap-end">
+			<button type="button" class="sub-btn out-btn" th:text="#{notification.common.list}" th:onclick="|location.href='@{/info/penaltyplace/list.do}'|"></button>
+		</div>
+	</div>
+</div>
+</html>

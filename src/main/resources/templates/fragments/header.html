@@ -1,140 +1,242 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="headerFragment" id="header">
+	<div class="top-inner">
+		<div class="top-inner-contents">
+			<div class="top-inner-title" th:text="#{main.header.title}">Official Mozambican government portal page.</div>
+<!--			<div class="language">-->
+<!--				<select>-->
+<!--					<option>Language</option>-->
+<!--					<option>Eng</option>-->
+<!--					<option>Por</option>-->
+<!--				</select>-->
+<!--			</div>-->
+		</div>
+	</div>
+	<div id="header-contents">
+		<div class="center-wrap">
+			<div class="logo">
+				<a th:href="@{/}"><img th:src="@{/images/logo2.png}" alt="logo"></a>
+			</div>
+			
+			<div id="mobile-menu-btn">
+				<img th:src="@{/images/hamburger.png}" alt="menu" onclick="mobileMenu('mobile-menu')">
+			</div>
+
+			<div id="nav-list">
+				<ul>
+					<li>
+						<a th:href="@{/inquiry/enfstatus/search.do}" title="Fines Inquiry" th:text="#{main.header.inquiry}"></a>
+						<ul id="nav-drop-menu">
+							<li><a th:href="@{/inquiry/enfstatus/search.do}" th:text="#{main.header.enforcementStatus}"></a></li>
+							<li><a th:href="@{/inquiry/pymntstatus/search.do}" th:text="#{main.header.PaymentDelinquency}"></a></li>
+							<li><a th:href="@{/inquiry/licencestatus/search.do}" th:text="#{main.header.licenseStatus}"></a></li>
+						</ul>
+					</li>
+					<li>
+						<a th:href="@{/complain/list.do}" title="Complaints Inquiry"
+							th:text="#{main.header.reception}"></a>
+						<ul id="nav-drop-menu">
+							<li><a th:href="@{/complain/list.do}" th:text="#{main.header.complaints}"></a></li>
+							<li><a th:href="@{/objection/list.do}" th:text="#{main.header.objection}"></a></li>
+						</ul>
+					</li>
+					<li>
+						<a th:href="@{/traffic/info/safeinfo/list.do}" title="Customer Service"
+							th:text="#{main.header.infomation}"></a>
+						
+						<ul id="nav-drop-menu">
+							<li><a th:href="@{/traffic/info/safeinfo/list.do}" th:text="#{main.header.trafficSafetyInfo}"></a></li>
+							<li><a th:href="@{/traffic/info/edu/list.do}" th:text="#{main.header.trafficSafetyEdu}"></a></li>
+							<li><a th:href="@{/traffic/info/lawinfo/list.do}" th:text="#{main.header.trafficLawInfo}"></a></li>
+<!--							<li><a th:href="@{/statisticsmng/statisticsAnalyze}" th:text="#{main.header.analysis}"></a></li>-->
+						</ul>
+					</li>
+					<li>
+						<a th:href="@{/info/notice/list.do}" title="Customer Service"
+							th:text="#{main.header.notification}"></a>
+						<ul id="nav-drop-menu">
+							<li><a th:href="@{/info/notice/list.do}" th:text="#{main.header.notice}"></a></li>
+							<li><a th:href="@{/info/faq/list.do}" th:text="#{main.header.faq}"></a></li>
+							<li><a th:href="@{/info/qna/list.do}" th:text="#{main.header.qna}"></a></li>
+							<li><a th:href="@{/info/penaltyplace/list.do}" th:text="#{main.header.finePayment}"></a></li>
+						</ul>
+					</li>
+					
+				</ul>
+			</div>
+
+<!--			<div class="login">-->
+<!--				<a th:href="@{/login}" th:text="#{main.header.login}"></a>-->
+<!--				 기능 추가시 login 과 change 되어야함 -->
+<!--				<a th:href="@{/mypage}" th:text="#{main.header.myPage}"></a>-->
+<!--			</div>-->
+<!--			<div class="mobile-menu">-->
+<!--				<img src="/images/hamburger.png" th:alt="#{main.header.menu}" class="hamburger">-->
+<!--			</div>-->
+		</div>
+	</div>
+
 	
-    <div th:fragment="headerFragment" class="header">
-        <div class="header-contents">
-            <div class="center-wrap">
-                <div class="logo">
-                    <a th:href="@{/}"><img th:src="@{/images/logo.png}" alt=""></a>
-                </div>
-                
-                        <div class="nav-list">
-                            <ul>
-                                <li class="">
-									<a th:href="@{/finesmng/finesInquiryList}" title="Fines Inquiry" th:text="#{main.header.finesInquiry}">범칙금 조회</a>
-								</li>
-                                <li class="">
-									<a th:href="@{/paymentmng/paymentCnfrm}" title="Payment" th:text="#{main.header.payment}">운전자조회</a>
-								</li>
-                                <li class="">
-									<a th:href="@{/inquirymng/complainmng/complainInfo}" title="Complaints Inquiry" th:text="#{main.header.complaintsInquiry}">범칙금 조회</a>
-                                </li>
-                                <li class="">
-									<a th:href="@{/customer/service/trafficSafeInfo}" title="Customer Service" th:text="#{main.header.cisubComplaintsInquiry}">범칙금 조회</a>
-                                </li>
-                                <li class="">
-									<a th:href="@{/customer/service/trafficSafeInfo}" title="Customer Service" th:text="#{main.header.cisubObjectionInquiry}">범칙금 조회</a>
-                                </li>
-                            </ul>
-                        </div>
-                
-                <div class="login">
-                    <a href="">Login</a>
-                </div>
-                <div class="mobile-menu">
-                    <img src="/images/hamburger.png" alt="메뉴" class="hamburger">
-                </div>
-            </div>
-        </div>
-        
-        <div class="drop-list">
-				<div class="drop-center">
-					<ul>
-						<li><a href="">단속현황</a></li>
-						<li><a href="">납부/체납현황</a></li>
-					</ul>
-					<ul>
-						<li><a href="">면허현황</a></li>
-					</ul>
-					<ul>
-						<li><a href="">민원</a></li>
-						<li><a href="">통계분석</a></li>
-					</ul>
-					<ul>
-						<li><a href="">통계분석</a></li>
-					</ul>
-					<ul>
-						<li><a href="">공지사항</a></li>
-						<li><a href="">FAQ</a></li>
-						<li><a href="">교통안전정보</a></li>
-						<li><a href="">교통안전교육</a></li>
-						<li><a href="">교통법규정보</a></li>
-						<li><a href="">범칙금 납부처</a></li>
-					</ul>
+
+	<div id="mobile-menu">
+		<div class="mobile-nav-wrap">
+			<div class="mobile-login">
+				<div class="mobile-login-form">
+					<div class="mobile-login">
+						<h2>Portal Service</h2>
+					</div>
+					<div class="mobile-close">
+						<img src="/images/mobile-close.png" onclick="mobileMenu('mobile-menu')" th:alt="#{main.header.close}">
+					</div>
 				</div>
+			</div>
+			<div class="mobile-nav-list">
+				<ul>
+					<li class="mobileDropList">
+						<div class="mobileMenuTitleWrap">
+							<span th:text="#{main.header.inquiry}"></span>
+							<div class="mTitleBorder"></div>
+						</div>
+						<ul class="mobile-nav-sub-list">
+							<li>
+								<a th:href="@{/inquiry/enfstatus/search.do}">
+									<div class="mIconWrap">
+										<img src="/images/mobile-menu-img01.png">
+									</div>
+									<span th:text="#{main.header.enforcementStatus}"></span>
+								</a>
+							</li>
+							<li>
+								<a th:href="@{/inquiry/pymntstatus/search.do}">
+									<div class="mIconWrap">
+										<img src="/images/mobile-menu-img02.png">
+									</div>
+									<span th:text="#{main.header.PaymentDelinquency}"></span>
+								</a>
+							</li>
+							<li>
+								<a th:href="@{/inquiry/licencestatus/search.do}">
+									<div class="mIconWrap">
+										<img src="/images/mobile-menu-img03.png">
+									</div>
+									<span th:text="#{main.header.licenseStatus}"></span>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="mobileDropList">
+						<div class="mobileMenuTitleWrap">
+							<span th:text="#{main.header.reception}"></span>
+							<div class="mTitleBorder"></div>
+						</div>
+						<ul class="mobile-nav-sub-list">
+							
+							<li>
+								<a th:href="@{/complain/list.do}">
+									<div class="mIconWrap">
+										<img src="/images/mobile-menu-img04.png">
+									</div>
+									<span th:text="#{main.header.complaints}"></span>
+								</a>
+							</li>
+							<li>
+								<a th:href="@{/objection/list.do}">
+									<div class="mIconWrap">
+										<img src="/images/mobile-menu-img05.png">
+									</div>
+									<span th:text="#{main.header.objection}"></span>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="mobileDropList">
+						<div class="mobileMenuTitleWrap">
+							<span th:text="#{main.header.infomation}"></span>
+							<div class="mTitleBorder"></div>
+						</div>
+						<ul class="mobile-nav-sub-list">
+							<li>
+								<a th:href="@{/traffic/info/safeinfo/list.do}">
+									<div class="mIconWrap">
+										<img src="/images/mobile-menu-img06.png">
+									</div>
+									<span th:text="#{main.header.trafficSafetyInfo}"></span>
+								</a>
+							</li>
+							<li>
+								<a th:href="@{/traffic/info/edu/list.do}">
+									<div class="mIconWrap">
+										<img src="/images/mobile-menu-img07.png">
+									</div>
+									<span th:text="#{main.header.trafficSafetyEdu}"></span>
+								</a>
+							</li>
+							<li>
+								<a th:href="@{/traffic/info/lawinfo/list.do}">
+									<div class="mIconWrap">
+										<img src="/images/mobile-menu-img08.png">
+									</div>
+									<span th:text="#{main.header.trafficLawInfo}"></span>
+								</a>
+							</li>
+<!--							<li>-->
+<!--								<a th:href="@{/statisticsmng/statisticsAnalyze}">-->
+<!--									<div class="mIconWrap">-->
+<!--										<img src="/images/mobile-menu-img09.png">-->
+<!--									</div>-->
+<!--									<span th:text="#{main.header.trafficEnforStatis}"></span>-->
+<!--								</a>-->
+<!--							</li>-->
+						</ul>
+					</li>
+					<li class="mobileDropList">
+						<div class="mobileMenuTitleWrap">
+							<span th:text="#{main.header.notification}"></span>
+							<div class="mTitleBorder"></div>
+						</div>
+						<ul class="mobile-nav-sub-list">
+							<li>
+								<a th:href="@{/info/notice/list.do}">
+									<div class="mIconWrap">
+										<img src="/images/mobile-menu-img10.png">
+									</div>
+									<span th:text="#{main.header.notice}"></span>
+								</a>
+							</li>
+							<li>
+								<a th:href="@{/info/faq/list.do}">
+									<div class="mIconWrap">
+										<img src="/images/mobile-menu-img11.png">
+									</div>
+									<span th:text="#{main.header.faq}"></span>
+								</a>
+							</li>
+							<li>
+								<a th:href="@{/info/qna/list.do}">
+									<div class="mIconWrap">
+										<img src="/images/mobile-menu-img12.png">
+									</div>
+									<span th:text="#{main.header.qna}"></span>
+								</a>
+							</li>
+							<li>
+								<a th:href="@{/info/penaltyplace/list.do}">
+									<div class="mIconWrap">
+										<img src="/images/mobile-menu-img13.png">
+									</div>
+									<span th:text="#{main.header.finePayment}"></span>
+								</a>
+							</li>
+						</ul>
+					</li>
+					
+				</ul>
+			</div>
 		</div>
-		
-		<div class="mobile-nav">
-			 <div class="mobile-nav-wrap">
-				 <div class="mobile-login">
-					 <div class="mobile-login-form">
-						  <div class="mobile-login">
-		                    <a href="">로그인 하러가기</a>
-		               </div>
-		               <div class="mobile-close">
-						    <img src="/images/mobile-close.png" alt="닫기" class="close">
-					   </div>
-					 </div>
-				 </div>
-				    <div class="mobile-nav-list">
-                            <ul>
-                                <li class="">
-									<a th:href="@{/finesmng/finesInquiryList}" title="Fines Inquiry" class="mobile-list-title">
-										<span  th:text="#{main.header.finesInquiry}"></span>
-										<i class="arrow"></i>
-									 </a>
-									<ul class="mobile-nav-sub-list">
-										<li><a href="">단속현황</a></li>
-										<li><a href="">납부/체납현황</a></li>
-									</ul>
-								</li>
-                                <li class="">
-									<a th:href="@{/paymentmng/paymentCnfrm}" title="Payment" class="mobile-list-title">
-										<span th:text="#{main.header.payment}"></span>
-										<i class="arrow"></i>
-										</a>
-									<ul class="mobile-nav-sub-list">
-										<li><a href="">면허현황</a></li>
-									</ul>
-								</li>
-                                <li class="">
-									<a th:href="@{/inquirymng/complainmng/complainInfo}" title="Complaints Inquiry" class="mobile-list-title">
-										<span th:text="#{main.header.complaintsInquiry}"></span>
-										<i class="arrow"></i>
-										</a>
-									<ul class="mobile-nav-sub-list">
-										<li><a href="">민원</a></li>
-										<li><a href="">통계분석</a></li>
-									</ul>
-                                </li>
-                                <li class="">
-									<a th:href="@{/customer/service/trafficSafeInfo}" title="Customer Service" class="mobile-list-title">
-										<span th:text="#{main.header.cisubComplaintsInquiry}"></span>
-										<i class="arrow"></i>
-									</a>
-									<ul class="mobile-nav-sub-list">
-										<li><a href="">통계분석</a></li>
-									</ul>
-                                </li>
-                                <li class="">
-									<a th:href="@{/customer/service/trafficSafeInfo}" title="Customer Service" class="mobile-list-title">
-										<span th:text="#{main.header.cisubObjectionInquiry}"></span>
-										<i class="arrow"></i>
-									</a>
-									<ul class="mobile-nav-sub-list">
-										<li><a href="">공지사항</a></li>
-										<li><a href="">FAQ</a></li>
-										<li><a href="">교통안전정보</a></li>
-										<li><a href="">교통안전교육</a></li>
-										<li><a href="">교통법규정보</a></li>
-										<li><a href="">범칙금 납부처</a></li>
-									</ul>
-                                </li>
-                            </ul>
-                      </div>
-              </div>
-		</div>
-    </div>
-    
-    
+	</div>
+</div>
+
+
 </html>

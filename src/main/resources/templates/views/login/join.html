@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+	
+	<div layout:fragment="content" >
+		<div id="loginContainer">
+			<div id="loginWrap">
+				<h1 th:text="#{login.join.join}"></h1>
+				<form>
+					<div class="login-user-info">
+						<label th:text="#{login.join.id}"><span class="required">*</span></label>
+						<input type="text" class="login-input" th:placeholder="#{login.join.placeholder.id}">
+					</div>
+					<div class="login-user-info">
+						<label th:text="#{login.join.name}"><span class="required">*</span></label>
+						<input type="text" class="login-input" th:placeholder="#{login.join.placeholder.name}">
+					</div>
+					<div class="login-user-info">
+						<label th:text="#{login.join.licenseNumber}"><span class="required">*</span></label>
+						<input type="text" class="login-input" th:placeholder="#{login.join.placeholder.licenseNumber}">
+					</div>
+					<div class="login-user-info">
+						<label th:text="#{login.join.birthday}"><span class="required">*</span></label>
+						<input type="text" class="login-input" th:placeholder="#{login.join.placeholder.birthday}">
+					</div>
+					<div class="login-user-info">
+						<label th:text="#{login.join.password}"><span class="required">*</span></label>
+						<input type="password" class="login-input" th:placeholder="#{login.join.placeholder.password}">
+					</div>
+					<div class="login-user-info">
+						<label th:text="#{login.join.passwordChk}"><span class="required">*</span></label>
+						<input type="password" class="login-input" th:placeholder="#{login.join.placeholder.passwordChk}">
+					</div>
+					<div class="login-user-info">
+						<label th:text="#{login.join.tel}"><span class="required">*</span></label>
+						<div class="phoneBox">
+							<input type="text" class="login-input" th:placeholder="#{login.join.placeholder.tel}">
+							<div><input type="button" id="phoneVerify" th:value="#{login.join.verify}"/></div>						
+						</div>
+					</div>
+					<div>
+						<a th:href="@{/login/join/complete}" id="joinButton" class="login-Button" th:text="#{login.join.join}"></a>
+					</div>
+					<div class="loginLinkBox">
+						<a th:href="@{/login}" th:text="#{login.join.login}"></a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</html>

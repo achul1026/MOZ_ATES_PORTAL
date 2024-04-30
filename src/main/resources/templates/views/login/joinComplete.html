@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+	
+	<div layout:fragment="content" >
+		<div id="loginContainer">
+			<div id="loginWrap">
+				<div><img th:src="@{/images/logo.png}" th:alt="#{login.joinComplete.logo}"></div>
+				<h2 id="joinCompleteTitle">Moon In-gi’s membership registration has been completed.</h2>
+				<div class="complete-txt">
+					Hello, ID.
+					<br>
+					You can log in.
+				</div>
+				<div class="loginLinkBox">
+					<a th:href="@{/login}" class="login-Button" th:text="#{login.joinComplete.toLogin}"></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</html>
+<script>
+	$('.footer').addClass('login');
+</script>

@@ -1,0 +1,48 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+
+<div layout:fragment="content">
+	<div id="container">
+		<h2 id="page-title" th:text="#{trafficinfo.sateinfo.title}">Traffic Safety Info Detail Title</h2>
+
+		<div class="cm-info-wrap">
+			<div id="cm-notice-wrap">
+				<div id="cm-notice-title" th:text="${tfcSftyInfrmDetail.postTtl}">Traffic Safety Info Title</div>
+				<div class="cm-notice-info">
+					<dl class="cm-notice-info-list">
+						<dt th:text="${tfcSftyInfrmDetail.webOprtr.oprtrDeptNm}">Writer Dept</dt>
+						<dd th:text="${tfcSftyInfrmDetail.webOprtr.oprtrNm}">Writer Nm</dd>
+					</dl>
+					<div id="cm-notice-info-date">
+						<dl class="cm-notice-info-list">
+							<dt th:text="#{trafficinfo.common.add.date}">Regist Date</dt>
+							<dd th:text="${#dates.format(tfcSftyInfrmDetail.crDt, 'yyyy.MM.dd')}">2023.08.13</dd>
+						</dl>
+						<dl class="cm-notice-info-list">
+							<dt th:text="#{trafficinfo.common.hits}">View</dt>
+							<dd th:text="${tfcSftyInfrmDetail.viewCnt}">60</dd>
+						</dl>
+					</div>
+				</div>
+				<div class="cm-notice-info">
+					<dl class="cm-notice-info-list">
+						<!-- TODO :: 첨부파일 작업 -->
+						<dt th:text="#{trafficinfo.common.file}">첨부파일</dt>
+<!--						<dd><a href="" id="download">공고문.hwp</a><i id="download-icon"></i></dd>-->
+						<dd>Não há informações cadastradas.</dd>
+					</dl>
+				</div>
+				<div id="cm-notice-con" th:text="${tfcSftyInfrmDetail.postCn}">
+					Post contents
+				</div>
+			</div>
+		</div>
+
+		<div class="btn-wrap-end">
+			<button type="button" class="sub-btn out-btn" th:onclick="|location.href='@{/traffic/info/safeinfo/list.do}'|"
+				th:text="#{notification.common.list}">List</button>
+		</div>
+	</div>
+</div>
+
+</html>

@@ -1,0 +1,58 @@
+<html xmlns:th="http://www.thymeleaf.org">
+	
+<div>
+	<div id="listSearchTableOpiton">
+		<div id="listSearchTotal">
+			<p th:text="#{inquiry.licenceStatus.total}">Total </p><span th:text='|"${pagination.totalListCnt}"|'>"8"</span>
+		</div>
+		<!--							<div id="listSearchSelect">-->
+		<!--								<select class="base-select">-->
+		<!--									<option th:text="#{inquiry.licenceStatus.class}">분류유형</option>-->
+		<!--									<option th:text="#{inquiry.common.all}">전체</option>-->
+		<!--									<option th:text="#{inquiry.licenceStatus.1st}">1차</option>-->
+		<!--									<option th:text="#{inquiry.licenceStatus.2nd}">2차</option>-->
+		<!--								</select>-->
+		<!--								<select class="base-select">-->
+		<!--									<option th:text="#{inquiry.licenceStatus.payment.status}">납부여부</option>-->
+		<!--									<option th:text="#{inquiry.common.all}">전체</option>-->
+		<!--									<option th:text="#{inquiry.licenceStatus.payment.status.payment}">납부</option>-->
+		<!--									<option th:text="#{inquiry.licenceStatus.payment.status.default}">미납</option>-->
+		<!--								</select>-->
+		<!--							</div>-->
+	</div>
+	<div id="base-table">
+		<ul class="base-table-th base-table-cm">
+			<li th:text="#{inquiry.licenceStatus.number}"></li>
+			<li th:text="#{inquiry.licenceStatus.bill.number}"></li>
+			<li th:text="#{inquiry.licenceStatus.class}"></li>
+			<li th:text="#{inquiry.licenceStatus.payment.status}"></li>
+			<li th:text="#{inquiry.licenceStatus.enf.date}"></li>
+		</ul>
+		<ul>
+			<li>
+				<ul th:if="${not #lists.isEmpty(enfList)}" 
+					class="base-table-td base-table-cm driver-table"
+					th:each="enfItm : ${enfList}"
+					th:onclick="|location.href='@{/inquiry/licencestatus/detail.do}'|">
+					<li class="TableNumber" th:text="${enfItm.rnum}">1</li>
+					<li class="TableBillNumber" th:text="${enfItm.tfcEnfId}">E-20240401-1961-0</li>
+					
+					<li class="TableType" th:if="${enfItm.enfFineInfoCnt > 1}" th:text="|${enfItm.title} ... (${enfItm.enfFineInfoCnt})|">Speeding Violation ... (2)</li>
+					<li class="TableType" th:unless="${enfItm.enfFineInfoCnt > 1}" th:text="${enfItm.title}">Speeding Violation ... (2)</li>
+					
+					<li class="TableState" th:if="${enfItm.finePymntInfo.pymntStts == 'Y'}" th:text="#{inquiry.licenceStatus.paid}">Paid</li>
+					<li class="TableState" th:unless="${enfItm.finePymntInfo.pymntStts == 'Y'}" th:text="#{inquiry.licenceStatus.unpaid}">Paid</li>
+					<li class="TableCmDate" th:text="${#dates.format(enfItm.tfcEnfDt, 'yyyy-MM-dd')}">2023-12-25</li>
+				</ul>
+
+				<ul th:unless="${not #lists.isEmpty(enfList)}" 
+				class="base-table-td base-table-cm driver-table">
+					<li th:text="#{inquiry.licenceStatus.registration.empty}"></li>
+				</ul>
+
+			</li>
+		</ul>
+	</div>
+</div>
+
+</html>

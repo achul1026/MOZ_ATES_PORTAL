@@ -1,0 +1,116 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+	
+	<div layout:fragment="content">
+		<div id="container">
+			<div id="wrap">
+				<h2 id="page-title" th:text="#{inquiry.pymntBankPaymentDetail.mainTitle}"></h2>
+
+				<div class="detail-info-wrap">
+					<h1 class="bank-title" th:text="#{inquiry.pymntBankPaymentDetail.bankTitle}"></h1>
+					<div class="detail-title">
+						<h3>
+							<span th:text="#{inquiry.pymntBankPaymentDetail.paymentIssuanceDate}"></span>
+							<span>2024-04-26</span>
+						</h3>
+						<div>
+							<span id="billNumber" th:text="#{inquiry.pymntBankPaymentDetail.billSerialNumber}"></span>
+							<span>M1318-2023-90010893</span>
+						</div>
+					</div>
+					<div class="detail-table detail-table-7">
+						<dl>
+							<dt th:text="#{inquiry.pymntBankPaymentDetail.vehicleNumber}"></dt>
+							<dd>SWF 854 MP</dd>
+						</dl>
+						<dl>
+							<dt th:text="#{inquiry.pymntBankPaymentDetail.violatorName}"></dt>
+							<dd>Mateus Chaves</dd>
+						</dl>
+						<dl>
+							<dt th:text="#{inquiry.pymntBankPaymentDetail.violationPlace}"></dt>
+							<dd>Street 50</dd>
+						</dl>
+						<dl>
+							<dt th:text="#{inquiry.pymntBankPaymentDetail.violationDate}"></dt>
+							<dd>2024-04-09</dd>
+						</dl>
+<!--						<dl>-->
+<!--							<dt th:text="#{inquiry.pymntBankPaymentDetail.violationType}"></dt>-->
+<!--							<dd>Speeding</dd>-->
+<!--						</dl>-->
+						<dl class="detail-content">
+							<dt class="detail19" th:text="#{inquiry.pymntBankPaymentDetail.violationLaw}"></dt>
+							<dd class="detail80">
+								[Speeding Violation] II - Transport of Vehicles and Animals - 94<br>
+								[Speeding Violation] II - Transport of Vehicles and Animals - 96<br>
+								[Driving without a license] IV - Vehicles - 113
+							</dd>
+						</dl>
+						<dl class="detail-content">
+							<dt th:text="#{inquiry.pymntBankPaymentDetail.violationContent}"></dt>
+							<dd>
+								don't drink
+							</dd>
+						</dl>
+					</div>
+				</div>
+				
+				<div class="detail-info-wrap">
+					<div class="detail-title">
+						<h3 th:text="#{inquiry.pymntBankPaymentDetail.paymentAndPeriod}"></h3>
+					</div>
+					<div class="detail-table">
+						<dl>
+							<dt th:text="#{inquiry.pymntBankPaymentDetail.firstPaymentDueDate}"></dt>
+							<dd>2024-04-23</dd>
+						</dl>
+						<dl>
+							<dt th:text="#{inquiry.pymntBankPaymentDetail.amountWithinDueDate}"></dt>
+							<dd>10,800 MT</dd>
+						</dl>
+						<dl>
+							<dt th:text="#{inquiry.pymntBankPaymentDetail.secondPaymentDueDate}"></dt>
+							<dd>2024-05-08</dd>
+						</dl>
+						<dl>
+							<dt th:text="#{inquiry.pymntBankPaymentDetail.additionalAmount}"></dt>
+							<dd>12,960 MT</dd>
+						</dl>
+<!--						<dl>-->
+<!--							<dt th:text="#{inquiry.pymntBankPaymentDetail.currencyUnit}"></dt>-->
+<!--							<dd>Speeding <span class="comma"></span></dd>-->
+<!--						</dl>-->
+						<dl>
+							<dt th:text="#{inquiry.pymntBankPaymentDetail.bank}">납부은행</dt>
+							<dd>-</dd>
+						</dl>
+					</div>
+					
+					<div id="receiptDateBox" th:text="#{inquiry.pymntBankPaymentDetail.receivedAmount}"></div>
+						
+		
+					<div id="bankPaymentBox">
+						<div class="dateSign">
+							<span th:text="#{inquiry.pymntBankPaymentDetail.date}">Date : </span>
+							<span th:text="#{inquiry.pymntBankPaymentDetail.year}">Year</span>
+							<span th:text="#{inquiry.pymntBankPaymentDetail.month}">Month</span>
+							<span th:text="#{inquiry.pymntBankPaymentDetail.day}">Day</span>
+						</div>
+						<div id="approvalBox">
+							<div id="approval" th:text="#{inquiry.pymntBankPaymentDetail.receiver}"></div>
+							<div id="stamp"></div>
+						</div>
+					</div>
+				</div>
+				
+				<div id="backLinkBox">
+					<a onclick="history.back()" class="sub-btn" th:text="#{inquiry.pymntBankPaymentDetail.cancle}"></a>
+					<input type="button" id="printButton" class="main-btn" th:value="#{inquiry.pymntBankPaymentDetail.print}">
+				</div>	
+			</div>		
+		</div>
+	</div>
+</html>
+<script type="text/javascript">
+</script>

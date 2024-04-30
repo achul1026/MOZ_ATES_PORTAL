@@ -1,0 +1,141 @@
+<html xmlns:th="http://www.thymeleaf.org">
+	
+<head>
+	
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<link th:href="@{/css/bill.css}" rel="stylesheet">
+	<link th:href="@{/css/reset.css}" rel="stylesheet">
+	<link th:href="@{/css/fonts.css}" rel="stylesheet">
+</head>
+
+<div layout:fragment="content">
+	<div id="billContainer">
+		<div id="billTitle">
+			<h1>Aviso de Multa</h1>	
+		</div>
+		<div id="billContent">
+			<div id="billInfo">
+				
+				<dl>
+					<dt>AVISO Nº</dt>
+					<dd th:text="${fineNtcInfo.tfcEnfId}">3/56261-1235674/2024</dd>
+				</dl>
+				<dl>
+					<dt>Entidade</dt>
+					<dd>-</dd>
+				</dl>
+				<dl>
+					<dt>Referência</dt>
+					<dd>-</dd>
+				</dl>
+				<dl>
+					<dt>Multa</dt>
+					<dd th:text="${fineNtcInfo.firstFineNtcPrice}"></dd>
+				</dl>
+				<dl>
+					<dt>Limite Pgto</dt>
+					<dd th:text="${#dates.format(fineNtcInfo.firstFineNtcDdln, 'dd/MM/yyyy HH:mm')}">1690/2024 11:05 AM</dd>
+				</dl>
+				<dl>
+					<dt>Responsabilidade</dt>
+					<dd th:text="${fineNtcInfo.vioInfo.vioNm}">Ji Hoon Park</dd>
+				</dl>
+				<dl>
+					<dt>Operador</dt>
+					<dd th:text="${fineNtcInfo.polInfo.polNm}">pasdzxcas</dd>
+				</dl>
+				<dl>
+					<dt>Local de Fiscalização</dt>
+					<dd th:text="${fineNtcInfo.tfcEnfMaster.roadAddr}">2HJF+VWR, Av. Olof Palme, Maputo</dd>
+				</dl>
+			</div>
+			<div id="billDetailInfo">
+				<dl>
+					<dt>Detalhe</dt>
+					<dd id="billDetail">
+<!--						Foi avisado (이름), titula da Carta de Condução número (운전면허증번호), -->
+<!--						que foi autuado  no(a) (기소 지역) conduzia o veículo de -->
+<!--						matricula (차번호) e foi passada a multa de (벌금액)MT por ter infringido as -->
+<!--						disposições do (위반형법(몇항 몇조)) do código de Estrada e que deverá efectuar o -->
+<!--						pagamento até (벌금 기한 일자) em qualquer Departamento da Polícia de trânsito-->
+<!--						ou apresentar reclamação no INATTER, conforme os números 1 e 2 do artigo 172 do Código da Estrada.-->
+					</dd>
+				</dl>
+			</div>
+			<div id="fixLine">
+				<div id="billAccount">
+					<ul>
+						<li>Data de emissão : <span th:text="${#dates.format(fineNtcInfo.firstFineNtcDt, 'dd/MM/yyyy HH:mm')}">2024.04.29</span></li>
+						<li>Processado por computador apartir do Sistema da PT</li>
+						<li>PODE EFETUAR  PARAMENTO NAS CONTAS : BIM-1000001; BCI-2000001; M-PESA - 8455555; E-MOLA - 867777</li>
+					</ul>
+				</div>
+				<div id="billDepartmentContainer">
+					<div id="billDepartment">
+						<p>- REPÚBLICA DE MOÇAMBIQUE</p>
+						<p>- MINISTÉRIO DO INTERIOR</p>
+						<p>- COMANDO GERAL DA POLÍCIA</p>
+						<p>- RAMO DA POLICIA DE ORDEM E SEGURANÇA PÚBLICA</p>
+						<p>- DEPARTAMENTO CENTRAL DA POLÍCIA DE TRÂNSITO</p>
+					</div>
+					<div id="billDepartment">
+						<img src="/images/favilogo.png" alt="logo" id="billLogo">
+					</div>
+				</div>
+			</div>
+			<div id="printBtnWrap">
+				<button type="button" onclick="printPage()" id="PrintBtn" >Print</button>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+</html>
+<script th:inline="javascript">
+	var initBodyHtml;
+	
+	const fileTr = document.getElementById("fileTr");
+	
+	function printPage(){
+		window.print();
+	}
+	
+	function beforePrint(){
+		if(fileTr){
+			initBodyHtml = document.body.innerHTML;
+	     	document.body.innerHTML = document.getElementById("printDiv").innerHTML;
+		}
+		
+	}
+	function afterPrint(){
+		if(fileTr){
+			document.body.innerHTML = initBodyHtml;		
+		}
+	}
+	
+	function billDetail() {
+		const billDetail = document.getElementById('billDetail');
+		let vioNm = /*[[${fineNtcInfo.vioInfo.vioNm}]]*/;
+		
+		let vhRegNo = /*[[${fineNtcInfo.tfcEnfMaster.vhRegNo}]]*/;
+		let roadAddr = /*[[${fineNtcInfo.tfcEnfMaster.roadAddr}]]*/;
+		
+		let dvrLcenId = /*[[${fineNtcInfo.vioInfo.dvrLcenId}]]*/;
+		let lawType = /*[[${fineNtcInfo.lawType}]]*/;
+		let firstFineNtcPrice = /*[[${fineNtcInfo.firstFineNtcPrice}]]*/;
+		let firstFineNtcDdln = /*[[${#dates.format(fineNtcInfo.firstFineNtcDdln, 'dd/MM/yyyy HH:mm')}]]*/;
+		
+		let html = `						Foi avisado ${vioNm}, titula da Carta de Condução número ${dvrLcenId}, 
+						que foi autuado  no(a) ${roadAddr} conduzia o veículo de 
+						matricula ${vhRegNo} e foi passada a multa de ${firstFineNtcPrice}MT por ter infringido as 
+						disposições do ${lawType} do código de Estrada e que deverá efectuar o 
+						pagamento até ${firstFineNtcDdln} em qualquer Departamento da Polícia de trânsito
+						ou apresentar reclamação no INATTER, conforme os números 1 e 2 do artigo 172 do Código da Estrada.`;
+		billDetail.innerHTML = html;
+	}
+	
+		window.addEventListener("load", (e) => {
+			billDetail();	
+		});
+</script>

@@ -1,0 +1,129 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+
+<div layout:fragment="content">
+	<div id="container">
+		<h2 id="page-title" th:text="#{reception.objectionInfo.title.objectionInfo}">이의제기</h2>
+
+		<div id="filterBox">
+			<form id="searchForm" method="get">
+				<dl>
+					<dt class="filterBoxRong" th:text="#{reception.objectionSearchFineNtc.search}">Search</dt>
+					<dd>
+						<input type="text" class="base-search" id="searchTxt" name="searchTxt" th:placeholder="#{reception.objectionSearchFineNtc.enter.text}">
+						<button type="button" class="main-btn" th:text="#{reception.common.check}"
+							onclick="searchFineNtcInfo()"></button>
+					</dd>
+				</dl>
+			</form>
+		</div>
+
+		<div id="list-table-wrap">
+			<div id="base-table" class="ob-regist-base-table">
+				<ul class="base-table-th base-table-cm">
+					<li th:text="#{reception.common.check}">Check</li>
+					<li th:text="#{reception.modal.objectionDetail.car.number}"></li>
+					<li th:text="#{reception.modal.objectionDetail.bill.number}"></li>
+					<li th:text="#{reception.modal.objectionDetail.type}"></li>
+					<li th:text="#{reception.modal.objectionDetail.status}"></li>
+				</ul>
+				<ul>
+					<li>
+
+						<ul class="base-table-td base-table-cm ob-regist-table" id="searchResultWrap">
+							<li th:text="|Please search for the fine notice number|"></li>
+						</ul>
+
+					</li>
+				</ul>
+			</div>
+			<div class="btn-wrap-end">
+				<button type="button" class="sub-btn out-btn" th:onclick="|location.href='@{/objection/list.do}'|"
+					th:text="#{reception.common.list.more}">List</button>
+				<button type="button" class="main-btn" onclick="pageMoveToRegPage()"
+					th:text="#{reception.complainInfo.content.new.complaint}">이의제기 신청</button>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+</html>
+<script>
+	function moveSavePage() {
+		location.href = '/objection/save.do';
+	}
+
+	const searchResultWrapElmnt = document.getElementById("searchResultWrap");
+
+	function searchFineNtcInfo() {
+		const searchTxtVal = document.getElementById("searchTxt").value;
+
+		if (searchTxtVal === null || searchTxtVal === '') {
+			// Please enter your search term
+			alert("Por favor insira o seu termo de pesquisa");
+			return false;
+		}
+		searchResultWrapElmnt.innerHTML = "<li>Searching.....</li>";
+
+		const formData = new FormData(document.getElementById("searchForm"));
+
+		fetch('/objection/fineNtc/search.ajax', {
+			method: "post",
+			body: formData
+		})
+			.then(response => response.json())
+			.then((result) => {
+				if (result.code === 200) {
+					let data = result.data;
+
+					let vhRegNo = data.tfcEnfMaster.vhRegNo;
+					let tfcEnfId = data.tfcEnfId;
+					let ntcTy = data.cmCd.cdNm;
+					let pymntStts = data.finePymntInfo.pymntStts;
+					
+					if (pymntStts == 'Y') {
+						pymntStts = "Paid";
+					} else {
+						pymntStts = "Unpaid";
+					}
+					
+					let html = `							<li class="TableCheck"><input type="radio" id="tfcEnfId" value="${tfcEnfId}"></li>
+							<li class="TableCarNumber">${vhRegNo}</li>
+							<li class="TableObNumber">${tfcEnfId}</li>
+							<li class="TableCmType">${ntcTy}</li>
+							<li class="TableStatus">${pymntStts}</li>`;
+					
+					searchResultWrapElmnt.innerHTML = html;
+				} else {
+					// There are no matching results.
+					searchResultWrapElmnt.innerHTML = "<li>Não há resultados correspondentes.</li>"
+				}
+			});
+	}
+
+
+	function pageMoveToRegPage() {
+		const tfcEnfIdElmnt = document.getElementById("tfcEnfId");
+
+		if (tfcEnfIdElmnt === null) {
+			// Please search for the fine notice number
+			alert("Procure o número do aviso de multa")
+			return false;
+		}
+
+		if (!tfcEnfIdElmnt.checked) {
+			// Please select a fine notice
+			alert("Selecione um aviso de penalidade")
+			return false;
+		}
+
+		const tfcEnfIdVal = tfcEnfIdElmnt.value;
+		location.href = "/objection/save.do?searchTxt="+tfcEnfIdVal;
+	}
+
+	// TODO::시연&개발 끝나면 삭제
+	$("#page-title").click(function() {
+		$("#searchTxt").val("E-20240425-1961-65");
+	});
+</script>

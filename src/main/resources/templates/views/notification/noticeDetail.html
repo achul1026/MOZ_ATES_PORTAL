@@ -1,0 +1,47 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+
+	<div layout:fragment="content">
+    <div id="container">
+      <h2 id="page-title" th:text="#{notification.notice.title}">공지사항</h2>
+			<div class="cm-info-wrap">
+				<div id="cm-notice-wrap">
+					<div id="cm-notice-title" th:text="${noticeDetail.boardTitle}">Notice Title</div>
+					<div class="cm-notice-info">
+						<dl class="cm-notice-info-list">
+							<dt th:text="${noticeDetail.oprtrDeptNm}">Transportation Administration</dt>
+							<dd th:text="${noticeDetail.oprtrNm}">Mr.Hoon</dd>
+						</dl>
+						<div id="cm-notice-info-date">
+							<dl class="cm-notice-info-list">
+								<dt th:text="#{notification.common.registDate}">Regist Date</dt>
+								<dd th:text="${#dates.format(noticeDetail.crDt, 'yyyy-MM-dd')}">2023.08.13</dd>
+							</dl>
+							<dl class="cm-notice-info-list">
+								<dt th:text="#{notification.common.view}">View</dt>
+								<dd th:text="${noticeDetail.viewCnt}">60</dd>
+							</dl>
+						</div>
+					</div>
+					<div class="cm-notice-info">
+						<dl class="cm-notice-info-list">
+							<dt th:text="#{notification.common.file}">첨부파일</dt>
+							<!-- TODO:: 첨부파일 작업 -->
+							<dd>Não há informações cadastradas.</dd>
+						</dl>
+					</div>
+					<div id="cm-notice-con" th:text="${noticeDetail.boardContents}">
+						공지사항 입니다.
+					</div>
+				</div>
+			</div>
+			<div class="search-wrap btn-wrap">
+				<div class="form-group">
+					<button type="button" class="sub-btn out-btn" 
+						th:text="#{notification.common.list}" th:onclick="|location.href='@{/info/notice/list.do}'|">List</button>
+				</div>
+			</div>
+    </div>
+	</div>
+</html>

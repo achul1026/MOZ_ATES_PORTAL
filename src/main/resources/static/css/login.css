@@ -1,0 +1,89 @@
+@charset "UTF-8";
+
+
+#loginContainer {
+	width:100%;
+}
+#loginWrap {
+	widtH:406px;
+	margin:180px auto 0 auto;
+}
+#loginWrap h1 {
+	margin-bottom:32px;
+	font-size:22px;
+	font-weight:700;
+	text-align:center;
+}
+.login-user-info {
+	margin:16px 0;
+}
+.login-user-info:nth-child(1) {
+	margin-top:0;
+}
+.login-user-info label {
+	display:block;
+	margin-bottom:8px;
+	font-weight:500;
+}
+.login-input {
+	width:100%;
+	padding:12px;
+	font-size:16px;
+	border:none;
+	outline:none;
+	background-color:#f6f6f6;
+}
+#userSelectBox {
+	display:flex;
+	justify-content:space-between;
+	align-items:flex-end;
+	font-weight:500;
+}
+.login-Button {
+	display:block;
+	width:100%;
+	margin: 16px 0;
+	padding:12px 0;
+	color:#fff;
+	background-color:#00967a;
+	text-align:center;
+}
+#joinButton {
+	display:block;
+	width:100%;
+	padding:12px 0;
+	font-weight:500;
+	border:1px solid #000;
+	text-align:center;
+}
+.footer.login {
+	position:fixed;
+	bottom:0;
+	left:0;
+	width:100%;
+}
+.phoneBox {
+	position:relative;
+}
+#phoneVerify, #phoneCheck{
+	position:absolute;
+	top:50%;
+	right:8px;
+	border:none;
+	background-color:transparent;
+	transform:translateY(-50%);
+	cursor:pointer;
+}
+.loginLinkBox {
+	margin-top:16px;
+	margin-bottom:40px;
+	text-align:center;
+}
+#joinCompleteTitle {
+	margin-top:8px;
+	font-size:22px;
+	font-weight:600;
+}
+.complete-txt {
+	margin:32px 0;
+}

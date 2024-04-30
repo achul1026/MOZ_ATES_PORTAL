@@ -1,0 +1,177 @@
+<html xmlns:th="http://www.thymeleaf.org"  
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+	
+	<div layout:fragment="content">
+		<div id="container">
+			<div id="wrap">
+				<h2 id="page-title" th:text="#{reception.objectionInfo.title.objectionInfo}">이의제기</h2>
+				<div id="filterBox">
+					<form id="searchForm" method="get">
+						<dl>
+							<dt th:text="#{reception.objectionInfo.type}">Type</dt>
+							<dd>
+								<select class="base-select" name="cateCd">
+									<option th:text="#{reception.objectionInfo.type.all}" value="all">전체</option>
+									<th:block th:each="cateItm : ${objCate}">
+					     			<option th:value="${cateItm.cdId}" th:text="${cateItm.cdNm}">All</option>
+						     	</th:block>
+						    </select>
+							</dd>
+						</dl>
+						<dl>
+							<dt th:text="#{reception.objectionInfo.search}">Search</dt>
+							<dd>
+								<input type="text" class="base-search" name="searchTxt" th:value="${objReg.searchTxt}" th:placeholder="#{reception.objectionInfo.enter.text}">
+								<input type="hidden" name="page" id="page" value="1">
+								<button type="submit" class="sub-btn" th:text="#{reception.common.check}"></button>
+							</dd>
+						</dl>
+					</form>
+				</div>
+				<div id="list-table-wrap" th:object="${objRegList}">
+					<th:block th:if="${not #object.isEmpty()}">
+						<div id="listSearchTableOpiton">
+							<div id="listSearchTotal">
+								<p th:text="#{reception.objectionInfo.total}"></p> <span th:text='|"${pagination.totalListCnt}"|'>"546465"</span>
+							</div>
+							<div id="listRegistBtn">
+								<a th:href="@{/objection/fineNtc/search.do}" class="sub-btn" th:text="#{reception.objectionInfo.new.complain}"></a>
+							</div>				
+						</div>
+						<div id="base-table">
+							<ul class="base-table-th base-table-cm">
+								<li th:text="#{reception.objectionInfo.table.number}"></li>
+								<li th:text="#{reception.objectionInfo.table.category}"></li>
+								<li th:text="#{reception.objectionInfo.table.serial.number}"></li>
+								<li th:text="#{reception.objectionInfo.table.add.date}"></li>
+								<li th:text="#{reception.objectionInfo.table.result.state}"></li>
+							</ul>
+							
+							<form id="checkPwForm" onsubmit="return false">
+								<ul class="baseCmTable">
+									<th:block th:each="objRegItm : ${objRegList}">
+										<li>
+											<ul class="base-table-td base-table-cm base-table-objections" 
+											th:onclick="showPwCheckWrap([[${objRegItm.objIdx}]], [[${objRegItm.rnum}]])">
+												<li class="TableNumber" th:text="${objRegItm.rnum}">1</li>
+												<li class="TableType" th:text="${objRegItm.cmCd.cdNm}">Category</li>
+												<li class="TableTitle" th:text="${objRegItm.fineNtcInfo.tfcEnfId}">Fine Notice Id</li>
+												<li class="TableCmDate" th:text="${#dates.format(objRegItm.crDt, 'yyyy-MM-dd')}">reg date</li>
+												<li class="TableStatus" 
+												th:text="${objRegItm.ansStts} == 'Y' ? #{reception.objectionInfo.completed} : #{reception.objectionInfo.incompleted}">stts</li>
+											</ul>
+											<ul class="pwCheckWrap" th:id="pwCheckWrap+${objRegItm.rnum}"></ul>
+										</li>
+									</th:block>
+								</ul>
+							</form>
+					  </div>
+					  
+						<div class="page_wrap">
+							<div th:insert="tags/pagingTag :: pagingTag"></div>
+						</div>
+					</th:block>
+					
+					<th:block th:if="${#object.isEmpty()}">
+						<div id="listSearchTableOpiton">
+							<div id="listSearchTotal"></div>
+							<div id="listRegistBtn"><a th:href="@{/objection/select.do}"
+									th:text="#{reception.objectionInfo.new.complain}" class="main-btn">신규신청</a></div>
+						</div>
+						<div id="base-table" th:text="#{reception.objectionInfo.search.notFound}">
+							Nothing registered
+						</div>
+					</th:block>
+					
+				</div>			
+			</div>		
+		</div>    
+	</div>
+</html>
+<script type="text/javascript" th:inline="javascript">
+	objectionInfoDetail = function(){
+		new ModalBuilder().init(/*[[#{reception.objectionInfo.bill.list}]]*/).ajaxBody("/modal/objection/detail").footer(1,/*[[#{reception.objectionInfo.file.appeal}]]*/,function(button, modal){
+			location.href='/objectionRegister'
+		}).open();
+	}
+	
+	function showPwCheckWrap(objIdx, rowNumber) {
+		const pwCheckWrapElmnts = document.getElementsByClassName('pwCheckWrap');
+		const pwCheckWrapArray = [...pwCheckWrapElmnts];
+
+		let pwCheckWrapId = 'pwCheckWrap' + rowNumber;
+		const pwCheckWrapElmnt = document.getElementById(pwCheckWrapId);
+
+		for (const element of pwCheckWrapArray) {
+			element.innerHTML = '';
+			element.style.display = "none";
+		}
+
+		let html = '';
+
+		html = `<label for="postPw">Password</label>
+		<input type="password" id="postPw" name="postPw" class="base-search" maxlength="30" onkeydown="if(event.keyCode == 13){checkPw('${objIdx}');}">
+		<input type="hidden" name="objIdx" value="${objIdx}">
+		<button type="button" class="main-btn" onclick="checkPw()">Confirm</button>		
+		<br><span id="pwCheckWrapErrorMsg"></span>`;
+
+		pwCheckWrapElmnt.innerHTML = html;
+
+		pwCheckWrapElmnt.style.display = "flex";
+	}
+
+	function checkPw() {
+		const formData = new FormData(document.getElementById('checkPwForm'));
+		const postPw = document.getElementById("postPw");
+		const pwCheckWrapErrorMsg = document.getElementById("pwCheckWrapErrorMsg");
+		
+		pwCheckWrapErrorMsg.style.display = "none";
+		pwCheckWrapErrorMsg.innerText = '';
+		
+		if (postPw.value === '') {
+			// Please enter a password
+			pwCheckWrapErrorMsg.style.display = "block";
+			pwCheckWrapErrorMsg.innerText = "Por favor insira uma senha"
+		} else {
+			
+		fetch('/objection/pwCheck.ajax', {
+			method: "post",
+			body: formData
+		})
+			.then(response => response.json())
+			.then((result) => {
+				if (result.code === 200) {
+					let redirectUrl = result.successUrl;
+					let objIdx = result.data;
+
+	        let form = document.createElement("form");
+	        form.action = redirectUrl;
+	        form.method = "POST";
+
+	        let input = document.createElement("input");
+	        input.type = "hidden";
+	        input.name = "objIdx";
+	        input.value = objIdx;
+	        form.appendChild(input);
+
+	        document.body.appendChild(form);
+
+	        form.submit();
+
+	        document.body.removeChild(form);
+				} else {
+					pwCheckWrapErrorMsg.style.display = "block";
+					pwCheckWrapErrorMsg.innerText = result.message;
+				}
+			});
+		}
+	}
+
+	function fnPageMove(pageToMove) {
+		document.getElementById("page").value = pageToMove;
+		document.getElementById("searchForm").submit();
+	}
+	
+</script>
+

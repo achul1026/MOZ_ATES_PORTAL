@@ -21,21 +21,20 @@ import com.moz.ates.traffic.portal.common.service.CommonService;
 @Service
 public class CommonServiceImpl implements CommonService {
 
-    @Autowired
-    MozCmCdRepository cmCdRepository;
+  @Autowired
+  MozCmCdRepository cmCdRepository;
 
 	/**
-	 * @Method 		: getCommonCdList
-	 * @Author 		: NK.KIM
-	 * @Description : 공통 코드 조회
-	 * <PRE>
-	 * 2022. 3. 10. kim : 최초 작성
-	 * </PRE>
-	 */
+	  * @Method Name : getCdList
+	  * @Date : 2024. 3. 29.
+	  * @Author : IK.MOON
+	  * @Method Brief : 공통 코드 조회
+	  * @param cdGroupId
+	  * @return
+	  */
 	@Override
-	public List<MozCmCd> getCommonCdList(Map<String, Object> paramMap) {
-		String cdGroupId = !MozatesCommonUtils.isNull(paramMap.get("cdGroupId")) ? String.valueOf(paramMap.get("cdGroupId")) : "";
-		return cmCdRepository.selectCdList(cdGroupId);
+	public List<MozCmCd> getCdList(String cdGroupId) {
+		return cmCdRepository.findAllCdList(cdGroupId);
 	}
 	
 }
