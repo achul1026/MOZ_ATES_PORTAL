@@ -2,6 +2,8 @@ package com.moz.ates.traffic.portal.inquiry.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -13,10 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.moz.ates.traffic.common.component.Pagination;
+import com.moz.ates.traffic.common.component.validate.ValidateBuilder;
+import com.moz.ates.traffic.common.component.validate.ValidateChecker;
+import com.moz.ates.traffic.common.component.validate.ValidateResult;
 import com.moz.ates.traffic.common.entity.common.CommonResponse;
 import com.moz.ates.traffic.common.entity.enforcement.MozTfcEnfMaster;
 import com.moz.ates.traffic.common.entity.finentc.MozFineNtcInfo;
 import com.moz.ates.traffic.common.enums.NtcTypeCd;
+import com.moz.ates.traffic.common.support.exception.CommonException;
+import com.moz.ates.traffic.common.support.exception.ErrorCode;
 import com.moz.ates.traffic.portal.inquiry.service.InquiryService;
 
 @Controller
@@ -195,12 +202,37 @@ public class InquiryController {
 
 		return "views/inquiry/licneceDetail";
 	}
-	
-	@PostMapping("/enfstatus/bill/detail.do")
-	public String billPopup(Model model, @RequestParam Map<String, Object> paramMap) {
-//		paramMap.put("tfcEnfId", "E-20240425-1961-65");
-//		paramMap.put("dvrLcenId", "10070970/7");
-//		paramMap.put("vioBrth", "13/03/2000");
+
+	/**
+	  * @Method Name : billPopup
+	  * @Date : 2024. 5. 8.
+	  * @Author : IK.MOON
+	  * @Method Brief :
+	  * @param model
+	  * @param paramMap
+	  * @param request
+	  * @return
+	  * @throws Exception
+	  */
+	@RequestMapping("/enfstatus/bill/detail.do")
+	public String billPopup(Model model, @RequestParam Map<String, Object> paramMap, HttpServletRequest request) throws Exception {
+		
+		if (!request.getMethod().equals("POST")) {
+			throw new Exception();
+		}
+		
+		ValidateBuilder dtoValidator = new ValidateBuilder(paramMap);
+		
+		ValidateResult dtoValidateResult = dtoValidator
+				.addRule("tfcEnfId", new ValidateChecker().setRequired())
+				.addRule("dvrLcenId", new ValidateChecker().setRequired())
+				.addRule("vioBrth", new ValidateChecker().setRequired())
+				.isValid()
+				;
+		
+		if (!dtoValidateResult.isSuccess()) {
+			throw new CommonException(ErrorCode.REQUIRED_FIELDS);
+		}
 		
 		model.addAttribute("fineNtcInfo", inquiryService.getFineNtcInfo(paramMap));
 		return "views/inquiry/1stBillDetail";

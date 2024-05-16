@@ -1,4 +1,4 @@
-package com.moz.ates.traffic.portal.notification.service;
+package com.moz.ates.traffic.portal.contactus.service;
 
 import java.util.List;
 import com.moz.ates.traffic.common.entity.board.MozBrd;

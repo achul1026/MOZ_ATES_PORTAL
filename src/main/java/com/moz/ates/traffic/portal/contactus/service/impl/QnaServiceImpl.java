@@ -1,4 +1,4 @@
-package com.moz.ates.traffic.portal.notification.service.impl;
+package com.moz.ates.traffic.portal.contactus.service.impl;
 
 import java.util.List;
 
@@ -11,12 +11,14 @@ import com.moz.ates.traffic.common.component.FileUploadComponent;
 import com.moz.ates.traffic.common.entity.board.MozAtchFile;
 import com.moz.ates.traffic.common.entity.board.MozInqry;
 import com.moz.ates.traffic.common.entity.common.UploadFileInfo;
+import com.moz.ates.traffic.common.enums.BoradType;
+import com.moz.ates.traffic.common.enums.RegistantType;
 import com.moz.ates.traffic.common.repository.board.MozAtchFileRepository;
 import com.moz.ates.traffic.common.repository.board.MozInqryRepository;
 import com.moz.ates.traffic.common.support.exception.CommonException;
 import com.moz.ates.traffic.common.support.exception.ErrorCode;
 import com.moz.ates.traffic.common.util.MozatesCommonUtils;
-import com.moz.ates.traffic.portal.notification.service.QnaService;
+import com.moz.ates.traffic.portal.contactus.service.QnaService;
 
 @Service
 public class QnaServiceImpl implements QnaService {
@@ -83,7 +85,23 @@ public class QnaServiceImpl implements QnaService {
 	  */
 	@Override
 	public MozInqry getQnaDetail(String inqryId) {
-		return mozInqryRepository.findOneMozInqryPortal(inqryId);
+		if (MozatesCommonUtils.isNull(inqryId)) {
+			throw new CommonException(ErrorCode.REQUIRED_FIELDS);
+		}
+		
+		MozInqry inqryDetail = mozInqryRepository.findOneMozInqryPortal(inqryId);
+		
+		if (MozatesCommonUtils.isNull(inqryDetail)) {
+			throw new CommonException(ErrorCode.REQUIRED_FIELDS);
+		}
+		
+		inqryDetail.setQstAtchFileList(
+				mozAtchFileRepository.findAllMozAtchFileByAtchIdxAndRgsTy(inqryId, RegistantType.PORTAL_USER));
+		
+		inqryDetail.setAnsAtchFileList(
+				mozAtchFileRepository.findAllMozAtchFileByAtchIdxAndRgsTy(inqryId, RegistantType.ADMIN_USER));
+
+		return inqryDetail;
 	}
 
 	/**
@@ -96,47 +114,38 @@ public class QnaServiceImpl implements QnaService {
 	@Override
 	@Transactional
 	public void save(MozInqry mozInqry, MultipartFile[] uploadFile) {
-		
-		String inqryId = MozatesCommonUtils.getUuid();
-		mozInqry.setInqryId(inqryId);
-		
-		try {
-			if (uploadFile != null && uploadFile.length > 0) {
-				// 파일 갯수 제한
-				if (uploadFile.length > 4) {
-					throw new CommonException(ErrorCode.FILE_UPLOAD_FAIL);
-				}
-				
-				// 파일 크기 제한 (10MB)
-				for (MultipartFile file : uploadFile) {
-					if (file.getSize() > 10485760) {
-						throw new CommonException(ErrorCode.FILE_UPLOAD_FAIL);
-					}
-				}
-				
-				String[] extArr = {"jpg", "jpeg", "png"};
-				
-				List<UploadFileInfo> uploadFileInfo = fileUploadComponent.uploadFilesToUploadFileInfoListChkExtension(uploadFile, extArr);    		
-				
-				for (UploadFileInfo newUploadFileInfo : uploadFileInfo) {
 
-					MozAtchFile atchFile =new MozAtchFile();
-					String fileIdx = MozatesCommonUtils.getUuid();
-					atchFile.setFileIdx(fileIdx);
-					atchFile.setAtchIdx(inqryId);
-					atchFile.setAtchIdx(mozInqry.getInqryId());
-					atchFile.setFileOrgNm(newUploadFileInfo.getOriginalFileNm());
-					atchFile.setFileSaveNm(newUploadFileInfo.getFileNm());
-					atchFile.setFilePath(newUploadFileInfo.getFilePath());
-					atchFile.setFileSize(newUploadFileInfo.getFileSize());
-					atchFile.setFileExts(newUploadFileInfo.getFileExt());
-					mozAtchFileRepository.insertMozAtchFile(atchFile);
-				}
-			}
-			mozInqryRepository.saveMozInqry(mozInqry);
-		} catch (Exception e) {
+		mozInqry.setInqryId(MozatesCommonUtils.getUuid());
+
+		// 파일 갯수 제한
+		if (uploadFile.length > 10) {
 			throw new CommonException(ErrorCode.FILE_UPLOAD_FAIL);
 		}
+
+		for (MultipartFile file : uploadFile) {
+			if (!file.isEmpty() && !MozatesCommonUtils.isNull(file.getOriginalFilename())) {
+				// 파일 크기 제한 (5MB)
+				if (file.getSize() > 5242880) {
+					throw new CommonException(ErrorCode.FILE_UPLOAD_FAIL);
+				}
+
+				String[] extArr = { "jpg", "jpeg", "png"};
+				UploadFileInfo uploadFileInfo = fileUploadComponent
+						.uploadFileToUploadFileInfoChkExtension(file, extArr);
+				MozAtchFile atchFile = new MozAtchFile();
+				atchFile.setFileIdx(MozatesCommonUtils.getUuid());
+				atchFile.setAtchIdx(mozInqry.getInqryId());
+				atchFile.setFileOrgNm(uploadFileInfo.getOriginalFileNm());
+				atchFile.setFileSaveNm(uploadFileInfo.getFileNm());
+				atchFile.setFilePath(uploadFileInfo.getFilePath());
+				atchFile.setFileSize(uploadFileInfo.getFileSize());
+				atchFile.setFileExts(uploadFileInfo.getFileExt());
+				atchFile.setBrdTy(BoradType.QNA);
+				atchFile.setRgsTy(RegistantType.PORTAL_USER);
+				mozAtchFileRepository.insertMozAtchFile(atchFile);
+			}
+		}
+		mozInqryRepository.saveMozInqry(mozInqry);
 	}
 
 	/**

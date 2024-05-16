@@ -26,19 +26,28 @@
 					</div>
 					<div class="cm-notice-info">
 						<dl class="cm-notice-info-list">
-							<!-- TODO :: 첨부파일 작업 -->
 							<dt th:text="#{trafficinfo.common.file}">첨부파일</dt>
-							<dd>Não há informações cadastradas.</dd>
+							<th:block th:if="${tfcSftyEdctnDetail.atchFile == null}">
+								<dd>Não há informações cadastradas.</dd>
+							</th:block>
+							<th:block th:unless="${tfcSftyEdctnDetail.atchFile == null}">
+								<dd class="flex-center">
+									<a class="detailFile" th:href="@{/common/file/download.do(fileId=${tfcSftyEdctnDetail.atchFile.fileIdx})}">
+										<div th:text="${tfcSftyEdctnDetail.atchFile.fileOrgNm}">File Og Name</div>
+										<button class="download"></button>
+									</a>
+								</dd>
+							</th:block>
 						</dl>
 					</div>
-					<div id="cm-notice-con" th:text="${tfcSftyEdctnDetail.postCn}">
+					<div id="cm-notice-con" class="text-pre-line" th:text="${tfcSftyEdctnDetail.postCn}">
 						공지사항 입니다.
 					</div>
 				</div>
 			</div>		
 			<div class="btn-wrap-end">
 			<button type="button" class="sub-btn out-btn" th:onclick="|location.href='@{/traffic/info/edu/list.do}'|"
-				th:text="#{notification.common.list}">List</button>
+				th:text="#{trafficinfo.trafficSafeEduDetail.list}">List</button>
 			</div>
         </div>
 	</div>

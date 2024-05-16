@@ -29,18 +29,18 @@
 <!--	</div>-->
 	<div id="container">
 		<div id="wrap">
-			<h2 id="page-title" th:text="#{notification.faq.title}">FAQ</h2>
+			<h2 id="page-title" th:text="#{contactus.faq.title}">FAQ</h2>
 			<div id="filterBox">
 				<dl>
-					<dt th:text="#{notification.common.search}">Search</dt>
+					<dt th:text="#{contactus.common.search}">Search</dt>
 					<dd>
 						<form id="faqSearchForm" method="get">
 							<input type="text" name="searchTxt" class="base-search"
 								th:value="${mozFaq.searchTxt}"
-								th:placeholder="#{notification.common.search.placeholder}">
+								th:placeholder="#{contactus.common.search.placeholder}">
 							<input type="hidden" id="hdnStart" name="start" th:value="${mozFaq.start}">
 							<input type="hidden" id="page" name="page" value="1">
-							<button type="submit" class="sub-btn" th:text="#{notification.common.search.button}"></button>
+							<button type="submit" class="sub-btn" th:text="#{contactus.common.search.button}"></button>
 						</form>
 					</dd>
 				</dl>
@@ -48,14 +48,14 @@
 			<div id="list-table-wrap" th:object="${faqList}">
 				<div th:if="${not #object.isEmpty()}">
 					<div id="listSearchTableOpiton">
-						<div id="listSearchTotal"><p th:text="#{notification.faqList.total}"></p> <span th:text='|"${pagination.totalListCnt}"|'>"546465"</span></div>
+						<div id="listSearchTotal"><p th:text="#{contactus.faqList.total}"></p> <span th:text='|"${pagination.totalListCnt}"|'>"546465"</span></div>
 					</div>
 					<div id="base-table">
 						<ul class="base-table-th base-table-cm">
-							<li th:text="#{notification.common.number}"></li>
-							<li th:text="#{notification.common.title}">제목</li>
-							<li th:text="#{notification.common.add.date}"></li>
-							<li th:text="#{notification.common.view}">조회수</li>
+							<li th:text="#{contactus.common.number}"></li>
+							<li th:text="#{contactus.common.title}">제목</li>
+							<li th:text="#{contactus.common.add.date}"></li>
+							<li th:text="#{contactus.common.view}">조회수</li>
 						</ul>
 						<ul>
 							<li th:each="faqItem : ${faqList}" >
@@ -74,7 +74,7 @@
 					</div>
 				</div>
 				<div th:unless="${not #object.isEmpty()}">
-					<span th:text="#{notification.search.notFound}">등록된 FAQ가 없습니다</span>
+					<span th:text="#{contactus.search.notFound}">등록된 FAQ가 없습니다</span>
 				</div>
 				
 			</div>

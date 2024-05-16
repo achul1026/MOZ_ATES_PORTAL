@@ -3,47 +3,22 @@
 	layout:decorate="layouts/layout">
 	
 	<div layout:fragment="content">
-<!--		<div id="breadcrumb">-->
-<!--			<ul>-->
-<!--				<li>-->
-<!--					<a href="">-->
-<!--						<img th:src="@{/images/home.png}" alt="메인 페이지">-->
-<!--					</a>-->
-<!--				</li>-->
-<!--				<li>-->
-<!--					<img th:src="@{/images/arrow-right.png}" alt="다음">-->
-<!--				</li>-->
-<!--				<li>-->
-<!--					<a href="">-->
-<!--						서브페이지-->
-<!--					</a>-->
-<!--				</li>-->
-<!--				<li>-->
-<!--					<img th:src="@{/images/arrow-right.png}" alt="다음">-->
-<!--				</li>-->
-<!--				<li>-->
-<!--					<a href="">-->
-<!--						서브페이지-->
-<!--					</a>-->
-<!--				</li>-->
-<!--			</ul>-->
-<!--		</div>-->
 		<div id="container">
 			<div id="wrap">
-				<h2 id="page-title" th:text="#{notification.qna.title}">QnA</h2>
+				<h2 id="page-title" th:text="#{contactus.qna.title}">QnA</h2>
 				<div id="filterBox">
 					<form id="frmSearch">
 						<dl>
-							<dt th:text="#{notification.qnaList.type}">Type</dt>
+							<dt th:text="#{contactus.qnaList.type}">Type</dt>
 							<dd>
 								<select class="base-select" name="searchType">
-									<option th:text="#{notification.common.all}" th:value="all">All</option>
+									<option th:text="#{contactus.common.all}" th:value="all">All</option>
 									<option th:each="item : ${cateCdList}" th:text="${item.cdNm}" th:value="${item.cdId}" th:selected="${mozInqryInfo.searchType} == ${item.cdId}">cateCd</option>
 								</select>
 							</dd>
 						</dl>
 						<dl>
-							<dt th:text="#{notification.qnaList.date}">Date</dt>
+							<dt th:text="#{contactus.qnaList.date}">Date</dt>
 							<dd class="">
 								<input type="date" class="base-search" name="sDate" th:value="${mozInqryInfo.sDate}"> 
 								<sapn> ~ </sapn> 
@@ -51,11 +26,11 @@
 							</dd>
 						</dl>
 						<dl>
-							<dt th:text="#{notification.common.search}">Search</dt>
+							<dt th:text="#{contactus.common.search}">Search</dt>
 							<dd>
-								<input type="text" class="base-search" id="searchTxt" name="searchTxt" th:placeholder="#{notification.common.search.placeholder}" th:value="${mozInqryInfo.searchTxt}">
+								<input type="text" class="base-search" id="searchTxt" name="searchTxt" th:placeholder="#{contactus.common.search.placeholder}" th:value="${mozInqryInfo.searchTxt}">
 								<input type="hidden" name="page" id="page" value="1">
-								<input type="button" class="sub-btn" th:value="#{notification.common.search.button}" onclick="frmSearch.submit()"/>
+								<input type="button" class="sub-btn" th:value="#{contactus.common.search.button}" onclick="frmSearch.submit()"/>
 							</dd>
 						</dl>
 					</form>
@@ -63,37 +38,29 @@
 				<div id="list-table-wrap">
 					<div>
 						<div id="listSearchTableOpiton">
-							<div id="listSearchTotal"><p th:text="#{notification.qnaList.total}"></p> <span th:text='|"${pagination.totalListCnt}"|'>"546465"</span></div>
-							<a th:href="@{/info/qna/save.do}" class="sub-btn" th:text="#{notification.qna.new.inquiry}"></a>
+							<div id="listSearchTotal"><p th:text="#{contactus.qnaList.total}"></p> <span th:text='|"${pagination.totalListCnt}"|'>"546465"</span></div>
+							<a th:href="@{/info/qna/save.do}" class="sub-btn" th:text="#{contactus.qna.new.inquiry}"></a>
 						</div>
 						
 						<form id="checkPwForm" onsubmit="return false">
 							<div id="base-table">
 								<ul class="base-table-th base-table-cm">
-									<li th:text="#{notification.common.number}"></li>
-									<li th:text="#{notification.common.category}">카테고리</li>
-									<li th:text="#{notification.common.title}"></li>			
-									<li th:text="#{notification.common.add.date}"></li>
-									<li th:text="#{notification.common.answer}">답변상태</li>
+									<li th:text="#{contactus.common.number}"></li>
+									<li th:text="#{contactus.common.category}">카테고리</li>
+									<li th:text="#{contactus.common.title}"></li>			
+									<li th:text="#{contactus.common.add.date}"></li>
+									<li th:text="#{contactus.common.answer}">답변상태</li>
 								</ul>
 								<ul >	
 									<li th:each="item : ${mozInqryList}">
-	<!--									<ul class="base-table-td base-table-cm faq-table" th:onclick="|location.href='@{/info/qna/detail}'|">-->
 										<ul class="base-table-td base-table-cm qna-table" th:onclick="showPwCheckWrap([[${item.inqryId}]], [[${item.rnum}]])">
 											<li class="TableNumber" th:text="${item.rnum}">23213test</li>
 											<li class="TableType" th:text="${item.cmCd.cdNm}">카테고리2</li>
 											<li class="TableTitle" th:text="${item.postTtl}">주차 개선 요청2</li>
 											<li class="TableCmDate" th:text="${#dates.format(item.crDt, 'yyyy-MM-dd')}">2023-12-25</li>
-											<li class="TableStatus" th:text="${item.ansYn} == 'Y' ? #{notification.common.completed} : #{notification.common.incompleted}">대기중2</li>
+											<li class="TableStatus" th:text="${item.ansYn} == 'Y' ? #{contactus.common.completed} : #{contactus.common.incompleted}">대기중2</li>
 										</ul>
 										<ul class="pwCheckWrap" th:id="pwCheckWrap+${item.rnum}"></ul>
-										
-	<!--									<ul class="pwCheckWrap" id="pwCheckWrapId001">-->
-	<!--										<label for="userPw">Password</label>-->
-	<!--										<input type="password" id="userPw" name="userPw" class="base-search" maxlength="30">-->
-	<!--										<input type="hidden" name="" value="">-->
-	<!--										<button type="button" class="main-btn">Confirm</button>									-->
-	<!-- 									</ul>-->
 									</li>
 								</ul>
 							</div>
@@ -102,7 +69,7 @@
 							<div th:insert="tags/pagingTag :: pagingTag"></div>
 						</div>
 						<div th:if="${#lists.size(mozInqryList) == 0}">
-							<span colspan="5" th:text="#{notification.search.notFound}">검색 결과를 찾을 수 없습니다.</span>
+							<span colspan="5" th:text="#{contactus.search.notFound}">검색 결과를 찾을 수 없습니다.</span>
 						</div>
 					</div>
 				</div>
@@ -124,11 +91,6 @@
 		}
 		
 		let html = '';
-		// html += '	<label for="postPw">Password</label>';
-		// html += '	<input type="password" id="postPw" name="postPw" class="base-search" maxlength="30" onkeydown="if(event.keyCode == 13){checkPw(\'' + inqryId + '\');}">';
-		// html += '	<input type="hidden" name="inqryId" value="' + inqryId + '">';
-		// html += '	<button type="button" class="main-btn" onclick="checkPw(\'' + inqryId + '\')">Confirm</button>';					
-		// html += '	<br><span id="pwCheckWrapErrorMsg"></span>';	
 						
 		html = `<label for="postPw">Password</label>
 		<input type="password" id="postPw" name="postPw" class="base-search" maxlength="30" onkeydown="if(event.keyCode == 13){checkPw('${inqryId}');}">
@@ -149,9 +111,10 @@
             success: function(data){
                 if(data.code == 200){
                     location.href= __contextPath__+"/info/qna/detail.do?inqryId=" + inqryId;
-                } else {
+                } else {   
                 	var message = data.message;
                 	$("#pwCheckWrapErrorMsg").text(message);
+                	$("#pwCheckWrapErrorMsg").show();
                 }
             }
 		});

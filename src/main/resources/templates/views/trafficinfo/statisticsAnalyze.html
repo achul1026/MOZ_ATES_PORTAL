@@ -35,8 +35,8 @@
 					<dl>
 						<dt th:text="#{statisticsmng.common.search}">Search</dt>
 						<dd>
-							<input type="text" class="base-search" th:placeholder="#{notification.common.search.placeholder}">
-							<input type="button" class="main-btn" th:value="#{notification.common.search.button}"/>
+							<input type="text" class="base-search">
+							<input type="button" class="main-btn" value="search"/>
 						</dd>
 					</dl>
 				</div>
@@ -95,16 +95,11 @@
 	</div>
 </html>
 <script type="text/javascript">
-	
-	
-	
-	////TODO 좌표값 확인하기
-	const lng = 22;
-	const lat = 60;
+
 	let map = new MozAtesMap({
 		elementId : 'map',
-		center_lng : lng,
-		center_lat : lat,
+		center_lng : null,
+		center_lat : null,
 		isInitDrawCenterMarker : true
 	});
 

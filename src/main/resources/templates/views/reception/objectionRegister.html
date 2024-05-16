@@ -83,7 +83,7 @@
 							<dd>
 								<select class="base-select" name="cateCd">
 									<th:block th:each="cateItm : ${objCate}">
-										<option th:value="${cateItm.cdId}" th:text="${cateItm.cdNm}">Categiry Name</option>
+										<option th:value="${cateItm.cdId}" th:text="${cateItm.cdNm}">Category Name</option>
 									</th:block>
 								</select>
 							</dd>
@@ -94,17 +94,15 @@
 					<div class="cm-input-list">
 						<dl>
 							<dt class="textarea-top">
-								<label class="control-label" for="postCn" th:text="#{reception.objectionRegister.file}">첨부파일</label>
+								<label class="control-label" for="uploadFiles" th:text="#{reception.objectionRegister.file}">첨부파일</label>
 							</dt>
 							<dd id="file-wrap">
 								<div class="file-inner">
-									<input class="upload-name" readonly
-										th:placeholder="#{reception.objectionRegister.file}">
-									<button type="button" th:text="#{reception.objectionRegister.file.search}" class="fileUpBtn" onclick="fileUpload()">Find</button>
-									<input type="file" id="uploadFiles" multiple accept="image/jpeg, image/png" style="display: none;">
+									<button type="button" th:text="#{reception.objectionRegister.file.search}" class="fileUpBtn" onclick="fileUpload('5', '10', '50', ['jpg', 'jpeg', 'png'])">Find</button>
+									<input type="file" id="uploadFiles" name="uploadFiles" accept="image/jpeg, image/png" multiple style="display: none;">
 								</div>
 								<p class="file-text" th:text="#{reception.objectionRegister.file.rules}">
-									*파일첨부는 n개까지 가능, 총 (n)MB이하로 첨부하여 주세요. 첨부 가능 확장자 (*hwp,hwpx,…)
+									* 최대 10개. 최대 용량 5MB. 첨부 가능 확장자 (*jpg,jpeg,png)
 								</p>
 								<div class="uploadWrap none">
 									<div id="uploadListContainer"></div>
@@ -138,44 +136,30 @@
 </div>
 
 </html>
-<script type="text/javascript" th:inline="javascript">
+<script th:inline="javascript">
 
 	function registObj() {
-
 		if (soValid("registForm")) {
 			const formData = new FormData(document.getElementById('registForm'));
 
-			const fileList = document.getElementById("uploadFiles").files;
-			if (fileList.length > 0) {
-				for (const file of fileList) {
-					let fileReg = /(.*?)\.(jpg|jpeg|png)$/;
-					let maxSize = 20 * 1024 * 1024;
-					if (!fileReg.test(file.name)) {
-				        alert('Only Images File');
-				        return false;
-				    } 
-				    else if (file.size > maxSize) {
-				        alert('Image size is too large');
-				        return false;
-				    }
-					
-					formData.append("files", file);
-				}
-			}
-
-			fetch('/objection/save.ajax', {
+			fetch(/*[[@{/objection/save.ajax}]]*/, {
 				method: "post",
 				body: formData
 			})
 				.then(response => response.json())
 				.then((result) => {
 					if (result.code === 200) {
-						alert(result.message);
-						location.href="/objection/list.do";
+						new ModalBuilder().init().alertBody(result.message).footer(4, 'OK', function (button, modal) {
+							modal.close();
+							location.href=/*[[@{/objection/list.do}]]*/;
+						}).open();
 					} else {
-						alert(result.message);
+						new ModalBuilder().init().alertBody(result.message).footer(4, 'OK', function (button, modal) {
+							modal.close();
+						}).open();
 					}
 				});
 		}
 	}
+	
 </script>

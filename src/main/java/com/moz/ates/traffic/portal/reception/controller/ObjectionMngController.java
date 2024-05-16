@@ -131,17 +131,17 @@ public class ObjectionMngController {
 	  */
 	@PostMapping("/save.ajax")
 	@ResponseBody
-	public CommonResponse<?> objectionRegisterAjax(MozObjReg mozObjReg, @RequestParam(name = "files", required = false) MultipartFile[] files) {
-		
+	public CommonResponse<?> objectionRegisterAjax(
+			MozObjReg mozObjReg, 
+			@RequestParam(name = "uploadFiles", required = false) MultipartFile[] uploadFiles) {
 		try {
-			objectionMngService.saveObjReg(mozObjReg, files);
+			objectionMngService.saveObjReg(mozObjReg, uploadFiles);
+			// 성공적으로 등록되었습니다.
+			return CommonResponse.ResponseCodeAndMessage(HttpStatus.OK, "Você foi registrado com sucesso.");
 		} catch (Exception e) {
-			// 오류가 발생 했습니다.
-			return CommonResponse.ResponseCodeAndMessage(HttpStatus.BAD_REQUEST, "Um erro ocorreu.");
+			// 성공적으로 등록되지 않았습니다
+			return CommonResponse.ResponseCodeAndMessage(HttpStatus.BAD_REQUEST, "Não foi registrado com sucesso.");
 		}
-		
-		// 정상적으로 처리가 되었습니다.
-		return CommonResponse.ResponseCodeAndMessage(HttpStatus.OK, "Foi processado normalmente.");
 	}
 	
 	

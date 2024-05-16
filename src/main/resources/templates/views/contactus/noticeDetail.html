@@ -1,0 +1,59 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+
+	<div layout:fragment="content">
+    <div id="container">
+      <h2 id="page-title" th:text="#{contactus.notice.title}">공지사항</h2>
+			<div class="cm-info-wrap">
+				<div id="cm-notice-wrap">
+					<div id="cm-notice-title" th:text="${noticeDetail.boardTitle}">Notice Title</div>
+					<div class="cm-notice-info">
+						<dl class="cm-notice-info-list">
+							<dt th:text="${noticeDetail.webOprtr.oprtrDeptNm}">Transportation Administration</dt>
+							<dd th:text="${noticeDetail.webOprtr.oprtrNm}">Mr.Hoon</dd>
+						</dl>
+						<div id="cm-notice-info-date">
+							<dl class="cm-notice-info-list">
+								<dt th:text="#{contactus.common.registDate}">Regist Date</dt>
+								<dd th:text="${#dates.format(noticeDetail.crDt, 'yyyy-MM-dd')}">2023.08.13</dd>
+							</dl>
+							<dl class="cm-notice-info-list">
+								<dt th:text="#{contactus.common.view}">View</dt>
+								<dd th:text="${noticeDetail.viewCnt}">60</dd>
+							</dl>
+						</div>
+					</div>
+					<div class="cm-notice-info">
+						<dl class="cm-notice-info-list">
+							<dt th:text="#{contactus.common.file}">첨부파일</dt>
+
+							<th:block th:if="${#lists.isEmpty(noticeDetail.atchFileList)}">
+								<dd>Não há informações cadastradas.</dd>
+							</th:block>
+							<th:block th:unless="${#lists.isEmpty(noticeDetail.atchFileList)}">
+								<dd class="listItem">
+									<a class="detailFile" th:href="@{/common/file/download.do(fileId=${itm.fileIdx})}" 
+										th:each="itm : ${noticeDetail.atchFileList}">
+										<div th:text="${itm.fileOrgNm}">File Og Name</div>
+										<button class="download"></button>
+									</a>
+								</dd>
+							</th:block>
+							
+						</dl>
+					</div>
+					<div id="cm-notice-con" class="text-pre-line" th:text="${noticeDetail.boardContents}">
+						공지사항 입니다.
+					</div>
+				</div>
+			</div>
+			<div class="search-wrap btn-wrap">
+				<div class="form-group">
+					<button type="button" class="sub-btn out-btn" 
+						th:text="#{contactus.common.list}" th:onclick="|location.href='@{/info/notice/list.do}'|">List</button>
+				</div>
+			</div>
+    </div>
+	</div>
+</html>

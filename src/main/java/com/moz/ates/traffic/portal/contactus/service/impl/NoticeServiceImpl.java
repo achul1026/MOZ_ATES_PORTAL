@@ -1,4 +1,4 @@
-package com.moz.ates.traffic.portal.notification.service.impl;
+package com.moz.ates.traffic.portal.contactus.service.impl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,7 @@ import com.moz.ates.traffic.common.repository.board.MozBrdRepository;
 import com.moz.ates.traffic.common.support.exception.CommonException;
 import com.moz.ates.traffic.common.support.exception.ErrorCode;
 import com.moz.ates.traffic.common.util.MozatesCommonUtils;
-import com.moz.ates.traffic.portal.notification.service.NoticeService;
+import com.moz.ates.traffic.portal.contactus.service.NoticeService;
 
 @Service
 public class NoticeServiceImpl implements NoticeService {
@@ -66,10 +66,10 @@ public class NoticeServiceImpl implements NoticeService {
 		mozBrd.setUseYn("Y");
 		mozBrd.setCateCd(NoticeCateCd.PORTAL.getCode());
 		
-		mozBrdRepository.updateViewCnt(boardIdx);
-		MozBrd noticeDetail = mozBrdRepository.findOneByBoardIdxAnduseYnAndCateCd(mozBrd);
+		mozBrdRepository.updateViewCnt(mozBrd);
+		MozBrd noticeDetail = mozBrdRepository.findOneByBoardIdxAndUseYnAndCateCd(mozBrd);
 		
-		if(MozatesCommonUtils.isNull(mozBrd)) {
+		if(MozatesCommonUtils.isNull(noticeDetail)) {
 			throw new CommonException(ErrorCode.ENTITY_DATA_NULL);
 		}
 		

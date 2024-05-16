@@ -30,18 +30,18 @@
 <!--	</div>-->
 	<div id="container">
 		<div id="wrap">
-			<h2 id="page-title" th:text="#{notification.notice.title}">공지사항</h2>
+			<h2 id="page-title" th:text="#{contactus.notice.title}">공지사항</h2>
 			<div id="filterBox">
 				<dl>
-					<dt th:text="#{notification.common.search}">Search</dt>
+					<dt th:text="#{contactus.common.search}">Search</dt>
 					<dd>
 						<form id="noticeSearchForm" method="get">
 							<input type="text" name="searchTxt" class="base-search" 
 								th:value="${mozBrd.searchTxt}"
-								th:placeholder="#{notification.common.search.placeholder}">
+								th:placeholder="#{contactus.common.search.placeholder}">
 							<input type="hidden" id="hdnStart" name="start" th:value="${mozBrd.start}">
 							<input type="hidden" id="page" name="page" value="1">
-							<button type="submit" class="sub-btn" th:text="#{notification.common.search.button}"></button>
+							<button type="submit" class="sub-btn" th:text="#{contactus.common.search.button}"></button>
 						</form>
 					</dd>
 				</dl>
@@ -50,14 +50,14 @@
 				<div th:if="${not #object.isEmpty()}">
 					
 					<div id="listSearchTableOpiton">
-						<div id="listSearchTotal"><p th:text="#{notification.noticeList.total}"></p> <span th:text='|"${pagination.totalListCnt}"|'>"546465"</span></div>
+						<div id="listSearchTotal"><p th:text="#{contactus.noticeList.total}"></p> <span th:text='|"${pagination.totalListCnt}"|'>"546465"</span></div>
 					</div>
 					<div id="base-table">
 						<ul class="base-table-th base-table-cm">
-							<li th:text="#{notification.common.number}"></li>
-							<li th:text="#{notification.common.title}"></li>
-							<li th:text="#{notification.common.add.date}"></li>
-							<li th:text="#{notification.common.hits}"></li>
+							<li th:text="#{contactus.common.number}"></li>
+							<li th:text="#{contactus.common.title}"></li>
+							<li th:text="#{contactus.common.add.date}"></li>
+							<li th:text="#{contactus.common.hits}"></li>
 						</ul>
 						<ul>	
 							<li th:each="noticeItm : ${noticeList}">
@@ -76,7 +76,7 @@
 					</div>
 				</div>
 				<div th:unless="${not #object.isEmpty()}">
-					<span th:text="#{notification.search.notFound}">등록된 공지사항이 없습니다.</span>
+					<span th:text="#{contactus.search.notFound}">등록된 공지사항이 없습니다.</span>
 				</div>
 			</div>		
 			

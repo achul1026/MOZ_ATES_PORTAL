@@ -1,4 +1,4 @@
-package com.moz.ates.traffic.portal.notification.service.impl;
+package com.moz.ates.traffic.portal.contactus.service.impl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import com.moz.ates.traffic.common.repository.payment.MozPlPymntInfoRepository;
 import com.moz.ates.traffic.common.support.exception.CommonException;
 import com.moz.ates.traffic.common.support.exception.ErrorCode;
 import com.moz.ates.traffic.common.util.MozatesCommonUtils;
-import com.moz.ates.traffic.portal.notification.service.PenaltyPlaceService;
+import com.moz.ates.traffic.portal.contactus.service.PenaltyPlaceService;
 
 @Service
 public class PenaltyPlaceServiceImpl implements PenaltyPlaceService {

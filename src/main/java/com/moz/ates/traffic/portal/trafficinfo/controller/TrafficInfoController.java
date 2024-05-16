@@ -146,4 +146,15 @@ public class TrafficInfoController {
 		return "views/trafficinfo/trafficLawDetail";
 	}
 
+	/**
+	  * @Method Name : statistics
+	  * @Date : 2024. 5. 8.
+	  * @Author : IK.MOON
+	  * @Method Brief : 통계 페이지
+	  * @return
+	  */
+	@GetMapping("/stat")
+	public String statistics(Model model) {
+		return "views/trafficinfo/statisticsAnalyze";
+	}
 }

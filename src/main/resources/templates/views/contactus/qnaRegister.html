@@ -1,0 +1,118 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+
+	<div layout:fragment="content">
+        <div id="container">
+			<h2 id="page-title" th:text="#{contactus.qna.title}">문의하기</h2>
+			<form id="qnaSaveForm">
+				<div class="cm-info-wrap">
+					<h1	th:text="#{contactus.qna.register.user.title}">문의 신청인 정보</h1>
+						<div class="cm-input-wrap">
+							<div class="cm-input-list">
+								<dl>
+									<dt>
+										<label class="control-label" for="postPw" th:text="#{contactus.common.password}">비밀번호</label>
+									</dt>
+									<dd>
+										<input type="password" id="wrtrPno" name="postPw" placeholder="" class="form-control detail-input">
+									</dd>
+								</dl>
+							</div>
+						</div>
+				</div>
+				<div class="cm-info-wrap">
+					<h1 th:text="#{contactus.qna.content}">민원내용</h1>
+						<div class="search-wrap">
+							<div class="cm-input-list">
+								<dl>
+									<dt>
+										<label class="control-label" for="postTtl" th:text="#{contactus.common.title}">제목</label>
+									</dt>
+									<dd>
+										<input type="text" id="postTtl" name="postTtl" placeholder="" class="form-control detail-input">
+									</dd>
+								</dl>
+							</div>
+							
+							<div class="cm-input-list">
+								<dl>
+									<dt>
+										<label  class="control-label" for="cateCd" th:text="#{contactus.common.category}">카테고리</label>
+									</dt>
+									<dd>
+										<select class="base-select" name="cateCd" >
+											<option th:each="item : ${cateCdList}" th:text="${item.cdNm}" th:value="${item.cdId}">All</option>
+										</select>
+									</dd>
+								</dl>
+							</div>
+							<div class="cm-input-list">
+								<dl>
+									<dt class="textarea-top">
+										<label class="control-label" for="uploadFiles" th:text="#{contactus.common.file}">첨부파일</label>
+									</dt>
+									<dd id="file-wrap">
+										<div class="file-inner">
+											<button type="button" class="fileUpBtn" onclick="fileUpload('5', '10', '50', ['jpg', 'jpeg', 'png'])" th:text="#{contactus.common.file.search}">파일찾기</button> 
+											<input type="file" id="uploadFiles" name="uploadFiles" accept="image/jpeg, image/png" multiple style="display: none;">
+										</div>
+										<p class="file-text" th:text="#{contactus.common.qna.file.rules}">
+											* 최대 10개. 최대 용량 5MB. 첨부 가능 확장자 (*jpg,jpeg,png)
+										</p>
+										<div class="uploadWrap none">
+											<div id="uploadListContainer"></div>	
+										</div>
+									</dd>
+								</dl>
+							</div>
+							<div class="cm-input-list">
+								<dl>
+									<dt class="textarea-top">
+										<label class="control-label" for="postCn" th:text="#{contactus.common.text}">내용</label>
+									</dt>
+									<dd>
+										<textarea class="form-control base-textarea" id="postCn" name="postCn" rows="6"></textarea>
+									</dd>
+								</dl>
+							</div>
+							
+						</div>
+				</div>
+			</form>
+			<div class="btn-wrap-end">
+				<div class="form-group">
+					<input type="button" class="sub-btn out-btn" th:value="#{contactus.common.list}" onclick="location.href='/info/qna/list.do'">
+					<input type="button" class="main-btn out-btn" th:value="#{contactus.common.register}" th:onclick="registQna()">
+				</div>
+			</div>
+        </div>
+	</div>
+</html>
+<script th:inline="javascript">
+
+	function registQna() {
+		const formData = new FormData(document.getElementById('qnaSaveForm'));
+
+		$.ajax({
+			url: /*[[@{/info/qna/save.ajax}]]*/,
+			type: "post",
+			data: formData,
+			processData: false,  // jQuery가 데이터를 처리하지 않도록 설정
+			contentType: false,  // contentType을 false로 설정하여 jQuery가 boundary를 포함한 Content-Type 헤더를 설정하도록 함
+			success: function (result) {
+				if (result.code == 200) {
+					new ModalBuilder().init().alertBody(result.message).footer(4, 'OK', function (button, modal) {
+						modal.close();
+						location.href = /*[[@{/info/qna/list.do}]]*/;
+					}).open();
+				} else {
+					new ModalBuilder().init().alertBody(result.message).footer(4, 'OK', function (button, modal) {
+						modal.close();
+					}).open();
+				}
+			}
+		});
+	}
+	
+</script>

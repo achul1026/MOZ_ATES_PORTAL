@@ -272,3 +272,7 @@ input[type="checkbox"] {
 	}
 	
 }
+
+.text-pre-line{
+	white-space:pre-line
+}

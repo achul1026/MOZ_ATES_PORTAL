@@ -65,136 +65,152 @@ function mobileMenu(tg){
     }
 }
 
-function fileUpload() {
-	//file upload
-      
-        let $fileInput = $("#uploadFiles");
-        let $fileList = $("#uploadListContainer");
+function fileUpload(maxFileSizeMB, maxFileCount, maxFileNameLength, allowedExtensions) {
+	let $fileInput = $("#uploadFiles");
+	let $fileList = $("#uploadListContainer");
 
-        const inputFile = $fileInput[0].files;
-        $fileInput.click();
-        $fileInput.off().on("change", function() {
-            if(!fileUploadChange(inputFile) || !fileUploadChange(this.files)){
-                $fileInput.prop('files',inputFile);
-                return;
-            }
-            if(inputFile.length > 0){
-                fileChangeAddEvent(inputFile,this.files);
-            } else{
-                fileChangeDefaultEvent(this.files);
-            }
-            $('.uploadWrap').removeClass('none')
-        });
-     
+	const inputFile = $fileInput[0].files;
+	$fileInput.click();
+	$fileInput.off().on("change", function() {
+		// 파일 업로드 가능 개수 체크
+		if (inputFile.length + this.files.length > maxFileCount) {
+			$fileInput.prop('files', inputFile);
+			new ModalBuilder().init().alertBody(`Não pode haver mais de ${maxFileCount} arquivos.`).footer(4, 'OK', function (button, modal) {
+				// 파일은 최대 ${maxFileCount}개를 넘을 수 없습니다.
+				modal.close();
+			}).open();
+			return;
+		}
+		// 확장자, 용량, 이름 길이 체크
+		if (!fileUploadChange(inputFile) || !fileUploadChange(this.files)) {
+			$fileInput.prop('files', inputFile);
+			return;
+		}
+		if (inputFile.length > 0) {
+			fileChangeAddEvent(inputFile, this.files);
+		} else {
+			fileChangeDefaultEvent(this.files);
+		}
+		$('.uploadWrap').removeClass('none')
+	});
 
-        function fileChangeAddEvent(inputFileArr , addFileArr){
-            const dataTransfer = new DataTransfer();
-            Array.from(inputFileArr).forEach(file => {
-                addUniqueFile(file, dataTransfer);
-            });
-            Array.from(addFileArr).forEach(file => {
-                addUniqueFile(file, dataTransfer);
-            });
-            handleFiles(dataTransfer.files);
-            $fileInput.prop('files',dataTransfer.files);
-        }
 
-        function fileChangeDefaultEvent(files){
-            handleFiles(files);
-            $fileInput.prop('files',files);
-        }
+	function fileChangeAddEvent(inputFileArr, addFileArr) {
+		const dataTransfer = new DataTransfer();
+		Array.from(inputFileArr).forEach(file => {
+			addUniqueFile(file, dataTransfer);
+		});
+		Array.from(addFileArr).forEach(file => {
+			addUniqueFile(file, dataTransfer);
+		});
+		handleFiles(dataTransfer.files);
+		$fileInput.prop('files', dataTransfer.files);
+	}
 
-        function addUniqueFile(file, dataTransfer) {
-            const uniqueFileSet = new Set();
-            const uniqueFiles = [];
-            const uniqueKey = file.name + "_" + file.size;
+	function fileChangeDefaultEvent(files) {
+		handleFiles(files);
+		$fileInput.prop('files', files);
+	}
 
-            for (let i = dataTransfer.items.length - 1; i >= 0; i--) {
-                const file = dataTransfer.items[i].getAsFile();
-                if (uniqueFileSet.has(file.name + "_" + file.size)) {
-                    dataTransfer.items.remove(i);
-                } else {
-                    uniqueFileSet.add(file.name + "_" + file.size);
-                    uniqueFiles.push(file);
-                }
-            }
-            if (!uniqueFileSet.has(uniqueKey)) {
-                uniqueFileSet.add(uniqueKey);
-                dataTransfer.items.add(file);
-            }
-        }
+	function addUniqueFile(file, dataTransfer) {
+		const uniqueFileSet = new Set();
+		const uniqueFiles = [];
+		const uniqueKey = file.name + "_" + file.size;
 
-        function handleFiles(files) {
-            if (files.length === 0) return;
-            $("#uploadListContainer").empty();
-            for (let i = 0; i < files.length; i++) {
-                let fileNm = files[i].name;
-                var uploadList = $(`
+		for (let i = dataTransfer.items.length - 1; i >= 0; i--) {
+			const file = dataTransfer.items[i].getAsFile();
+			if (uniqueFileSet.has(file.name + "_" + file.size)) {
+				dataTransfer.items.remove(i);
+			} else {
+				uniqueFileSet.add(file.name + "_" + file.size);
+				uniqueFiles.push(file);
+			}
+		}
+		if (!uniqueFileSet.has(uniqueKey)) {
+			uniqueFileSet.add(uniqueKey);
+			dataTransfer.items.add(file);
+		}
+	}
+
+	function handleFiles(files) {
+		if (files.length === 0) return;
+		$("#uploadListContainer").empty();
+		for (let i = 0; i < files.length; i++) {
+			let fileNm = files[i].name;
+			var uploadList = $(`
 	                <div class="uploadList">
                 		<div class="listItem">
                 			<div class="fileList">
-		                		`+fileNm+`
+		                		`+ fileNm + `
                 			</div>
-	                		<button type="button" data-value='`+fileNm+`' class="fileDelBtn">
+	                		<button type="button" data-value='`+ fileNm + `' class="fileDelBtn">
 									<img src="/images/upload_close.png" alt="업로드파일 삭제">
 	                		</button>
                 		</div>
 	                </div>`);
-                console.log($fileList);
-                console.log(uploadList);
-                $fileList.append(uploadList);
-            }
-			 
-            $(".fileDelBtn").on('click',function(){
-                var $this = $(this);
-                var fileNm = $this.data('value');
-                const dataTransfer = new DataTransfer();
-                let trans = $('#uploadFiles')[0].files;
-                let fileArray = Array.from(trans);
-	
-                $this.closest('.uploadList').remove();
-                fileArray.filter(file => file.name != fileNm).forEach(file => {
-                    dataTransfer.items.add(file);
-                });
-                $fileInput.prop('files',dataTransfer.files);
-                
-                let uploadLength = $('#uploadListContainer').children().length;
-        		if(uploadLength <= 0){
-        			$('.uploadWrap').addClass('none')
-        		}
-            });
-        }
+			$fileList.append(uploadList);
+		}
 
+		$(".fileDelBtn").on('click', function() {
+			var $this = $(this);
+			var fileNm = $this.data('value');
+			const dataTransfer = new DataTransfer();
+			let trans = $('#uploadFiles')[0].files;
+			let fileArray = Array.from(trans);
 
-    function fileUploadChange(files){
-        var maxBytes = 5242880;
-        var fileNmMaxLength = 50;
+			$this.closest('.uploadList').remove();
+			fileArray.filter(file => file.name != fileNm).forEach(file => {
+				dataTransfer.items.add(file);
+			});
+			$fileInput.prop('files', dataTransfer.files);
 
-        for(var i = 0; i < files.length; i++){
-            var fileNm = files[i].name;
-            var fileBytes = 0;
+			let uploadLength = $('#uploadListContainer').children().length;
+			if (uploadLength <= 0) {
+				$('.uploadWrap').addClass('none')
+			}
+		});
+	}
 
-            if(fileNm != ''){
-                fileBytes = files[i].size;
-            }
-            if(fileNm != ''){
-                var ext = fileNm.slice(fileNm.lastIndexOf(".")+1).toLowerCase();
-                //if(ext != 'png' && ext != 'jpg' && ext != 'jpeg' && ext != 'mp4'){
-				//	alert('JPG, PNG, MP4 파일만 첨부 가능합니다.')
-                //    return false;
-                //}else 
-                if(fileBytes > maxBytes){
-                    return false;
-                }else if(fileNm.length > fileNmMaxLength){
-				//	new ModalBuilder().init().alertBoby('파일 제목은 50자 이상 넘을 수 없습니다.').footer(4,'확인',function(button, modal){modal.close();}).open();
-				//	modalAlertWrap();      
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
+	function fileUploadChange(files) {
+		var maxBytes = maxFileSizeMB * 1024 * 1024;
+
+		for (var i = 0; i < files.length; i++) {
+			var fileNm = files[i].name;
+			var fileBytes = 0;
+
+			if (fileNm != '') {
+				fileBytes = files[i].size;
+			}
+			if (fileNm != '') {
+				let fileReg = new RegExp("(.*?)\\.(" + allowedExtensions.join("|") + ")$");
+				// fileReg = /(.*?)\.(jpg|jpeg|png)$/
+				if (!fileReg.test(fileNm)) {
+					new ModalBuilder().init().alertBody(`Por favor, verifique a extensão do arquivo.(${allowedExtensions.join(", ")})`).footer(4, 'OK', function(button, modal) {
+						// 파일 확장자를 확인 해 주세요.
+						modal.close();
+					}).open();
+					return false;
+				}
+				if (fileBytes > maxBytes) {
+					new ModalBuilder().init().alertBody(`O tamanho do arquivo não pode exceder ${maxFileSizeMB}MB.`).footer(4, 'OK', function(button, modal) {
+						// 파일 용량은 ${maxFileSizeMB}MB를 초과할 수 없습니다.
+						modal.close();
+					}).open(); 
+					return false;
+				}
+				if (fileNm.length > maxFileNameLength) {
+					new ModalBuilder().init().alertBody(`Os títulos dos arquivos não podem exceder ${maxFileNameLength} caracteres.`).footer(4, 'OK', function(button, modal) {
+						// 파일 제목은 ${maxFileNameLength}자 이상을 넘을 수 없습니다.
+						modal.close();
+					}).open(); 
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 }
+
 /* 이태유 추가 */
 function numberComma(number) {
 	if(number == null) return 0;

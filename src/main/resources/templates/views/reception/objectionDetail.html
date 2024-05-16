@@ -10,7 +10,7 @@
 				<div class="cm-input-list cm-detail-input-list">
 					<dl>
 						<dt th:text="#{reception.objectionResult.bill.number}">
-							고지서 일련번호
+							단속 번호
 						</dt>
 						<dd class="" th:text="${objRegDetail.fineNtcInfo.tfcEnfId}">
 							M1318-2023-900018984
@@ -52,8 +52,14 @@
 						<dt th:text="#{reception.objectionResult.file}">
 							첨부파일
 						</dt>
-						<dd class="">
-							file
+						<dd th:if="${#lists.isEmpty(objRegDetail.qstAtchFileList)}">Não há informações cadastradas.</dd>
+						<dd th:unless="${#lists.isEmpty(objRegDetail.qstAtchFileList)}" class="flex-center">
+							<div class="detailFile" th:each="fileItem : ${objRegDetail.qstAtchFileList}">
+								<a th:href="@{/common/file/download.do(fileId = ${fileItem.fileIdx})}">
+									<div th:text="${fileItem.fileOrgNm}">파일 이름</div>
+									<button type="button" class="download"></button>
+								</a>
+							</div>
 						</dd>
 					</dl>
 				</div>
@@ -63,7 +69,7 @@
 							내용
 						</dt>
 						<dd>
-							<div th:text="${objRegDetail.postCn}"></div>
+							<div class="text-pre-line" th:text="${objRegDetail.postCn}"></div>
 						</dd>
 					</dl>
 				</div>
@@ -98,7 +104,7 @@
 						<dt th:text="#{reception.objectionResult.textarea.txt}">
 							내용
 						</dt>
-						<dd class="" th:text="${objRegDetail.ansContents}">
+						<dd class="text-pre-line" th:text="${objRegDetail.ansContents}">
 							Content
 						</dd>
 					</dl>

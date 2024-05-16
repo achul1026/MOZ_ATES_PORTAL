@@ -145,21 +145,21 @@
 					let redirectUrl = result.successUrl;
 					let objIdx = result.data;
 
-	        let form = document.createElement("form");
-	        form.action = redirectUrl;
-	        form.method = "POST";
-
-	        let input = document.createElement("input");
-	        input.type = "hidden";
-	        input.name = "objIdx";
-	        input.value = objIdx;
-	        form.appendChild(input);
-
-	        document.body.appendChild(form);
-
-	        form.submit();
-
-	        document.body.removeChild(form);
+			        let form = document.createElement("form");
+			        form.action = redirectUrl;
+			        form.method = "POST";
+		
+			        let input = document.createElement("input");
+			        input.type = "hidden";
+			        input.name = "objIdx";
+			        input.value = objIdx;
+			        form.appendChild(input);
+		
+			        document.body.appendChild(form);
+		
+			        form.submit();
+		
+			        document.body.removeChild(form);
 				} else {
 					pwCheckWrapErrorMsg.style.display = "block";
 					pwCheckWrapErrorMsg.innerText = result.message;

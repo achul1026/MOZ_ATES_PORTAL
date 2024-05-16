@@ -6,11 +6,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import com.moz.ates.traffic.common.component.FileUploadComponent;
 import com.moz.ates.traffic.common.entity.board.MozAtchFile;
 import com.moz.ates.traffic.common.entity.board.MozComplaintsReg;
 import com.moz.ates.traffic.common.entity.common.UploadFileInfo;
+import com.moz.ates.traffic.common.enums.BoradType;
+import com.moz.ates.traffic.common.enums.RegistantType;
 import com.moz.ates.traffic.common.repository.board.MozAtchFileRepository;
 import com.moz.ates.traffic.common.repository.board.MozComplaintsRegRepository;
 import com.moz.ates.traffic.common.support.exception.CommonException;
@@ -75,13 +78,22 @@ public class ComplaintsMngServiceImpl implements ComplaintsMngService {
 		  */
 		@Override
 		public MozComplaintsReg getComplaintsDetail(MozComplaintsReg mozComplaintsReg) {
+			if (MozatesCommonUtils.isNull(mozComplaintsReg.getComplaintsIdx())) {
+				throw new CommonException(ErrorCode.REQUIRED_FIELDS);
+			}
 
 			MozComplaintsReg complaintsDetail = complaintsRegRepository
 					.findOneMozComplaintsRegJoinMozCmCdAndMozWebOprtrByComplaintsIdx(mozComplaintsReg);
-			
+
 			if (MozatesCommonUtils.isNull(complaintsDetail)) {
 				throw new CommonException(ErrorCode.ENTITY_DATA_NULL);
 			}
+
+			complaintsDetail.setQstAtchFileList(atchFileRepository.findAllMozAtchFileByAtchIdxAndRgsTy(
+					mozComplaintsReg.getComplaintsIdx(), RegistantType.PORTAL_USER));
+			
+			complaintsDetail.setAnsAtchFileList(atchFileRepository.findAllMozAtchFileByAtchIdxAndRgsTy(
+					mozComplaintsReg.getComplaintsIdx(), RegistantType.ADMIN_USER));
 			
 			return complaintsDetail;
 		}
@@ -95,47 +107,42 @@ public class ComplaintsMngServiceImpl implements ComplaintsMngService {
 		  * @param files
 		  */
 		@Override
-		public void registComplaints(MozComplaintsReg mozComplaintsReg, MultipartFile[] files) {
-			// TODO Auto-generated method stub
+		@Transactional
+		public void registComplaints(MozComplaintsReg mozComplaintsReg, MultipartFile[] uploadFile) {
 			
-			String complaintsIdx = MozatesCommonUtils.getUuid();
-			mozComplaintsReg.setComplaintsIdx(complaintsIdx);
+			mozComplaintsReg.setComplaintsIdx(MozatesCommonUtils.getUuid());
 			mozComplaintsReg.setPostPw(Base64PasswordUtils.encodePassword(mozComplaintsReg.getPostPw()));
+			mozComplaintsReg.setAnsStts("N");
+				
+			// 파일 갯수 제한
+			if (uploadFile.length > 10) {
+				throw new CommonException(ErrorCode.FILE_UPLOAD_FAIL);
+			}
 			
-			if(files != null && files.length > 0){
-				
-				// 파일 갯수 제한
-				if (files.length > 10) {
-					throw new CommonException(ErrorCode.FILE_UPLOAD_FAIL);
-				}
-				
-				// 파일 크기 제한 (20MB)
-				for (MultipartFile file : files) {
-					if (file.getSize() > 20971520) {
+			for (MultipartFile file : uploadFile) {
+				if (!file.isEmpty() && !MozatesCommonUtils.isNull(file.getOriginalFilename())) {
+					// 파일 크기 제한 (5MB)
+					if (file.getSize() > 5242880) {
 						throw new CommonException(ErrorCode.FILE_UPLOAD_FAIL);
 					}
-				}
-				
-				String[] extArr = {"jpg", "jpeg", "png", "jfif", "pjpeg", "pjp"};
-				List<UploadFileInfo> uploadFileInfoList = fileUploadComponent
-						.uploadFilesToUploadFileInfoListChkExtension(files, extArr);
-				
-				for (UploadFileInfo uploadFileInfo : uploadFileInfoList) {
 
+					String[] extArr = { "jpg", "jpeg", "png"};
+					UploadFileInfo uploadFileInfo = fileUploadComponent
+							.uploadFileToUploadFileInfoChkExtension(file, extArr);
 					MozAtchFile atchFile = new MozAtchFile();
 					atchFile.setFileIdx(MozatesCommonUtils.getUuid());
-					atchFile.setAtchIdx(complaintsIdx);
+					atchFile.setAtchIdx(mozComplaintsReg.getComplaintsIdx());
 					atchFile.setFileOrgNm(uploadFileInfo.getOriginalFileNm());
 					atchFile.setFileSaveNm(uploadFileInfo.getFileNm());
 					atchFile.setFilePath(uploadFileInfo.getFilePath());
 					atchFile.setFileSize(uploadFileInfo.getFileSize());
 					atchFile.setFileExts(uploadFileInfo.getFileExt());
+					atchFile.setBrdTy(BoradType.COMPLAINTS);
+					atchFile.setRgsTy(RegistantType.PORTAL_USER);
 					atchFileRepository.insertMozAtchFile(atchFile);
 				}
 			}
-
-	    complaintsRegRepository.insertComaplainInfo(mozComplaintsReg);
-			
+			complaintsRegRepository.insertComaplainInfo(mozComplaintsReg);
 		}
 
 		/**

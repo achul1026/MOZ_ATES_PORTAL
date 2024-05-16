@@ -167,7 +167,13 @@ public class InquiryServiceImpl implements InquiryService {
 		paramMap.put("delYn", "N");
 		paramMap.put("ntcTy", NtcTypeCd.FIRST_NOTICE.getCode());
 		
-		return fineNtcInfoRepository.findOneFineNtcInfoForNoticeDetail(paramMap);
+		MozFineNtcInfo fineNtcInfo = fineNtcInfoRepository.findOneFineNtcInfoForNoticeDetail(paramMap);
+		
+		if (MozatesCommonUtils.isNull(fineNtcInfo)) {
+			throw new CommonException(ErrorCode.ENTITY_DATA_NULL);
+		}
+		
+		return fineNtcInfo;
 	}
 
 }

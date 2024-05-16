@@ -1,10 +1,8 @@
-package com.moz.ates.traffic.portal.notification.controller;
+package com.moz.ates.traffic.portal.contactus.controller;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,25 +15,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.moz.ates.traffic.common.component.FileUploadComponent;
 import com.moz.ates.traffic.common.component.Pagination;
-import com.moz.ates.traffic.common.entity.board.MozAtchFile;
 import com.moz.ates.traffic.common.entity.board.MozBrd;
 import com.moz.ates.traffic.common.entity.board.MozFaq;
 import com.moz.ates.traffic.common.entity.board.MozInqry;
 import com.moz.ates.traffic.common.entity.common.CommonResponse;
 import com.moz.ates.traffic.common.entity.common.MozCmCd;
 import com.moz.ates.traffic.common.entity.payment.MozPlPymntInfo;
-import com.moz.ates.traffic.common.repository.board.MozAtchFileRepository;
 import com.moz.ates.traffic.common.repository.common.MozCmCdRepository;
-import com.moz.ates.traffic.portal.notification.service.FaqService;
-import com.moz.ates.traffic.portal.notification.service.NoticeService;
-import com.moz.ates.traffic.portal.notification.service.PenaltyPlaceService;
-import com.moz.ates.traffic.portal.notification.service.QnaService;
+import com.moz.ates.traffic.portal.contactus.service.FaqService;
+import com.moz.ates.traffic.portal.contactus.service.NoticeService;
+import com.moz.ates.traffic.portal.contactus.service.PenaltyPlaceService;
+import com.moz.ates.traffic.portal.contactus.service.QnaService;
 
 @Controller
 @RequestMapping(value = "/info")
-public class InformationController {
+public class ContactUsController {
 
 	@Autowired
 	private FaqService faqService;
@@ -51,9 +46,6 @@ public class InformationController {
 	
 	@Autowired
 	private MozCmCdRepository mozCmCdRepository;
-	
-	@Autowired
-	private MozAtchFileRepository mozAtchFileRepository;
 
 	/**
 	  * @Method Name : noticeList
@@ -75,7 +67,7 @@ public class InformationController {
 		model.addAttribute("noticeList", noticeService.getNoticeList(mozBrd));
 		model.addAttribute("pagination", pagination);
 		
-		return "views/notification/noticeList";
+		return "views/contactus/noticeList";
 	}
 
 	/**
@@ -90,7 +82,7 @@ public class InformationController {
 	public String noticeDetail(Model model, @RequestParam(name="boardIdx", required = true) String boardIdx) {
 		
 		model.addAttribute("noticeDetail", noticeService.getNoticeDetail(boardIdx));
-		return "views/notification/noticeDetail";
+		return "views/contactus/noticeDetail";
 	}	
 
 	/**
@@ -114,7 +106,7 @@ public class InformationController {
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("faqList", faqService.getFaqList(mozFaq));
 
-		return "views/notification/faqList";
+		return "views/contactus/faqList";
 	}
 
 	/**
@@ -130,7 +122,7 @@ public class InformationController {
 
 		model.addAttribute("faqDetail", faqService.getFaqDetail(mozFaq));
 		
-		return "views/notification/faqDetail";
+		return "views/contactus/faqDetail";
 	}
 
 	/**
@@ -156,7 +148,7 @@ public class InformationController {
 		model.addAttribute("mozInqryInfo", mozInqry);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("mozInqryList", qnaService.getQnaList(mozInqry));
-		return "views/notification/qnaList";
+		return "views/contactus/qnaList";
 	}
 	
 	/**
@@ -170,9 +162,10 @@ public class InformationController {
 	@GetMapping("/qna/save.do")
 	public String qnaRegister(Model model) {
 		List<MozCmCd> cateCdList = mozCmCdRepository.findAllSubCmcd("INQUIRY_TYPE_CD");
-		cateCdList.removeIf(x -> x.getUseYn().equals("N"));
+		// TODO :: removeIf 모두 삭제 필요 useYn: N 조건으로 찾아와야 함
+ 		cateCdList.removeIf(x -> x.getUseYn().equals("N"));
 		model.addAttribute("cateCdList", cateCdList);
-		return "views/notification/qnaRegister";
+		return "views/contactus/qnaRegister";
 	}
 	
 	/**
@@ -180,23 +173,23 @@ public class InformationController {
 	  * @작성일 : 2024. 3. 8.
 	  * @작성자 : SM.KIM
 	  * @Method 설명 : QnA 신청
-	  * @param model
 	  * @param mozInqry
+	  * @param uploadFiles
 	  * @return
 	  */
 	@PostMapping("/qna/save.ajax")
-	public @ResponseBody CommonResponse<?> qnaRegister(Model model, MozInqry mozInqry
-														, @RequestParam(name="uploadFiles",required = false) MultipartFile[] uploadFiles) {
-		Map<String, Object> result = new HashMap<String, Object>();
+	@ResponseBody
+	public CommonResponse<?> qnaRegister(
+			MozInqry mozInqry
+			, @RequestParam(name="uploadFiles",required = false) MultipartFile[] uploadFiles) {
 		try {
 			qnaService.save(mozInqry, uploadFiles);
-			
-			result.put("code", 200);
-			result.put("message", "QnA registration completed");
-			return CommonResponse.successToData(result,"");
+			// 성공적으로 등록되었습니다.
+			return CommonResponse.ResponseCodeAndMessage(HttpStatus.OK, "Você foi registrado com sucesso.");
 			
 		} catch (Exception e) {
-			return CommonResponse.ResponseCodeAndMessage(HttpStatus.UNAUTHORIZED,"QnA registration failed");
+			// 성공적으로 등록되지 않았습니다
+			return CommonResponse.ResponseCodeAndMessage(HttpStatus.BAD_REQUEST, "Não foi registrado com sucesso.");
 		}
 	}
 	
@@ -210,8 +203,9 @@ public class InformationController {
 	 */
 	@GetMapping("/qna/detail.do")
 	public String qnaDetail(Model model, MozInqry mozInqry) {
+		// TODO:: 비밀번호 검증로직 필요
 		model.addAttribute("qnaDetail", qnaService.getQnaDetail(mozInqry.getInqryId()));
-		return "views/notification/qnaDetail";
+		return "views/contactus/qnaDetail";
 	}
 	
 	/**
@@ -224,15 +218,14 @@ public class InformationController {
 	  */
 	@PostMapping("/qna/detail.ajax")
 	public @ResponseBody CommonResponse<?> qnaDetail(MozInqry mozInqry) {
-		Map<String, Object> result = new HashMap<String, Object>();
 				
 		Boolean isVaild = qnaService.isValidatePostPw(mozInqry);
 		if (isVaild) {
 			
-			result.put("code", 200);
-			return CommonResponse.successToData(result,"");
+			return CommonResponse.ResponseCodeAndMessage(HttpStatus.OK,"");
 		}
-		return CommonResponse.ResponseCodeAndMessage(9999, "It's not a valid password");
+		// 비밀번호를 확인해 주세요
+		return CommonResponse.ResponseCodeAndMessage(HttpStatus.BAD_REQUEST, "Por favor verifique sua senha");
 	}
 	
 	/**
@@ -257,20 +250,6 @@ public class InformationController {
 		} catch (Exception e) {
 			return CommonResponse.ResponseCodeAndMessage(401,"QnA deletion failed");
 		}
-	}
-	
-	/**
-	  * @Method Name : qnaAtchFileDownload
-	  * @작성일 : 2024. 3. 13.
-	  * @작성자 : SM.KIM
-	  * @Method 설명 : 첨부파일 다운로드
-	  * @param response
-	  * @param atchFile
-	  */
-	@GetMapping("/file/download.do")
-	public void qnaAtchFileDownload(HttpServletResponse response, MozAtchFile atchFile) {
-		MozAtchFile existAtchFile = mozAtchFileRepository.findOneMozAtchFileByFileIdx(atchFile.getFileIdx());
-		FileUploadComponent.fileDownload(response, existAtchFile.getFileSaveNm(), existAtchFile.getFileOrgNm(), existAtchFile.getFilePath());
 	}
 
 	/**
@@ -297,7 +276,7 @@ public class InformationController {
 		model.addAttribute("plPymntList", penaltyPlaceService.getPenaltyPlaceList(plPymntInfo));
 		
 		
-		return "views/notification/penaltyPlaceList";
+		return "views/contactus/penaltyPlaceList";
 	}
 
 	/**
@@ -314,6 +293,7 @@ public class InformationController {
 
 		model.addAttribute("plPymntDetail", penaltyPlaceService.getPenaltyPlaceDetail(plPymntInfo));
 		
-		return "views/notification/penaltyplaceDetail";
+		return "views/contactus/penaltyplaceDetail";
 	}
+	
 }

@@ -30,18 +30,18 @@
 <!--	</div>-->
 	<div id="container">
 		<div id="wrap">
-			<h2 id="page-title" th:text="#{notification.penalty.title}">범칙금 납부처</h2>
+			<h2 id="page-title" th:text="#{contactus.penalty.title}">범칙금 납부처</h2>
 			<div id="filterBox">
 				<dl>
-					<dt th:text="#{notification.common.search}">Search</dt>
+					<dt th:text="#{contactus.common.search}">Search</dt>
 					<dd>
 						<form id="plPymntForm" method="get">
 							<input type="text" name="searchTxt" class="base-search" 
 								th:value="${plPymntInfo.searchTxt}"
-								th:placeholder="#{notification.common.search.placeholder}">
+								th:placeholder="#{contactus.common.search.placeholder}">
 							<input type="hidden" id="hdnStart" name="start" th:value="${plPymntInfo.start}">
 							<input type="hidden" id="page" name="page" value="1">
-							<button type="submit" class="main-btn" th:text="#{notification.common.search.button}"></button>
+							<button type="submit" class="main-btn" th:text="#{contactus.common.search.button}"></button>
 						</form>
 					</dd>
 				</dl>
@@ -49,16 +49,16 @@
 			<div id="list-table-wrap"  th:object="${plPymntList}">
 				<div th:if="${not #object.isEmpty()}">
 					<div id="listSearchTableOpiton">
-						<div id="listSearchTotal"><p th:text="#{notification.penaltyPlaceList.total}"></p> <span th:text='|"${pagination.totalListCnt}"|'>"546465"</span></div>
+						<div id="listSearchTotal"><p th:text="#{contactus.penaltyPlaceList.total}"></p> <span th:text='|"${pagination.totalListCnt}"|'>"546465"</span></div>
 					</div>
 					
 					<div id="base-table">
 						<ul class="base-table-th base-table-cm">
-							<li th:text="#{notification.common.number}"></li>
-							<li th:text="#{notification.common.payment}"></li>
-							<li th:text="#{notification.common.address}"></li>
-							<li th:text="#{notification.common.time}"></li>
-							<li th:text="#{notification.common.closedDays}">Closed Days</li>
+							<li th:text="#{contactus.common.number}"></li>
+							<li th:text="#{contactus.common.payment}"></li>
+							<li th:text="#{contactus.common.address}"></li>
+							<li th:text="#{contactus.common.time}"></li>
+							<li th:text="#{contactus.common.closedDays}">Closed Days</li>
 						</ul>
 						<ul>	
 							<li th:each="plPymntItm : ${plPymntList}">
@@ -78,7 +78,7 @@
 					</div>
 				</div>
 				<div th:unless="${not #object.isEmpty()}">
-					<span th:text="#{notification.search.notFound}">등록된 범칙금 납부처가 없습니다.</span>
+					<span th:text="#{contactus.search.notFound}">등록된 범칙금 납부처가 없습니다.</span>
 				</div>
 			</div>			
 		</div>		

@@ -1,4 +1,4 @@
-package com.moz.ates.traffic.portal.notification.service.impl;
+package com.moz.ates.traffic.portal.contactus.service.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +11,7 @@ import com.moz.ates.traffic.common.repository.board.MozFaqRepository;
 import com.moz.ates.traffic.common.support.exception.CommonException;
 import com.moz.ates.traffic.common.support.exception.ErrorCode;
 import com.moz.ates.traffic.common.util.MozatesCommonUtils;
-import com.moz.ates.traffic.portal.notification.service.FaqService;
+import com.moz.ates.traffic.portal.contactus.service.FaqService;
 
 /**
  * @packageName : com.moz.ates.traffic.portal.customermng.service.impl 

@@ -2,18 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <div th:fragment="headerFragment" id="header">
-	<div class="top-inner">
-		<div class="top-inner-contents">
-			<div class="top-inner-title" th:text="#{main.header.title}">Official Mozambican government portal page.</div>
-<!--			<div class="language">-->
-<!--				<select>-->
-<!--					<option>Language</option>-->
-<!--					<option>Eng</option>-->
-<!--					<option>Por</option>-->
-<!--				</select>-->
-<!--			</div>-->
-		</div>
-	</div>
 	<div id="header-contents">
 		<div class="center-wrap">
 			<div class="logo">
@@ -50,7 +38,7 @@
 							<li><a th:href="@{/traffic/info/safeinfo/list.do}" th:text="#{main.header.trafficSafetyInfo}"></a></li>
 							<li><a th:href="@{/traffic/info/edu/list.do}" th:text="#{main.header.trafficSafetyEdu}"></a></li>
 							<li><a th:href="@{/traffic/info/lawinfo/list.do}" th:text="#{main.header.trafficLawInfo}"></a></li>
-<!--							<li><a th:href="@{/statisticsmng/statisticsAnalyze}" th:text="#{main.header.analysis}"></a></li>-->
+							<li><a th:href="@{/traffic/info/stat}" th:text="#{main.header.analysis}"></a></li>
 						</ul>
 					</li>
 					<li>
@@ -181,14 +169,14 @@
 									<span th:text="#{main.header.trafficLawInfo}"></span>
 								</a>
 							</li>
-<!--							<li>-->
-<!--								<a th:href="@{/statisticsmng/statisticsAnalyze}">-->
-<!--									<div class="mIconWrap">-->
-<!--										<img src="/images/mobile-menu-img09.png">-->
-<!--									</div>-->
-<!--									<span th:text="#{main.header.trafficEnforStatis}"></span>-->
-<!--								</a>-->
-<!--							</li>-->
+							<li>
+								<a th:href="@{/traffic/info/stat}">
+									<div class="mIconWrap">
+										<img src="/images/mobile-menu-img09.png">
+									</div>
+									<span th:text="#{main.header.analysis}"></span>
+								</a>
+							</li>
 						</ul>
 					</li>
 					<li class="mobileDropList">

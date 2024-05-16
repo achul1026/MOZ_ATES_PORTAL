@@ -1,17 +1,27 @@
 package com.moz.ates.traffic.portal.common.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.moz.ates.traffic.common.component.FileUploadComponent;
+import com.moz.ates.traffic.common.entity.board.MozAtchFile;
 import com.moz.ates.traffic.common.entity.common.ApiDriverInfoDTO;
+import com.moz.ates.traffic.common.repository.board.MozAtchFileRepository;
 import com.moz.ates.traffic.common.support.exception.CommonException;
 import com.moz.ates.traffic.common.support.exception.ErrorCode;
 import groovyjarjarpicocli.CommandLine.Model;
@@ -27,7 +37,13 @@ import groovyjarjarpicocli.CommandLine.Model;
 @Controller
 @RequestMapping(value = "/common")
 public class CommonController {
-
+	
+	@Autowired
+	private MozAtchFileRepository mozAtchFileRepository;
+	
+	@Autowired
+	private FileUploadComponent fileUploadComponent;
+	
 	/**
 	 * @Method Name : finesPayment
 	 * @작성일 : 2024. 01. 15.
@@ -157,5 +173,24 @@ public class CommonController {
 
 
 		return ResponseEntity.ok(resultList);
+	}
+	
+	/**
+	  * @Method Name : fileDownload
+	  * @Date : 2024. 5. 13.
+	  * @Author : IK.MOON
+	  * @Method Brief : 첨부 파일 다운로드
+	  * @param fileId
+	  * @param response
+	  * @throws IOException
+	  */
+	@GetMapping("/file/download.do")
+	public void fileDownload(@RequestParam(value = "fileId", required = true) String fileId, 
+			HttpServletResponse response) throws IOException {
+		MozAtchFile atchFile = mozAtchFileRepository.findOneMozAtchFileByFileIdx(fileId);
+		fileUploadComponent.fileDownload(response
+				, atchFile.getFileSaveNm()
+				, atchFile.getFileOrgNm()
+				, atchFile.getFilePath());
 	}
 }
