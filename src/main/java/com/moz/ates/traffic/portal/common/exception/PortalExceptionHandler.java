@@ -18,6 +18,7 @@ public class PortalExceptionHandler extends ResponseEntityExceptionHandler{
 	
 	@ExceptionHandler(value = Exception.class)
 	public ModelAndView exceptionHandler(Exception e){
+		e.printStackTrace();
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("views/common/ErrorPage");
 		mav.addObject("message", e.getMessage());

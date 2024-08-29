@@ -59,7 +59,7 @@
 						</a>
 					</div>
 					<div>
-						<a th:href="@{/drivermng/driverStatus}">
+						<a th:href="@{/inquiry/licencestatus/search.do}">
 							<img src="/images/main-img03.png" alt="LicenceStatus">
 							<p class="main-menu-list-title" th:text="#{main.main.licence}">Licence</p>
 						</a>
@@ -102,16 +102,11 @@
 					</div>
 				</div>
 				<div class="board-contents">
-					
-					<div class="board-contents-list" th:each="ntcItm : ${noticeList}">
-						<div class="board-date" th:text="${#dates.format(ntcItm.crDt, 'yyyy.MM.dd')}">
-							2023.08.19
-						</div>
-<!--						<div class="category" th:text="#{main.main.accident}"></div>-->
-						<div class="board-contents-title">
-							<a th:href="@{/info/notice/detail.do?(boardIdx=${ntcItm.boardIdx})}" th:text="${ntcItm.boardTitle}">Notice title</a>
-						</div>
-					</div>
+					<a class="board-contents-list" th:each="ntcItm : ${noticeList}" th:href="@{/info/notice/detail.do?(boardIdx=${ntcItm.boardIdx})}">
+						<span class="board-date" th:text="${#dates.format(ntcItm.crDt, 'yyyy.MM.dd')}"></span>
+						<span class="board-contents-title" th:text="${ntcItm.boardTitle}"></span>
+						<img src="/images/arrow-light.png" class="boardArrow">
+					</a>
 
 				</div>
 			</div>
@@ -127,16 +122,11 @@
 					</div>
 				</div>
 				<div class="board-contents">
-					
-					<div class="board-contents-list" th:each="faqItm : ${faqList}">
-						<div class="board-date" th:text="${#dates.format(faqItm.regDt, 'yyyy.MM.dd')}">
-							2023.08.19
-						</div>
-						<div class="board-contents-title">
-							<a th:href="@{/info/faq/detail.do?(faqIdx=${faqItm.faqIdx})}" th:text="${faqItm.postTitle}">FAQ title</a>
-						</div>
-					</div>
-
+					<a class="board-contents-list" th:each="faqItm : ${faqList}" th:href="@{/info/faq/detail.do?(faqIdx=${faqItm.faqIdx})}">
+						<span class="board-date fap-date" th:text="${#dates.format(faqItm.regDt, 'yyyy.MM.dd')}"></span>
+						<span class="board-contents-title faq-contents-title" th:text="${faqItm.postTitle}"></span>
+						<img src="/images/arrow-light.png" class="boardArrow">
+					</a>
 				</div>
 			</div>
 		</div>

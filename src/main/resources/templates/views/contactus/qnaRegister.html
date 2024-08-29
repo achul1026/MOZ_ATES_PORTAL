@@ -15,7 +15,15 @@
 										<label class="control-label" for="postPw" th:text="#{contactus.common.password}">비밀번호</label>
 									</dt>
 									<dd>
-										<input type="password" id="wrtrPno" name="postPw" placeholder="" class="form-control detail-input">
+										<input type="password" id="postPw" name="postPw" class="form-control detail-input data-validate" maxlength="10"
+										th:data-valid-name="#{contactus.common.password}" 
+										data-valid-minimum="4" data-valid-maximum="10" data-valid-required data-valid-pw
+										onkeyup="trimValues(['postPw'])">
+										<p class="file-text">
+											<span class="file-text" th:text="#{contactus.qnaRegister.password.rules.length}">비밀번호 길이 문구</span>
+											<br>
+											<span class="file-text" th:text="#{contactus.qnaRegister.password.rules}">입력 가능 값 문구</span>
+										</p>
 									</dd>
 								</dl>
 							</div>
@@ -30,7 +38,9 @@
 										<label class="control-label" for="postTtl" th:text="#{contactus.common.title}">제목</label>
 									</dt>
 									<dd>
-										<input type="text" id="postTtl" name="postTtl" placeholder="" class="form-control detail-input">
+										<input type="text" id="postTtl" name="postTtl" class="form-control detail-input data-validate" maxlength="150"
+										th:data-valid-name="#{contactus.common.title}" 
+										data-valid-minimum="5" data-valid-maximum="150" data-valid-required>
 									</dd>
 								</dl>
 							</div>
@@ -41,7 +51,7 @@
 										<label  class="control-label" for="cateCd" th:text="#{contactus.common.category}">카테고리</label>
 									</dt>
 									<dd>
-										<select class="base-select" name="cateCd" >
+										<select class="base-select" name="cateCd" id="cateCd">
 											<option th:each="item : ${cateCdList}" th:text="${item.cdNm}" th:value="${item.cdId}">All</option>
 										</select>
 									</dd>
@@ -50,7 +60,7 @@
 							<div class="cm-input-list">
 								<dl>
 									<dt class="textarea-top">
-										<label class="control-label" for="uploadFiles" th:text="#{contactus.common.file}">첨부파일</label>
+										<label for="uploadFiles" th:text="#{contactus.common.file}">첨부파일</label>
 									</dt>
 									<dd id="file-wrap">
 										<div class="file-inner">
@@ -72,7 +82,9 @@
 										<label class="control-label" for="postCn" th:text="#{contactus.common.text}">내용</label>
 									</dt>
 									<dd>
-										<textarea class="form-control base-textarea" id="postCn" name="postCn" rows="6"></textarea>
+										<textarea class="form-control base-textarea data-validate" id="postCn" name="postCn" rows="6" maxlength="1000"
+										th:data-valid-name="#{contactus.common.text}" 
+										data-valid-minimum="5" data-valid-maximum="1000" data-valid-required></textarea>
 									</dd>
 								</dl>
 							</div>
@@ -81,38 +93,43 @@
 				</div>
 			</form>
 			<div class="btn-wrap-end">
-				<div class="form-group">
-					<input type="button" class="sub-btn out-btn" th:value="#{contactus.common.list}" onclick="location.href='/info/qna/list.do'">
-					<input type="button" class="main-btn out-btn" th:value="#{contactus.common.register}" th:onclick="registQna()">
-				</div>
+				<input type="button" class="sub-btn out-btn" th:value="#{contactus.common.list}" onclick="location.href='/info/qna/list.do'">
+				<input type="button" class="main-btn out-btn" th:value="#{contactus.common.register}" onclick="registerQna()">
 			</div>
         </div>
 	</div>
 </html>
 <script th:inline="javascript">
 
-	function registQna() {
+	function registerQna() {
+		if (!trimValues(['postPw', 'postTtl', 'postCn'])) return;
+		if (!soValid("qnaSaveForm")) return;
+		
+		const searchingMsg = /*[[#{contactus.common.loading.saving}]]*/;
+		const loading = new PortalLoading().start(searchingMsg);
+		
 		const formData = new FormData(document.getElementById('qnaSaveForm'));
 
-		$.ajax({
-			url: /*[[@{/info/qna/save.ajax}]]*/,
-			type: "post",
-			data: formData,
-			processData: false,  // jQuery가 데이터를 처리하지 않도록 설정
-			contentType: false,  // contentType을 false로 설정하여 jQuery가 boundary를 포함한 Content-Type 헤더를 설정하도록 함
-			success: function (result) {
-				if (result.code == 200) {
-					new ModalBuilder().init().alertBody(result.message).footer(4, 'OK', function (button, modal) {
-						modal.close();
-						location.href = /*[[@{/info/qna/list.do}]]*/;
-					}).open();
-				} else {
-					new ModalBuilder().init().alertBody(result.message).footer(4, 'OK', function (button, modal) {
-						modal.close();
-					}).open();
-				}
-			}
-		});
+		fetch(/*[[@{/info/qna/save.ajax}]]*/, {
+			method: "post"
+			, body: formData
+		})
+				.then(response => response.json())
+				.then((result) => {
+					if (result.code === 200) {
+						new ModalBuilder().init().successBody(result.message).footer(4, 'OK', function (button, modal) {
+							modal.close();
+							location.href = /*[[@{/info/qna/list.do}]]*/;
+						}).open();
+					} else {
+						new ModalBuilder().init().alertBody(result.message).footer(4, 'OK', function (button, modal) {
+							modal.close();
+						}).open();
+					}
+				})
+				.finally(() => {
+					loading.end();
+				});
 	}
-	
+
 </script>

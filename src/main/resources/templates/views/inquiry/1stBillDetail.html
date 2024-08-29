@@ -30,7 +30,7 @@
 				</dl>
 				<dl>
 					<dt>Multa</dt>
-					<dd th:text="${fineNtcInfo.firstFineNtcPrice}"></dd>
+					<dd th:text="${@mozatesCommonUtils.priceFmt(fineNtcInfo.firstFineNtcPrice ,'MOZAMBIQUE_METICAL')}"></dd>
 				</dl>
 				<dl>
 					<dt>Limite Pgto</dt>
@@ -71,14 +71,14 @@
 					</ul>
 				</div>
 				<div id="billDepartmentContainer">
-					<div id="billDepartment">
+					<div class="billDepartment billDepartmentList">
 						<p>- REPÚBLICA DE MOÇAMBIQUE</p>
 						<p>- MINISTÉRIO DO INTERIOR</p>
 						<p>- COMANDO GERAL DA POLÍCIA</p>
 						<p>- RAMO DA POLICIA DE ORDEM E SEGURANÇA PÚBLICA</p>
 						<p>- DEPARTAMENTO CENTRAL DA POLÍCIA DE TRÂNSITO</p>
 					</div>
-					<div id="billDepartment">
+					<div class="billDepartment">
 						<img src="/images/favilogo.png" alt="logo" id="billLogo">
 					</div>
 				</div>

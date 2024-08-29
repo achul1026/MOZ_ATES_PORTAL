@@ -4,12 +4,13 @@
 <div layout:fragment="content">
 	<div id="container">
 		<div id="wrap">
+			<h2 id="page-title" th:text="#{inquiry.pymntStatusSearch.mainTitle}">타이틀</h2>
 			<div class="detail-info-wrap nt-detail-info-wrap">
 				<div class="detail-title">
-					<h3 th:text="#{inquiry.pymntStatusDetail.paymentDeail}"></h3>
-					<div>
-						<span th:text="#{inquiry.pymntStatusSearch.enforcementNo}" id="billNumber"></span>
-						<span th:text="${pymntStatusDetail.tfcEnfId}">M1318-2023-90010893</span>
+					<h3 th:text="#{inquiry.pymntStatusDetail.paymentDetail}"></h3>
+					<div id="billWrap">
+						<span th:text="#{inquiry.pymntStatusSearch.enforcementNo}"></span>
+						<span th:text="${pymntStatusDetail.tfcEnfId}" id="billNumber">M1318-2023-90010893</span>
 					</div>
 				</div>
 				<div class="detail-table detail-table-7">
@@ -29,18 +30,10 @@
 						<dt th:text="#{inquiry.pymntStatusDetail.violationDate}"></dt>
 						<dd th:text="${#dates.format(pymntStatusDetail.tfcEnfDt, 'yyyy-MM-dd')}">23-01-25 11:20:19</dd>
 					</dl>
-					<!--					<dl>-->
-					<!--						<dt th:text="#{inquiry.pymntStatusDetail.violationType}"></dt>-->
-					<!--						<dd>Speeding</dd>-->
-					<!--					</dl>-->
 					<dl class="detail-content">
-						<dt class="detail19" th:text="#{inquiry.pymntStatusDetail.violationLaw}"></dt>
+						<dt class="detail19" th:text="#{inquiry.pymntStatusDetail.violationLaw}">위반 법률</dt>
 						<dd class="detail80">
-							<th:block th:each="tfcLwInfo : ${pymntStatusDetail.tfcLwInfoList}">
-								<div th:text="|[${tfcLwInfo.cdNm}] ${tfcLwInfo.lawArticleNo}|">
-									Article 13, Paragraph 7 of the Road Traffic Act
-								</div>
-							</th:block>
+							<p th:each="item : ${fineList}" th:text="${item.tfcLwInfo.lawNm}"></p>
 						</dd>
 					</dl>
 					<dl class="detail-content">
@@ -111,29 +104,16 @@
 			</div>
 		</div>
 		<div class="btn-wrap-end">
-			<a th:href="@{/inquiry/pymntstatus/search.do}" class="sub-btn out-btn"
+			<a th:href="@{/inquiry/pymntstatus/search.do}" class="sub-btn"
 				th:text="#{inquiry.pymntStatusDetail.list}"></a>
 			<th:block
 				th:if="${pymntStatusDetail.fineNtcInfo.ntcTy == 'NTT002' and pymntStatusDetail.finePymntInfo.pymntStts == 'N'}">
-				<button type="button" id="paymentButton" class="main-btn out-btn"
-					th:text="#{inquiry.pymntStatusDetail.paymentApplication}" onclick="viewModal()"></button>
+				<button type="button" id="paymentButton" class="main-btn"
+					th:text="#{inquiry.pymntStatusDetail.paymentApplication}" 
+					onclick="location.href = 'https://www.balcaovirtual.inatro.gov.mz/auth-login.php'"></button>
 			</th:block>
 		</div>
 	</div>
 </div>
-</div>
 
 </html>
-<script th:inline="javascript">
-	function viewModal() {
-		new ModalBuilder()
-			.init(/*[[#{inquiry.pymntStatusDetail.paymentApplication.title}]]*/)
-			.ajaxBody("/common/modal/fines/payment")
-			.footer(1, '', function (button, modal) { }).open();
-	}
-
-	function pageMoveBankPayment() {
-		let url = /*[[@{/inquiry/pymntstatus/bank/detail.do}]]*/;
-		location.href = url;
-	}
-</script>

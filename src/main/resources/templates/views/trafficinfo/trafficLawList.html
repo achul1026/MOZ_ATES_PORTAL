@@ -3,31 +3,6 @@
 	layout:decorate="layouts/layout">
 	
 	<div layout:fragment="content">
-<!--		<div id="breadcrumb">-->
-<!--			<ul>-->
-<!--				<li>-->
-<!--					<a href="">-->
-<!--						<img th:src="@{/images/home.png}" alt="메인 페이지">-->
-<!--					</a>-->
-<!--				</li>-->
-<!--				<li>-->
-<!--					<img th:src="@{/images/arrow-right.png}" alt="다음">-->
-<!--				</li>-->
-<!--				<li>-->
-<!--					<a href="">-->
-<!--						서브페이지-->
-<!--					</a>-->
-<!--				</li>-->
-<!--				<li>-->
-<!--					<img th:src="@{/images/arrow-right.png}" alt="다음">-->
-<!--				</li>-->
-<!--				<li>-->
-<!--					<a href="">-->
-<!--						서브페이지-->
-<!--					</a>-->
-<!--				</li>-->
-<!--			</ul>-->
-<!--		</div>-->
 		<div id="container">
 			<div id="wrap">
 				<h2 id="page-title" th:text="#{trafficinfo.trafficLawList.title}">교통법규 정보</h2>
@@ -37,7 +12,8 @@
 						<dd>
 							<form id="trafficLawInfoSearchForm" method="get">
 								<input type="text" class="base-search" name="searchTxt" 
-									th:value="${tfcLwInfo.searchTxt}" th:placeholder="#{trafficinfo.trafficLawList.search.placeholder}">
+									th:value="${tfcLwInfo.searchTxt}" th:placeholder="#{trafficinfo.trafficLawList.search.placeholder}"
+									   maxlength="20">
 								<input type="hidden" name="start" th:value="${tfcLwInfo.start}">
 								<input type="hidden" name="page" id="page" value="1">
 								<button type="submit" class="sub-btn" th:text="#{trafficinfo.common.search.button}">Search</button>
@@ -57,17 +33,18 @@
 						<div id="base-table">
 							<ul class="base-table-th base-table-cm">
 								<li th:text="#{trafficinfo.common.number}">No.</li>
-								<li th:text="#{trafficinfo.trafficLawList.legal.provisions}">Legal Provisions</li>
-								<li th:text="#{trafficinfo.trafficLawList.name.law}">Law Name</li>
-								<li th:text="#{trafficinfo.trafficLawList.date}">Date</li>
+								<li th:text="#{trafficinfo.trafficLawList.articleId}">Article ID</li>
+								<li th:text="#{trafficinfo.trafficLawList.lawType}">Law Name</li>
+								<li th:text="#{trafficinfo.trafficLawList.repealStatus}">Date</li>
 							</ul>
 							<ul>	
 								<li th:each="tfcLwInfoItm : ${tfcLwInfoList}">
 									<ul class="base-table-td base-table-cm laws-table" th:onclick="|location.href='@{/traffic/info/lawinfo/detail.do(tfcLawId=${tfcLwInfoItm.tfcLawId})}'|">
 										<li class="TableNumber" th:text="${tfcLwInfoItm.rnum}">1</li>
 										<li class="TableTitle" th:text="${tfcLwInfoItm.lawArticleNo}">도로교통법 제17조 3항</li>
-										<li class="TableSubTitle" th:text="${tfcLwInfoItm.lawNm}">속도제한 및 안전거리 확보</li>
-										<li class="TableCmDate" th:text="${#dates.format(tfcLwInfoItm.eftvDe, 'yyyy-MM-dd')}">2023-12-25</li>
+										<li class="TableType cm-line" th:text="${tfcLwInfoItm.lawType}">Other</li>
+										<li class="TableStatus" th:text="${tfcLwInfoItm.repealYn == 'Y'} ? 
+											#{trafficinfo.trafficLawList.repealStatus.y} : #{trafficinfo.trafficLawList.repealStatus.n}">폐지</li>
 									</ul>
 								</li>
 							</ul>

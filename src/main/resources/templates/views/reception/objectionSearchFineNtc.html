@@ -3,16 +3,18 @@
 
 <div layout:fragment="content">
 	<div id="container">
-		<h2 id="page-title" th:text="#{reception.objectionInfo.title.objectionInfo}">이의제기</h2>
+		<h2 id="page-title" th:text="#{reception.objectionSearchFineNtc.title}">이의제기</h2>
 
 		<div id="filterBox">
-			<form id="searchForm" method="get">
+			<form id="searchForm">
 				<dl>
 					<dt class="filterBoxRong" th:text="#{reception.objectionSearchFineNtc.search}">Search</dt>
 					<dd>
-						<input type="text" class="base-search" id="searchTxt" name="searchTxt" th:placeholder="#{reception.objectionSearchFineNtc.enter.text}">
-						<button type="button" class="main-btn" th:text="#{reception.common.check}"
-							onclick="searchFineNtcInfo()"></button>
+						<input type="text" class="base-search data-validate" id="searchTxt" name="searchTxt" 
+						th:placeholder="#{reception.objectionSearchFineNtc.enter.text}" maxlength="40"
+						data-valid-required>
+						<button type="button" class="sub-btn" th:text="#{reception.common.check}"
+							onclick="searchFineNtcInfo()">검색</button>
 					</dd>
 				</dl>
 			</form>
@@ -21,27 +23,23 @@
 		<div id="list-table-wrap">
 			<div id="base-table" class="ob-regist-base-table">
 				<ul class="base-table-th base-table-cm">
-					<li th:text="#{reception.common.check}">Check</li>
-					<li th:text="#{reception.modal.objectionDetail.car.number}"></li>
-					<li th:text="#{reception.modal.objectionDetail.bill.number}"></li>
-					<li th:text="#{reception.modal.objectionDetail.type}"></li>
-					<li th:text="#{reception.modal.objectionDetail.status}"></li>
+					<li th:text="#{reception.objectionSearchFineNtc.car.number}"></li>
+					<li th:text="#{reception.objectionSearchFineNtc.bill.number}"></li>
+					<li th:text="#{reception.objectionSearchFineNtc.type}"></li>
+					<li th:text="#{reception.objectionSearchFineNtc.status}"></li>
+					<li th:text="#{reception.oobjectionSearchFineNtc.regist}"></li>
 				</ul>
 				<ul>
 					<li>
-
 						<ul class="base-table-td base-table-cm ob-regist-table" id="searchResultWrap">
 							<li th:text="|Please search for the fine notice number|"></li>
 						</ul>
-
 					</li>
 				</ul>
 			</div>
 			<div class="btn-wrap-end">
 				<button type="button" class="sub-btn out-btn" th:onclick="|location.href='@{/objection/list.do}'|"
 					th:text="#{reception.common.list.more}">List</button>
-				<button type="button" class="main-btn" onclick="pageMoveToRegPage()"
-					th:text="#{reception.complainInfo.content.new.complaint}">이의제기 신청</button>
 			</div>
 		</div>
 	</div>
@@ -49,22 +47,17 @@
 </div>
 
 </html>
-<script>
-	function moveSavePage() {
-		location.href = '/objection/save.do';
-	}
+<script th:inline="javascript">
 
 	const searchResultWrapElmnt = document.getElementById("searchResultWrap");
 
 	function searchFineNtcInfo() {
-		const searchTxtVal = document.getElementById("searchTxt").value;
-
-		if (searchTxtVal === null || searchTxtVal === '') {
-			// Please enter your search term
-			alert("Por favor insira o seu termo de pesquisa");
-			return false;
-		}
-		searchResultWrapElmnt.innerHTML = "<li>Searching.....</li>";
+		trimValues(['searchTxt']);
+		if(!soValid('searchForm')) return false;
+		 
+		let searchingMsg = /*[[#{reception.objectionSearchFineNtc.searching}]]*/;
+		const loading = new PortalLoading().start(searchingMsg);
+		searchResultWrapElmnt.innerHTML = "";
 
 		const formData = new FormData(document.getElementById("searchForm"));
 
@@ -87,18 +80,26 @@
 					} else {
 						pymntStts = "Unpaid";
 					}
+					let btnTxt = /*[[#{reception.oobjectionSearchFineNtc.registBtn}]]*/;
 					
-					let html = `							<li class="TableCheck"><input type="radio" id="tfcEnfId" value="${tfcEnfId}"></li>
-							<li class="TableCarNumber">${vhRegNo}</li>
+					let html = `	<li class="TableCarNumber">${vhRegNo}</li>
 							<li class="TableObNumber">${tfcEnfId}</li>
 							<li class="TableCmType">${ntcTy}</li>
-							<li class="TableStatus">${pymntStts}</li>`;
+							<li class="TableStatus">${pymntStts}</li>
+							<li>				
+								<button type="button" class="main-btn" onclick="pageMoveToRegPage()"
+									>${btnTxt}</button>
+								<input type="hidden" id="tfcEnfId" value="${tfcEnfId}">
+							</li>`;
 					
 					searchResultWrapElmnt.innerHTML = html;
 				} else {
 					// There are no matching results.
 					searchResultWrapElmnt.innerHTML = "<li>Não há resultados correspondentes.</li>"
 				}
+			})
+			.finally(() => {
+				loading.end();
 			});
 	}
 
@@ -112,18 +113,9 @@
 			return false;
 		}
 
-		if (!tfcEnfIdElmnt.checked) {
-			// Please select a fine notice
-			alert("Selecione um aviso de penalidade")
-			return false;
-		}
-
 		const tfcEnfIdVal = tfcEnfIdElmnt.value;
-		location.href = "/objection/save.do?searchTxt="+tfcEnfIdVal;
+		let url = /*[[@{/objection/save.do?searchTxt=}]]*/;
+		location.href = url+tfcEnfIdVal;
 	}
 
-	// TODO::시연&개발 끝나면 삭제
-	$("#page-title").click(function() {
-		$("#searchTxt").val("E-20240507-1961-0");
-	});
 </script>

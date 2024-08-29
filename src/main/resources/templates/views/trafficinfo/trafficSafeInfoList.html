@@ -3,32 +3,6 @@
 	layout:decorate="layouts/layout">
 	
 	<div layout:fragment="content">
-<!--		<div id="breadcrumb">-->
-<!--			<ul>-->
-<!--				<li>-->
-<!--					<a href="">-->
-<!--						<img th:src="@{/images/home.png}" alt="메인 페이지">-->
-<!--					</a>-->
-<!--				</li>-->
-<!--				<li>-->
-<!--					<img th:src="@{/images/arrow-right.png}" alt="다음">-->
-<!--				</li>-->
-<!--				<li>-->
-<!--					<a href="">-->
-<!--						서브페이지-->
-<!--					</a>-->
-<!--				</li>-->
-<!--				<li>-->
-<!--					<img th:src="@{/images/arrow-right.png}" alt="다음">-->
-<!--				</li>-->
-<!--				<li>-->
-<!--					<a href="">-->
-<!--						서브페이지-->
-<!--					</a>-->
-<!--				</li>-->
-<!--			</ul>-->
-<!--		</div>-->
-		
 		<div id="container">
 			<div id="wrap">
 				<h2 id="page-title" th:text="#{trafficinfo.sateinfo.title}">Traffic Safety Information</h2>
@@ -39,7 +13,8 @@
 								<form id="trfcSftyInfrmForm" method="get">
 									<input type="text" class="base-search" name="searchTxt"
 										th:value="${tfcSftyInfrm.searchTxt}"
-										th:placeholder="#{trafficinfo.common.search.placeholder}">
+										th:placeholder="#{common.search.placeholder}"
+									maxlength="20">
 									<input type="hidden" id="start" name="start" th:value="${tfcSftyInfrm.start}">
 									<input type="hidden" id="page" name="page" value="1">
 									<input type="submit" class="sub-btn" th:value="#{trafficinfo.common.search.button}"/>
@@ -71,7 +46,7 @@
 										<li class="TableNumber" th:text="${tfcSftyInfrmItm.rnum}">1</li>
 										<li class="TableTitle" th:text="${tfcSftyInfrmItm.postTtl}">post title</li>
 										<li class="TableCmDate" th:text="${#dates.format(tfcSftyInfrmItm.crDt, 'yyyy-MM-dd')}">2023-12-25</li>
-										<li class="TableView" th:text="${tfcSftyInfrmItm.viewCnt}">256</li>
+										<li class="TableView cm-line" th:text="${tfcSftyInfrmItm.viewCnt}">256</li>
 									</ul>
 								</li>
 							</ul>

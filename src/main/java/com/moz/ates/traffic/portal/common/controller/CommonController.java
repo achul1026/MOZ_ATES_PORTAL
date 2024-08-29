@@ -45,19 +45,6 @@ public class CommonController {
 	private FileUploadComponent fileUploadComponent;
 	
 	/**
-	 * @Method Name : finesPayment
-	 * @작성일 : 2024. 01. 15.
-	 * @작성자 : TY.LEE
-	 * @Method 설명 : 과태료 납부
-	 * @param model
-	 * @return
-	 */
-	@GetMapping("/modal/fines/payment")
-	public String finesPayment(Model model) {
-		return "views/common/modalFinesPayment";
-	}
-
-	/**
 	 * @Method Name : objectionDatail
 	 * @작성일 : 2024. 01. 16.
 	 * @작성자 : TY.LEE

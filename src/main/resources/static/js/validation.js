@@ -1,10 +1,18 @@
-/**
- * 
- */
 
 function soValid(formId) {
 	let form = document.getElementById(formId);
 	let valid = true;
+	const pwRegEx = /^[a-zA-Z0-9!@#$%^&*]+$/;
+	function checkTel(num) {
+	    const regex = /^\d+$/;
+		return regex.test(num);
+	}
+
+	function checkBrthDt(brthDt) {
+		// dd-MM-yyyy
+		const regex = /^(0[1-9]|[12]\d|3[01])(0[1-9]|1[0-2])\d{4}$/;
+		return regex.test(brthDt.replace(/\D/g, ''));
+	}
 
 	let elements = form.querySelectorAll('.data-validate');
 	elements.forEach(function(element) {
@@ -22,12 +30,14 @@ function soValid(formId) {
 					msg = `Por favor, selecione uma ${labelname}`;
 				}
 				
-				alert(msg);
+				new ModalBuilder().init().alertBody(msg).footer(4, 'OK', function (button, modal) {
+					modal.close();
+					setTimeout(function() {
+						element.focus();
+						element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+					}, 0);
+				}).open();
 				
-				setTimeout(function() {
-					element.focus();
-					element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-				}, 0);
 	
 				valid = false;
 				return false;
@@ -37,12 +47,14 @@ function soValid(formId) {
 				let min = element.getAttribute('data-valid-minimum');
 				msg = `${labelname} deve ter pelo menos ${min} caracteres`;
 				
-				alert(msg);
+				new ModalBuilder().init().alertBody(msg).footer(4, 'OK', function (button, modal) {
+					modal.close();
+					setTimeout(function() {
+						element.focus();
+						element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+					}, 0);
+				}).open();
 				
-				setTimeout(function() {
-					element.focus();
-					element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-				}, 0);
 				
 				valid = false;
 				return false;
@@ -54,13 +66,66 @@ function soValid(formId) {
 				// por : A senha não pode exceder 10 caracteres
 				// eng : Password cannot exceed 10 characters
 				
-				alert(msg);
+				new ModalBuilder().init().alertBody(msg).footer(4, 'OK', function (button, modal) {
+					modal.close();
+					setTimeout(function() {
+						element.focus();
+						element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+					}, 0);
+				}).open();
 				
-				setTimeout(function() {
-					element.focus();
-					element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-				}, 0);
 				
+				valid = false;
+				return false;
+			}
+			
+			if (element.hasAttribute('data-valid-tel') && !checkTel(value)) {
+				// 전화번호는 숫자만 입력할 수 있습니다.
+				let msg = 'Os números de telefone só podem conter números.';
+				
+				new ModalBuilder().init().alertBody(msg).footer(4, 'OK', function (button, modal) {
+					modal.close();
+					setTimeout(function() {
+						element.focus();
+						element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+					}, 0);
+				}).open();
+				
+				
+				valid = false;
+				return false;
+			}
+			
+			if (element.hasAttribute('data-valid-brth') && !checkBrthDt(value)) {
+				// 생년월일 형식이 잘못되었습니다.
+				let msg = 'O formato da data de nascimento está incorreto.';
+				
+				new ModalBuilder().init().alertBody(msg).footer(4, 'OK', function (button, modal) {
+					modal.close();
+					setTimeout(function() {
+						element.focus();
+						element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+					}, 0);
+				}).open();
+				
+				
+				valid = false;
+				return false;
+			}
+
+			if (element.hasAttribute('data-valid-pw') && !pwRegEx.test(value)) {
+				// 비밀번호 형식이 잘못 되었습니다.
+				let msg = 'O formato da senha está incorreto.';
+
+				new ModalBuilder().init().alertBody(msg).footer(4, 'OK', function (button, modal) {
+					modal.close();
+					setTimeout(function() {
+						element.focus();
+						element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+					}, 0);
+				}).open();
+
+
 				valid = false;
 				return false;
 			}

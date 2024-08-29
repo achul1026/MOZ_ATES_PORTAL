@@ -1,195 +1,150 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="layouts/layout">
+      layout:decorate="layouts/layout">
 
 <div layout:fragment="content">
-	<div id="container">
-		<div id="wrap">
-			<h2 id="page-title" th:text="#{inquiry.pymntStatusSearch.mainTitle}"></h2>
-			<form id="searchFrm">
-				<div id="filterBox">
-					<!--				<dl>-->
-					<!--					<dt th:text="#{inquiry.common.type}">Type</dt>-->
-					<!--					<dd>-->
-					<!--						<select class="base-select">-->
-					<!--							<option th:text="#{inquiry.common.select}">선택</option>-->
-					<!--							<option th:text="#{inquiry.finesInquiryList.finesInquiry}">Fine Inquiry</option>-->
-					<!--							<option th:text="#{inquiry.finesInquiryList.penaltyInquiry}">Fine Inquiry</option>-->
-					<!--						</select>-->
-					<!--					</dd>-->
-					<!--				</dl>-->
-					<!--				<dl>-->
-					<!--					<dt th:text="#{inquiry.pymntStatusSearch.inquiry}">Search</dt>-->
-					<!--					<dd>-->
-					<!--						<input type="text" class="base-search"-->
-					<!--							th:placeholder="#{inquiry.finesInquiryList.enterVehicleNumber}">-->
-					<!--						<input type="button" class="main-btn" th:value="#{inquiry.finesInquiryList.inquiry}" />-->
-					<!--					</dd>-->
-					<!--				</dl>-->
-					<dl>
-						<dt class="filterBoxRong" th:text="#{inquiry.pymntStatusSearch.enforcementNo}">Enforcement No.</dt>
-						<dd>
-							<input type="text" name="tfcEnfId" id="tfcEnfId" class="base-search" th:placeholder="#{inquiry.pymntStatusSearch.enforcementNo}">
-						</dd>
-					</dl>
-					<dl>
-						<dt class="filterBoxRong" th:text="#{inquiry.pymntStatusSearch.birth.date}">Date of Birth</dt>
-						<dd>
-							<input type="text" name="vioBrth" id="vioBrth" class="base-search"
-								th:placeholder="#{inquiry.pymntStatusSearch.birth.date}">
-						</dd>
-					</dl>
-					<dl>
-						<dt class="filterBoxRong" th:text="#{inquiry.pymntStatusSearch.licneceId}">Driving Licence I.D No</dt>
-						<dd>
-							<input type="text" name="dvrLcenId" id="dvrLcenId" class="base-search"
-								th:placeholder="#{inquiry.pymntStatusSearch.licneceId}">
-							<button type="button" class="sub-btn" th:text="#{inquiry.pymntStatusSearch.button.search}"
-								onclick="searchEnfInfo()">Search</button>
-						</dd>
-					</dl>
-				</div>
-			</form>
-			<div id="list-table-wrap">
-				<!--					<div id="listSearchTableOpiton">-->
-				<!--						<div id="listSearchTotal">총 <span>"1개"</span> 의 내용이 검색되었습니다.</div>-->
-				<!--						<div id="listSearchSelect">-->
-				<!--							<select class="base-select">-->
-				<!--						     	<option th:text="#{inquiry.pymntStatusSearch.classType}">분류유형</option>-->
-				<!--						     	<option th:text="#{inquiry.common.select}">전체</option>-->
-				<!--						     	<option th:text="#{inquiry.pymntStatusSearch.1st}">1차</option>-->
-				<!--						     	<option th:text="#{inquiry.pymntStatusSearch.2nd}">2차</option>-->
-				<!--							</select>							-->
-				<!--							<select class="base-select">-->
-				<!--						     	<option th:text="#{inquiry.pymntStatusSearch.paymentStatus}">납부여부</option>-->
-				<!--						     	<option th:text="#{inquiry.common.all}">전체</option>-->
-				<!--						     	<option th:text="#{inquiry.pymntStatusSearch.paymentStatus.payment}">납부</option>-->
-				<!--						     	<option th:text="#{inquiry.pymntStatusSearch.paymentStatus.default}">미납</option>-->
-				<!--						    </select>-->
-				<!--						</div>-->
-				<!--					</div>-->
-				<div id="base-table">
-					<ul class="base-table-th base-table-cm">
-						<!--						<li th:text="#{inquiry.finesInquiryList.number}"></li>-->
-						<li th:text="#{inquiry.pymntStatusSearch.vehicleNumber}"></li>
-						<li th:text="#{inquiry.pymntStatusSearch.enforcementNo}"></li>
-						<li th:text="#{inquiry.pymntStatusSearch.paymentStatus}"></li>
-						<li th:text="#{inquiry.pymntStatusSearch.class}"></li>
-						<li th:text="#{inquiry.pymntStatusSearch.paymentDate}"></li>
-					</ul>
+    <div id="container">
+        <div id="wrap">
+            <h2 id="page-title" th:text="#{inquiry.pymntStatusSearch.mainTitle}"></h2>
+            <form id="searchFrm">
+                <div id="filterBox">
+                    <dl>
+                        <dt class="filterBoxRong" th:text="#{inquiry.pymntStatusSearch.enforcementNo}">Enforcement No.
+                        </dt>
+                        <dd>
+                            <input type="text" name="tfcEnfId" id="tfcEnfId" class="base-search data-validate"
+                                   maxlength="40"
+                                   th:placeholder="#{inquiry.pymntStatusSearch.enforcementNo}"
+                                   th:data-valid-name="#{inquiry.pymntStatusSearch.enforcementNo}" data-valid-required>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt class="filterBoxRong" th:text="#{inquiry.pymntStatusSearch.birth.date}">Date of Birth</dt>
+                        <dd>
+                            <input type="text" name="vioBrth" id="vioBrth" class="base-search data-validate"
+                                   placeholder="dd.mm.aaaa" maxlength="10"
+                                   onkeyup="keyupDateCheck(event, 'ddMMyyyy', '.')"
+                                   th:data-valid-name="#{inquiry.pymntStatusSearch.birth.date}" data-valid-brth
+                                   data-valid-required>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt class="filterBoxRong" th:text="#{inquiry.pymntStatusSearch.licneceId}">Driving Licence I.D
+                            No
+                        </dt>
+                        <dd>
+                            <input type="text" name="dvrLcenId" id="dvrLcenId" class="base-search data-validate"
+                                   maxlength="20"
+                                   th:placeholder="#{inquiry.pymntStatusSearch.licneceId}"
+                                   th:data-valid-name="#{inquiry.pymntStatusSearch.licneceId}" data-valid-required
+                                   onkeyup="retainNumbers(this)">
+                            <button type="button" class="sub-btn" th:text="#{inquiry.pymntStatusSearch.button.search}"
+                                    onclick="searchEnfInfo()">Search
+                            </button>
+                        </dd>
+                    </dl>
+                </div>
+            </form>
+            <div id="list-table-wrap">
+                <div id="base-table">
+                    <ul class="base-table-th base-table-cm">
+                        <li th:text="#{inquiry.pymntStatusSearch.vehicleNumber}"></li>
+                        <li th:text="#{inquiry.pymntStatusSearch.enforcementNo}"></li>
+                        <li th:text="#{inquiry.pymntStatusSearch.paymentStatus}"></li>
+                        <li th:text="#{inquiry.pymntStatusSearch.class}"></li>
+                        <li th:text="#{inquiry.pymntStatusSearch.paymentDate}"></li>
+                    </ul>
 
-					<ul>
-						<li>
-							<ul class="base-table-td base-table-cm payment-table" id="resultWrap" onclick="moveDetailPage()">
-								<li th:text="|Please search for vehicle enforcement information|">Please search</li>
-							</ul>
-						</li>
-					</ul>
+                    <ul>
+                        <li>
+                            <ul class="base-table-td base-table-cm payment-table" id="resultWrap"
+                                onclick="moveDetailPage()">
+                                <li class="textInput" th:text="|Please search for vehicle enforcement information|">
+                                    Please search
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
 
-				</div>
+                </div>
 
-				<div class="btn-wrap-end" id="btnWrap">
-				</div>
+                <div class="btn-wrap-end" id="btnWrap">
+                </div>
 
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 </html>
-<script type="text/javascript">
-	function searchEnfInfo() {
-		const resultWrap = document.getElementById("resultWrap");
-		const btnWrap = document.getElementById("btnWrap");
+<script th:inline="javascript">
+    function searchEnfInfo() {
+        trimValues(['tfcEnfId', 'dvrLcenId']);
+        if (!soValid('searchFrm')) return false;
 
-		const tfcEnfId = document.getElementById("tfcEnfId").value;
-		const vioBrth = document.getElementById("vioBrth").value;
-		const dvrLcenId = document.getElementById("dvrLcenId").value;
+        const searchingMsg = /*[[#{inquiry.pymntStatusSearch.searching}]]*/;
+        const loading = new PortalLoading().start(searchingMsg);
+        const resultWrap = document.getElementById("resultWrap");
+        const btnWrap = document.getElementById("btnWrap");
+        const formData = new FormData(document.getElementById("searchFrm"));
 
-		if (tfcEnfId === null || tfcEnfId === '') {
-			// Please enter your search term
-			alert("Por favor insira o seu termo de pesquisa");
-			document.getElementById("tfcEnfId").focus();
-			return false;
-		}
+        let vioBrth = document.getElementById('vioBrth').value;
+        let dvrLcenId = document.getElementById('dvrLcenId').value;
 
-		if (vioBrth === null || vioBrth === '') {
-			// Please enter your search term
-			alert("Por favor insira o seu termo de pesquisa");
-			document.getElementById("vioBrth").focus();
-			return false;
-		}
+        fetch('/inquiry/pymntstatus/search.ajax', {
+            method: 'post',
+            body: formData
+        })
+            .then(response => response.json())
+            .then((result) => {
+                if (result.code === 200) {
+                    let data = result.data;
 
-		if (dvrLcenId === null || dvrLcenId === '') {
-			// Please enter your search term
-			alert("Por favor insira o seu termo de pesquisa");
-			document.getElementById("dvrLcenId").focus();
-			return false;
-		}
+                    let vhRegNo = data.tfcEnfMaster.vhRegNo;
+                    let tfcEnfIdVal = data.tfcEnfId;
+                    let pymntStts = data.finePymntInfo.pymntStts;
+                    if (pymntStts === 'Y') {
+                        pymntStts = 'Paid';
+                    } else {
+                        pymntStts = 'Not Paid';
+                    }
 
-		resultWrap.innerHTML = "<li>Searching.....</li>";
+                    let ntcTy = data.cmCd.cdNm;
 
-		const formData = new FormData(document.getElementById("searchFrm"));
+                    let pymntDt = data.finePymntInfo.pymntDt;
+                    if (pymntDt == null) {
+                        pymntDt = '-';
+                    }
 
-		fetch('/inquiry/pymntstatus/search.ajax', {
-			method: 'post',
-			body: formData
-		})
-			.then(response => response.json())
-			.then((result) => {
-				if (result.code === 200) {
-					let data = result.data;
+                    // let ntcTy = data.cmCd.cdNm;
+                    let resultHtml = `<li class="TableCmNumber">${vhRegNo}</li>
+							<li class="TableBillNumber">${tfcEnfIdVal}</li>
+							<li class="TableType">${pymntStts}</li>
+							<li class="TableState">${ntcTy}</li>
+							<li class="TableCmDate">${pymntDt}</li>`;
 
-					let vhRegNo = data.tfcEnfMaster.vhRegNo;
-					let tfcEnfIdVal = data.tfcEnfId;
-					let pymntStts = data.finePymntInfo.pymntStts;
-					if (pymntStts == 'Y') {
-						pymntStts = 'Paid';
-					} else {
-						pymntStts = 'Not Paid';
-					}
-					
-					let ntcTy = data.cmCd.cdNm;
-					
-					// TODO :: 날짜 형식 가공 필요(ex. yyyy-MM-dd형식)
-					let tfcEnfDt = data.finePymntInfo.pymntDt;
-					if (tfcEnfDt == null) {
-						tfcEnfDt = '-';
-					}
+                    let formHtml = `				<form id="moveDetailFrm" method="post" action="/inquiry/pymntstatus/detail.do">
+				<input type="hidden" name="tfcEnfId" value="${tfcEnfIdVal}">
+				<input type="hidden" name="vioBrth" value="${vioBrth}">
+				<input type="hidden" name="dvrLcenId" value="${dvrLcenId}">
+			</form>`;
 
-					// let ntcTy = data.cmCd.cdNm;
-					let resultHtml = `<li class="TableCmNumber">${vhRegNo}</li>
-								<li class="TableBillNumber">${tfcEnfIdVal}</li>
-								<li class="TableType">${pymntStts}</li>
-								<li class="TableState">${ntcTy}</li>
-								<li class="TableCmDate">${tfcEnfDt}</li>`;
+                    resultWrap.innerHTML = resultHtml;
+                    btnWrap.innerHTML = formHtml;
+                } else {
+                    // There are no matching results.
+                    resultWrap.innerHTML = "<li>Não há resultados correspondentes.</li>"
+                }
+            })
+            .finally(() => {
+                loading.end();
+            });
+    }
 
-					let formHtml = `				<form id="moveDetailFrm" method="post" action="/inquiry/pymntstatus/detail.do">
-					<input type="hidden" name="tfcEnfId" value="${tfcEnfIdVal}">
-					<input type="hidden" name="vioBrth" value="${vioBrth}">
-					<input type="hidden" name="dvrLcenId" value="${dvrLcenId}">
-				</form>`;
+    function moveDetailPage() {
+        const form = document.getElementById("moveDetailFrm");
+        if (form != null) {
+            form.submit()
+        }
+    }
 
-					resultWrap.innerHTML = resultHtml;
-					btnWrap.innerHTML = formHtml;
-				} else {
-					// There are no matching results.
-					resultWrap.innerHTML = "<li>Não há resultados correspondentes.</li>"
-				}
-			});
-	}
-	
-	function moveDetailPage() {
-		const form = document.getElementById("moveDetailFrm");
-		if (form != null) {
-			form.submit()
-		}
-	}
-	
-	// TODO::시연&개발 끝나면 삭제
-	$("#page-title").click(function() {
-		$("#tfcEnfId").val("E-20240408-police1-0");
-		$("#vioBrth").val("1988-08-18");
-		$("#dvrLcenId").val("1524815");
-	});
-	
 </script>

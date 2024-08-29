@@ -6,7 +6,7 @@
 		<h2 id="page-title" th:text="#{reception.objectionRegister.title}">이의제기</h2>
 		<form id="registForm">
 			<div class="cm-info-wrap">
-				<h1 th:text="#{reception.complainRegiste.user.title}">이의제기 신청인 정보</h1>
+				<h1 th:text="#{reception.complainRegister.user.title}">이의제기 신청인 정보</h1>
 				<div class="cm-input-wrap">
 					<div class="cm-input-list">
 						<dl>
@@ -15,8 +15,8 @@
 									th:text="#{reception.objectionRegister.user.name}">이름</label>
 							</dt>
 							<dd class="table-border">
-								<input type="text" id="wrtrNm" name="wrtrNm" class="detail-input form-control data-validate"
-								th:data-valid-name="#{reception.objectionRegister.user.name}" 
+								<input type="text" id="wrtrNm" name="wrtrNm" class="detail-input form-control data-validate" maxlength="50"
+								th:data-valid-name="#{reception.objectionRegister.user.name}"
 								data-valid-minimum="3" data-valid-maximum="50" data-valid-required>
 							</dd>
 						</dl>
@@ -28,15 +28,20 @@
 									번호</label>
 							</dt>
 							<dd>
-								<input type="number" id="wrtrPno" name="wrtrPno" class="detail-input form-control data-validate"
-								th:data-valid-name="#{reception.objectionRegister.user.phone}" data-valid-required>
+								<input type="text" id="wrtrPno" name="wrtrPno" class="detail-input form-control data-validate" maxlength="15"
+								th:data-valid-name="#{reception.objectionRegister.user.phone}" 
+								data-valid-minimum="5" data-valid-maximum="15" data-valid-required data-valid-tel
+								onkeyup="retainNumbers(this)">
+								<p class="file-text" th:text="#{reception.objectionRegister.user.phone.rules}">
+									전화번호 안내 문구
+								</p>
 							</dd>
 						</dl>
 					</div>
 					<div class="cm-input-list">
 						<dl>
 							<dt>
-								<label class="control-label" for="wrtrEmail"
+								<label class="control-label" for="tfcEnfId"
 									th:text="#{reception.objectionRegister.user.bill.number}">고지서 일련번호</label>
 							</dt>
 							<dd>
@@ -57,19 +62,27 @@
 									th:text="#{reception.objectionRegister.subject}">제목</label>
 							</dt>
 							<dd>
-								<input type="text" id="postTtl" name="postTtl" class="form-control detail-input data-validate"
-								th:data-valid-name="#{reception.objectionRegister.subject}" data-valid-required>
+								<input type="text" id="postTtl" name="postTtl" class="form-control detail-input data-validate" maxlength="150"
+								th:data-valid-name="#{reception.objectionRegister.subject}" 
+								data-valid-minimum="5" data-valid-maximum="150" data-valid-required>
 							</dd>
 						</dl>
 					</div>
 					<div class="cm-input-list">
 						<dl>
 							<dt>
-								<label class="control-label" for="postPw" th:text="Password">Password</label>
+								<label class="control-label" for="postPw" th:text="#{reception.objectionRegister.password}">Password</label>
 							</dt>
 							<dd>
-								<input type="password" id="postPw" name="postPw" class="form-control detail-input data-validate"
-								th:data-valid-name="#{reception.complainRegist.password}" data-valid-required maxlength="10">
+								<input type="password" id="postPw" name="postPw" class="form-control detail-input data-validate" maxlength="10"
+								th:data-valid-name="#{reception.complainRegist.password}"
+								data-valid-minimum="4" data-valid-maximum="10" data-valid-required data-valid-pw
+								onkeyup="trimValues(['postPw'])">
+								<p class="file-text">
+									<span class="file-text" th:text="#{reception.objectionRegister.password.rules.length}">비밀번호 길이 문구</span>
+									<br>
+									<span class="file-text" th:text="#{reception.objectionRegister.password.rules}">입력 가능 값 문구</span>
+								</p>
 							</dd>
 						</dl>
 					</div>
@@ -81,7 +94,7 @@
 									th:text="#{reception.objectionRegister.category}">카테고리</label>
 							</dt>
 							<dd>
-								<select class="base-select" name="cateCd">
+								<select class="base-select" name="cateCd" id="cateCd">
 									<th:block th:each="cateItm : ${objCate}">
 										<option th:value="${cateItm.cdId}" th:text="${cateItm.cdNm}">Category Name</option>
 									</th:block>
@@ -90,7 +103,6 @@
 						</dl>
 					</div>
 					
-					<!-- TODO :: File Upload -->
 					<div class="cm-input-list">
 						<dl>
 							<dt class="textarea-top">
@@ -118,9 +130,10 @@
 									th:text="#{reception.objectionRegister.textarea.txt}">내용</label>
 							</dt>
 							<dd>
-								<textarea class="form-control base-textarea data-validate" id="postCn" name="postCn" rows="6"
-									th:placeholder="#{reception.complainRegiste.textarea.placeholder.txt}"
-									th:data-valid-name="#{reception.objectionRegister.textarea.txt}" data-valid-required></textarea>
+								<textarea class="form-control base-textarea data-validate" id="postCn" name="postCn" rows="6" maxlength="1000"
+									th:placeholder="#{reception.complainRegister.textarea.placeholder.txt}"
+									th:data-valid-name="#{reception.objectionRegister.textarea.txt}"
+									data-valid-minimum="5" data-valid-maximum="1000" data-valid-required></textarea>
 							</dd>
 						</dl>
 					</div>
@@ -137,29 +150,36 @@
 
 </html>
 <script th:inline="javascript">
-
 	function registObj() {
-		if (soValid("registForm")) {
-			const formData = new FormData(document.getElementById('registForm'));
+		if (!trimValues(['postPw', 'wrtrNm', 'postTtl', 'postCn'])) return false;
+		if (!soValid("registForm")) return;
 
-			fetch(/*[[@{/objection/save.ajax}]]*/, {
-				method: "post",
-				body: formData
-			})
+		const searchingMsg = /*[[#{reception.common.loading.saving}]]*/;
+		const loading = new PortalLoading().start(searchingMsg);
+
+		const formData = new FormData(document.getElementById('registForm'));
+
+		fetch(/*[[@{/objection/save.ajax}]]*/, {
+			method: "post",
+			body: formData
+		})
 				.then(response => response.json())
 				.then((result) => {
 					if (result.code === 200) {
-						new ModalBuilder().init().alertBody(result.message).footer(4, 'OK', function (button, modal) {
+						new ModalBuilder().init().successBody(result.message).footer(4, 'OK', function (button, modal) {
 							modal.close();
-							location.href=/*[[@{/objection/list.do}]]*/;
+							location.href =/*[[@{/objection/list.do}]]*/;
 						}).open();
 					} else {
 						new ModalBuilder().init().alertBody(result.message).footer(4, 'OK', function (button, modal) {
 							modal.close();
 						}).open();
 					}
+				})
+				.finally(() => {
+					loading.end();
 				});
-		}
+
 	}
 	
 </script>

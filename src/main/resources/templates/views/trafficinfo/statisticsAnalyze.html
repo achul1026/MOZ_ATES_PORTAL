@@ -1,226 +1,377 @@
-<html xmlns:th="http://www.thymeleaf.org"  
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="layouts/layout">
-	
-	<div layout:fragment="content">
 
-		<div id="container">
-			<div id="wrap">
-				<h2 id="page-title" th:text="#{statisticsmng.common.title}">통계분석</h2>
-				<div id="filterBox">
-					<dl>
-						<dt th:text="#{statisticsmng.common.type}">Type</dt>
-						<dd>
-							<a href="#" class="filter-btn" th:text="#{statisticsmng.statistics.crackdown}">단속통계</a>
-							<a href="#" class="filter-btn" th:text="#{statisticsmng.statistics.accident}">사고통계</a>
-						</dd>
-					</dl>
-					<dl>
-						<dt th:text="#{statisticsmng.statistics.date.select}">Date</dt>
-						<dd>
-							<label class="filter-btn" th:text="#{statisticsmng.statistics.date.month}">
-								<input type="checkbox" class="none">
-								월간
-							</label>
-							<label class="filter-btn" th:text="#{statisticsmng.statistics.date.weekly}">
-								<input type="checkbox" class="none">
-								주간
-							</label>
-							<label class="filter-btn" th:text="#{statisticsmng.statistics.date.daily}">
-								<input type="checkbox" class="none">
-								일간
-							</label>
-						</dd>
-					</dl>
-					<dl>
-						<dt th:text="#{statisticsmng.common.search}">Search</dt>
-						<dd>
-							<input type="text" class="base-search">
-							<input type="button" class="main-btn" value="search"/>
-						</dd>
-					</dl>
-				</div>
-				<div id="mapChartContainer">
-					<div id="mapWrap">
-						<div id="map"></div>
+<div layout:fragment="content">
+
+	<div id="statContainer">
+		<div id="statWrap">
+			<div id="chartTitle" th:text="#{statisticsmng.statistics.title}">
+				Statistics by Data Type
+			</div>
+			<div id="chartAbout" th:text="#{statisticsmng.statistics.about}">
+				아래 버튼을 클릭하여 데이터 통계를 확인하실수 있습니다.
+			</div>
+			<div id="mapChartContainer">
+				<div id="mapWrap">
+					<div id="map">
+						<th:block th:insert="tags/mapLegend :: mapLegendFragment"></th:block>
 					</div>
-					<div id="chartWrap">
-						<div>
-							<div class="chart">
-								<div class="chart-bigbox">
-									<div class="chart-box">
-										<div>
-											<div class="chart-title">Enforcement statistics by law violation in December 2022</div>
-											<div>
-												<canvas id="chart1"></canvas>
-											</div>									
-										</div>
-									</div>
-									<div class="chart-box">
-										<div>
-											<div class="chart-title">Enforcement statistics by vehicle type in December 2022</div>
-											<div>
-												<canvas id="chart2"></canvas>
-											</div>									
-										</div>
-									</div>
+					<div id="mapContents">
+						<div id="mapTableInfo">
+<!--							<div>건들지마셈 ui 생각중;;</div>-->
+<!--								<dl>-->
+<!--									<dt>Type</dt>-->
+<!--									<dd></dd>-->
+<!--								</dl>-->
+<!--								<dl>-->
+<!--									<dt>Name</dt>-->
+<!--									<dd></dd>-->
+<!--								</dl>-->
+<!--								<dl>-->
+<!--									<dt>Road</dt>-->
+<!--									<dd></dd>-->
+<!--								</dl>-->
+<!--								<dl>-->
+<!--									<dt>Status</dt>-->
+<!--									<dd></dd>-->
+<!--								</dl>-->
+							</div>
+						<div id="mapSearch">
+							<div class="ctOpTitle">
+								<span>01</span>
+								<h4 th:text="#{statisticsmng.statistics.date}">날짜 선택</h4>
+							</div>
+							<div class="mapDateListWrap">
+								<label class="dateLabel" th:text="#{statisticsmng.statistics.option.startDate}">Start
+									Date</label>
+								<input type="date" class="dateInput" id="acdntStartDate">
+								<span class="dateLine">~</span>
+								<label class="dateLabel" th:text="#{statisticsmng.statistics.option.endDate}">End
+									Date</label>
+								<input type="date" class="dateInput" id="acdntEndDate">
+								<button type="button" class="main-btn" id="acdntAnalysisButton">
+									Search
+								</button>
+							</div>
+						</div>
+						<div id="chartWrap">
+							<div class="ctOpTitle">
+								<span>02</span>
+								<h4 th:text="#{statisticsmng.statistics.Type}">종류 선택</h4>
+							</div>
+							<div id="chartBtnWrap">
+								<div class="chartBtnList">
+									<input type="radio" id="acdnt" name="statType" value="acdnt" checked>
+									<label for="acdnt" class="chartLabel"
+										th:text="#{statisticsmng.statistics.accident}">Number of accidents</label>
+								</div>
+								<div class="chartBtnList">
+									<input type="radio" id="type" name="statType" value="type">
+									<label for="type" class="chartLabel"
+										th:text="#{statisticsmng.statistics.accidentTy}">Accident Type</label>
+								</div>
+								<div class="chartBtnList">
+									<input type="radio" id="level" name="statType" value="level">
+									<label for="level" class="chartLabel"
+										th:text="#{statisticsmng.statistics.accidentLevel}">Accident Level</label>
+								</div>
+								<div class="chartBtnList">
+									<input type="radio" id="passenger" name="statType" value="passenger">
+									<label for="passenger" class="chartLabel"
+										th:text="#{statisticsmng.statistics.passenger}">Victim</label>
 								</div>
 							</div>
-							<div class="chart mt16">
-								<div class="map-chart-title" th:text="#{statisticsmng.statistics.pattern}">패턴 분석</div>
-								<div class="chart-bigbox">
-									<div class="chart-box">
-										<div>
-											<div class="chart-title">Enforcement statistics by vehicle type in December 2022</div>
-											<div>
-												<canvas id="chart3"></canvas>
-											</div>									
-										</div>
-									</div>
-									<div class="chart-box">
-										<div>
-											<div class="chart-title">Enforcement statistics by vehicle type in December 2022</div>
-											<div>
-												<canvas id="chart4"></canvas>
-											</div>									
-										</div>
-									</div>
-								</div>
+							<div id="mobileChartBtn">
+								<select id="statSelect">
+									<option value="acdnt" th:text="#{statisticsmng.statistics.accident}" selected>
+									</option>
+									<option value="type" th:text="#{statisticsmng.statistics.accidentTy}"></option>
+									<option value="level" th:text="#{statisticsmng.statistics.accidentLevel}"></option>
+									<option value="passenger" th:text="#{statisticsmng.statistics.passenger}"></option>
+								</select>
+							</div>
+							<div class="chartList">
+								<canvas id="accidentChart" class="none"></canvas>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>		
-		</div>    
+			</div>
+		</div>
 	</div>
+</div>
+
 </html>
-<script type="text/javascript">
+<script th:inline="javascript">
+	let accidentChart;
 
 	let map = new MozAtesMap({
-		elementId : 'map',
-		center_lng : null,
-		center_lat : null,
-		isInitDrawCenterMarker : true
+		elementId: 'map',
+		center_lng: null,
+		center_lat: null,
+		isInitDrawCenterMarker: false
 	});
 
-	new Chart(document.getElementById("chart1"), {
-	    type: 'bar',
-	    data: {
-	      labels: ["spot", "crackdown", "detective"],
-	      datasets: [
-	        {
-	          label: '',
-	          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
-	          data: [2478,5267,734]
-	        },
-	        
-	      ]
-	    },
-	    options: {
-	      legend: {
-	    	  display:false
-	      },
-          plugins: {
-              legend: {
-	        	  display:false,
-              },
-          },
-	    },
+	document.addEventListener('DOMContentLoaded', (event) => {
+		let statsRadio = document.getElementsByName('statType');
+		statsRadio.forEach((radio) => {
+			radio.addEventListener('change', function () {
+				if (this.checked) {
+					mobileWithPc(this.value);
+				}
+			});
+		});
+
+		let statsSelect = document.getElementById('statSelect');
+		statsSelect.addEventListener('change', function () {
+			pcWithMobile(this.value);
+		});
+
+		function mobileWithPc(value) {
+			let statsSelect = document.getElementById('statSelect');
+			statsSelect.value = value;
+		}
+
+		function pcWithMobile(value) {
+			let statsButtons = document.getElementsByName('statType');
+			statsButtons.forEach((radio) => {
+				if (radio.value === value) {
+					radio.checked = true;
+				}
+			});
+		}
 	});
-	
-	new Chart(document.getElementById("chart2"), {
-	    type: 'bar',
-	    data: {
-	      labels: ["spot", "crackdown", "detective"],
-	      datasets: [
-	        {
-	          label: '',
-	          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
-	          data: [2478,5267,734]
-	        },
-	        
-	      ]
-	    },
-	    options: {
-	      legend: {
-	    	  display:false
-	      },
-          plugins: {
-              legend: {
-	        	  display:false,
-              },
-          },
-	    },
+
+	document.addEventListener("DOMContentLoaded", function () {
+		const today = new Date();
+		const yyyyMax = today.getFullYear();
+		const mmMax = String(today.getMonth() + 1).padStart(2, '0');
+		const ddMax = String(today.getDate()).padStart(2, '0');
+		const todayMaxStr = `${yyyyMax}-${mmMax}-${ddMax}`;
+		document.getElementById("acdntStartDate").setAttribute("max", todayMaxStr);
+		document.getElementById("acdntEndDate").setAttribute("max", todayMaxStr);
+
+		today.setDate(today.getDate() - 31);
+		const yyyyMin = today.getFullYear();
+		const mmMin = String(today.getMonth() + 1).padStart(2, '0');
+		const ddMin = String(today.getDate()).padStart(2, '0');
+		const todayMinStr = `${yyyyMin}-${mmMin}-${ddMin}`;
+
+		document.getElementById("acdntStartDate").setAttribute("min", todayMinStr);
+		document.getElementById("acdntEndDate").setAttribute("min", todayMinStr);
 	});
-	new Chart(document.getElementById("chart3"), {
-	    type: 'bar',
-	    data: {
-	      labels: ["spot", "crackdown", "detective"],
-	      datasets: [
-	        {
-	          label: '',
-	          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
-	          data: [2478,5267,734]
-	        },
-	        
-	      ]
-	    },
-	    options: {
-	      legend: {
-	    	  display:false
-	      },
-          plugins: {
-              legend: {
-	        	  display:false,
-              },
-          },
-	    },
+
+	const accidentAnalysisButton = document.getElementById("acdntAnalysisButton");
+	accidentAnalysisButton.addEventListener("click", () => {
+		const startDateValue = document.getElementById("acdntStartDate").value;
+		const endDateValue = document.getElementById("acdntEndDate").value;
+		let statsTypeValue = null;
+		
+		document.getElementsByName('statType').forEach((radio) => {
+			if (radio.checked) {
+				statsTypeValue = radio.value;
+			}
+		});
+		
+		if (isDateValidate(startDateValue, endDateValue)) {
+			let startDate = new Date(startDateValue).toISOString().split('T')[0];
+			let endDate = new Date(endDateValue).toISOString().split('T')[0];
+			accidentMapInit(startDate, endDateValue, statsTypeValue);
+			accidentChartInit(startDate, endDateValue, statsTypeValue);
+		} else {
+			return;
+		}
 	});
-	
-	new Chart(document.getElementById("chart4"), {
-	    type: 'bar',
-	    data: {
-	      labels: ["spot", "crackdown", "detective"],
-	      datasets: [
-	        {
-	          label: '',
-	          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
-	          data: [2478,5267,734]
-	        },
-	        
-	      ]
-	    },
-	    options: {
-	      legend: {
-	    	  display:false
-	      },
-          plugins: {
-              legend: {
-	        	  display:false,
-              },
-          },
-	    },
-	});
-	
-	/*$('.filter-btn').click(function(){
-		$(this).addClass('on');
-		$(this).not().siblings().removeClass('on');
-	})*/
-	
-	const filterBtn = document.querySelectorAll('.filter-btn');
-	
-	filterBtn.forEach(filterBtn => {
-	    filterBtn.addEventListener('click', function() {
-	        
-	        this.classList.add('on');
-	        const siblings = this.parentNode.children;
-	        for (let sibling of siblings) {
-	            if (sibling !== this) {
-	                sibling.classList.remove('on');
-	            }
-	        }
-	    });
-	});
-	
+
+	function isDateValidate(startDate, endDate) {
+
+		if (!startDate || !endDate) {
+			new ModalBuilder().init().alertBody(/*[[#{statisticsmng.statistics.error.dateSelectRequired}]]*/).footer(4, 'OK', function (button, modal) {
+				modal.close();
+			}).open();
+			return false;
+		}
+
+		if (startDate >= endDate) {
+			new ModalBuilder().init().alertBody(/*[[#{statisticsmng.statistics.error.dateRange}]]*/).footer(4, 'OK', function (button, modal) {
+				modal.close();
+			}).open();
+			return false;
+		}
+		
+		return true;
+	}
+
+	function accidentMapInit(startDate, endDate, statType) {
+		map.accident.startDate = startDate;
+		map.accident.endDate = endDate;
+		map.accident.statType = statType
+		map.accident.doInterval(30000);
+	}
+
+	function accidentChartInit(startDate, endDate, statType) {
+		const accidentChartCanvas = document.getElementById("accidentChart");
+		
+		if (accidentChart) {
+			accidentChart.destroy();
+			accidentChart = null;
+		}
+		
+		let chartLabel = null;
+		let chartData = null;
+		let chartBackGround = null;
+		
+		// chart labels
+		const noOfAcdnt = /*[[#{statisticsmng.statistics.accident}]]*/;
+
+		const acdntType0 = /*[[#{statisticsmng.statistics.acdntType.ACT000}]]*/;
+		const acdntType1 = /*[[#{statisticsmng.statistics.acdntType.ACT001}]]*/;
+		const acdntType2 = /*[[#{statisticsmng.statistics.acdntType.ACT002}]]*/;
+		const acdntType3 = /*[[#{statisticsmng.statistics.acdntType.ACT003}]]*/;
+		const acdntType4 = /*[[#{statisticsmng.statistics.acdntType.ACT004}]]*/;
+		const acdntType5 = /*[[#{statisticsmng.statistics.acdntType.ACT005}]]*/;
+		const acdntType6 = /*[[#{statisticsmng.statistics.acdntType.ACT006}]]*/;
+		const acdntType7 = /*[[#{statisticsmng.statistics.acdntType.ACT007}]]*/;
+		
+		const acdntDmg0 = /*[[#{statisticsmng.statistics.accidentDamageCd.ADC000}]]*/;
+		const acdntDmg1 = /*[[#{statisticsmng.statistics.accidentDamageCd.ADC001}]]*/;
+		const acdntDmg2 = /*[[#{statisticsmng.statistics.accidentDamageCd.ADC002}]]*/;
+		const acdntDmg3 = /*[[#{statisticsmng.statistics.accidentDamageCd.ADC003}]]*/;
+		
+		const totalVictims = /*[[#{statisticsmng.statistics.totalVictims}]]*/;
+
+		$.ajax({
+			type: "post",
+			url: `/stat/${statType}/chart.ajax`,
+			options:{
+				responsive: false,
+			},
+			data: {
+				"startDate": startDate,
+				"endDate": endDate
+			},
+			success: function (result) {
+				switch (statType) {
+					case "acdnt":
+						accidentChart = new MozChart(ChartType.LINE).init("accidentChart")
+							.setData({
+								labels: JSON.parse(result.accidentTotalChart.acdntDtList),
+								datasets: [{
+									data: JSON.parse(result.accidentTotalChart.acdntCntList),
+									label: noOfAcdnt,
+									borderColor: "#3e95cd",
+									backgroundColor: "#3e95cd",
+								}]
+							}).draw();
+						break;
+					case "type":
+						accidentChart = new MozChart(ChartType.LINE).init("accidentChart")
+							.setData({
+								labels: JSON.parse(result.accidentChartGraph.acdntDtList),
+								datasets: [{
+									data: JSON.parse(result.accidentChartGraph.crsngList),
+									label: acdntType0,
+									borderColor: "#00B94A",
+									backgroundColor: '#00B94A',
+								}, {
+									data: JSON.parse(result.accidentChartGraph.crsngRoadwayList),
+									label: acdntType1,
+									borderColor: "#00B981",
+									backgroundColor: '#00B981',
+								}, {
+									data: JSON.parse(result.accidentChartGraph.crsngRoadEdgeZoneList),
+									label: acdntType2,
+									borderColor: "#00AEB9",
+									backgroundColor: '#00AEB9',
+								}, {
+									data: JSON.parse(result.accidentChartGraph.crsngSidewalkList),
+									label: acdntType3,
+									borderColor: "#008DB9",
+									backgroundColor: '#008DB9',
+								}, {
+									data: JSON.parse(result.accidentChartGraph.frtCollisionList),
+									label: acdntType4,
+									borderColor: "#0055B9",
+									backgroundColor: '#0055B9',
+								}, {
+									data: JSON.parse(result.accidentChartGraph.sideCollisionList),
+									label: acdntType5,
+									borderColor: "#5D50EB",
+									backgroundColor: '#5D50EB',
+								}, {
+									data: JSON.parse(result.accidentChartGraph.revCollisionList),
+									label: acdntType6,
+									borderColor: "#B050EB",
+									backgroundColor: '#B050EB',
+								}, {
+									data: JSON.parse(result.accidentChartGraph.collisionList),
+									label: acdntType7,
+									borderColor: "#CB3B89",
+									backgroundColor: '#CB3B89',
+								}]
+							})
+							.draw();
+						break;
+					case "level":
+						accidentChart = new MozChart(ChartType.LINE).init("accidentChart")
+							.setData({
+								labels: JSON.parse(result.accidentTypeTotalChart.acdntDtList),
+								datasets: [{
+									data: JSON.parse(result.accidentTypeTotalChart.fatalInjrList),
+									label: acdntDmg0,
+									borderColor: "#E9444E",
+									backgroundColor: '#E9444E',
+								}, 
+								{
+									data: JSON.parse(result.accidentTypeTotalChart.minorInjrList),
+									label: acdntDmg1,
+									borderColor: "#E97F44",
+									backgroundColor: '#E97F44',
+								}, 
+								{
+									data: JSON.parse(result.accidentTypeTotalChart.matetialDmgList),
+									label: acdntDmg2,
+									borderColor: "#E9BB44",
+									backgroundColor: '#E9BB44',
+								}, 
+								{
+									data: JSON.parse(result.accidentTypeTotalChart.noneInjrList),
+									label: acdntDmg3,
+									borderColor: "#B6CB33",
+									backgroundColor: '#B6CB33',
+								}]
+							})
+							.draw();
+						break;
+					case "passenger":
+						accidentChart = new MozChart(ChartType.LINE).init("accidentChart")
+							.setData({
+								labels: JSON.parse(result.accidentTotalVictimsChart.acdntDtList),
+								datasets: [{
+									data: JSON.parse(result.accidentTotalVictimsChart.acdntTotalVictimsCnt),
+									label: acdntDmg0,
+									borderColor: "#00B94A",
+									backgroundColor: '#00B94A',
+								}]
+							})
+							.draw();
+						break;
+				}
+			},
+			error: function (e) {
+				accidentChartCanvas.classList.add('none');
+				if (e.status == '400') {
+					new ModalBuilder().init().alertBody(e.responseText).footer(4, 'Confirmar', function (button, modal) {
+						modal.close();
+					}).open();
+				} else {
+					new ModalBuilder().init().alertBody(/*[[#{statisticsmng.statistics.error.stat}]]*/).footer(4, 'Confirmar', function (button, modal) {
+						modal.close();
+					}).open();
+				}
+			}
+		});
+
+		accidentChartCanvas.classList.remove('none');
+	}
 </script>
-

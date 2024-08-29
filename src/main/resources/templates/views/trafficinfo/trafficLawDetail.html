@@ -5,39 +5,84 @@
 	<div id="container">
 		<h2 id="page-title" th:text="#{trafficinfo.trafficLawDetail.title}">교통법규 정보</h2>
 		
+		<!-- Law Info -->
 		<div class="cm-info-wrap">
 			<div id="cm-notice-wrap">
-				<div id="cm-notice-title" th:text="#{trafficinfo.trafficLawDetail.title.detail}">교통법규 상세</div>
+				<div id="cm-notice-title" th:text="#{trafficinfo.trafficLawDetail.title.detail}">
+					교통법규 상세
+				</div>
+
 				<div class="cm-notice-info">
 					<dl class="cm-notice-info-list">
-						<dt th:text="${tfcLwInfoDetail.lawArticleNo}">Transportation Administration</dt>
-<!--						<dd th:text="${tfcLwInfoDetail.lawArticleNo}">Mr.Hoon</dd>-->
+						<dt th:text="#{trafficinfo.trafficLawDetail.articleId}">Article Id</dt>
+						<dd>
+							<span class="cm-ipt-text" th:text="${tfcLwInfoDetail.lawArticleNo}">11</span>
+							<span class="cm-red-text" th:if="${tfcLwInfoDetail.repealYn == 'Y'}" th:text="#{trafficinfo.trafficLawDetail.repealStatus.y}">폐지됨</span>
+						</dd>
 					</dl>
-					<div id="cm-notice-info-date">
-						<dl class="cm-notice-info-list">
-							<dt th:text="#{trafficinfo.trafficLawDetail.prmgtnDate}">공포일자</dt>
-							<dd  th:text="${#dates.format(tfcLwInfoDetail.prmgtnDe, 'yyyy-MM-dd')}">2023-01-01</dd>
-						</dl>
-						<dl class="cm-notice-info-list">
-							<dt th:text="#{trafficinfo.trafficLawDetail.prmgtnDate}">공포일자</dt>
-							<dd  th:text="${#dates.format(tfcLwInfoDetail.prmgtnDe, 'yyyy-MM-dd')}">2023-01-01</dd>
-						</dl>
-					</div>
+					<dl class="cm-notice-info-list">
+						<dt th:text="#{trafficinfo.trafficLawDetail.lawType}">법률 타입</dt>
+						<dd th:text="${tfcLwInfoDetail.lawType}">Speeding</dd>
+					</dl>
 				</div>
+
 				<div class="cm-notice-info">
 					<dl class="cm-notice-info-list">
-						<dt th:text="#{trafficinfo.trafficLawDetail.name.law}">법규명</dt>
-						<dd th:text="${tfcLwInfoDetail.lawNm}">2023.08.13</dd>
+						<dt th:text="#{trafficinfo.trafficLawDetail.legalExplanation}">법률 설명</dt>
+						<dd class="text-pre-line" 
+						th:text="${tfcLwInfoDetail.lawDesc != '' ? tfcLwInfoDetail.lawDesc : '-'}">법률 설명 내용</dd>
 					</dl>
-				</div>
-				<div id="cm-notice-con" class="text-pre-line" th:text="${tfcLwInfoDetail.lawNm}">
-					공지사항 입니다.
 				</div>
 			</div>
 		</div>
+
+		<!-- Fine Info -->
+		<div>
+			<div class="detail-table detail-table-7" 
+				th:if="${not #lists.isEmpty(tfcLwFineInfoList)}"
+				th:each="fineItm : ${tfcLwFineInfoList}">
+				<dl class="brNone">
+					<dt th:text="#{trafficinfo.trafficLawDetail.articelNo}">Article Number</dt>
+					<dd th:text="${fineItm.artclNo}">1</dd>
+				</dl>
+				<dl>
+					<dt th:text="#{trafficinfo.trafficLawDetail.paragraph}">Paragraph</dt>
+					<dd th:text="${fineItm.par}">a)</dd>
+				</dl>
+
+				<dl class="brNone">
+					<dt th:text="#{trafficinfo.trafficLawDetail.finePrice}">Fine Price</dt>
+<!--					<dd class="comma" th:text="${fineItm.finePrice}">750.0MT</dd>-->
+					<dd th:text="${@mozatesCommonUtils.priceFmt(fineItm.finePrice ,'MOZAMBIQUE_METICAL')}">750.0MT</dd>
+				</dl>
+				<dl>
+					<dt th:text="#{trafficinfo.trafficLawDetail.contraventionType}">Type of Contravention</dt>
+					<dd th:text="${fineItm.cntrvTy}">Leve</dd>
+				</dl>
+
+				<dl class="brNone">
+					<dt th:text="#{trafficinfo.trafficLawDetail.additionalPenalty}">Additional Penalty</dt>
+					<dd th:text="${fineItm.addlPn}">3 meses sem conduzir</dd>
+				</dl>
+				<dl>
+					<dt th:text="#{trafficinfo.trafficLawDetail.transgressionType}">Type of Transgression</dt>
+					<dd th:text="${fineItm.trnTy}">Baixa</dd>
+				</dl>
+
+				<dl class="detail-content">
+					<dt th:text="#{trafficinfo.trafficLawDetail.fineDescription}">Fine Desc</dt>
+					<dd class="text-pre-line" th:text="${fineItm.fineDesc}">Fine Desc</dd>
+				</dl>
+			</div>
+			
+			<div th:unless="${not #lists.isEmpty(tfcLwFineInfoList)}" th:text="#{trafficinfo.trafficLawDetail.fineInfoEmpty}">
+				등록된 정보가 없습니다.
+			</div>
+		</div>
+
 		<div class="btn-wrap-end">
-			<button type="button" class="sub-btn out-btn" 
-				th:text="#{trafficinfo.common.list}" th:onclick="|location.href='@{/traffic/info/lawinfo/list.do}'|"></button>
+			<button type="button" class="sub-btn out-btn" th:text="#{trafficinfo.common.list}"
+				th:onclick="|location.href='@{/traffic/info/lawinfo/list.do}'|"></button>
 		</div>
 	</div>
 </div>

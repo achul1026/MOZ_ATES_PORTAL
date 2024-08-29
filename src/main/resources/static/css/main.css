@@ -20,6 +20,7 @@
 	flex: 1 0 400px;
 }
 .main-menu-title {
+	color: #2c77c5;
 	font-weight: 600;
 	font-size:20px;
 }
@@ -75,6 +76,7 @@
 }
 
 .board-title {
+	color: #2c77c5;
 	font-size:20px;
 	font-weight: 600;
 }
@@ -87,67 +89,68 @@
 	color:#111;
 }
 .board-more a:hover {
-	color: #00B595;
-	border-color: #00B595;
+	color: #2c77c5;
+	border-color: #2c77c5;
 }
 .board-more a:hover:after {
-	color: #00B595;
+	color: #2c77c5;
 }
 .category {
 	border-radius:10px;
-	color: #009C7D;
+	color: #2c77c5;
 	font-size:14px;
 	font-weight: 600 !important;
 }
-
 .board-contents-list {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	gap:25px;
-    padding-bottom: 17px;
-	margin-bottom: 17px;
-	border-bottom: 1px solid #e2e5eb;
+	margin-bottom: 10px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #fff;
+	display: block;
+	cursor: pointer;
+	position: relative;
 }
-
-.board-contents-list > div {
-	max-width:500px;
+.board-contents-list::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 1px;
+	background: #ccc;	
+	transform: scaleX(0);
+}
+.board-contents-list:hover::after {
+	transform: scaleX(1);
+}
+.board-date {
+	width: 13%;
+	display: inline-block;
 	font-weight: 500;
-	color: #6f6f6f;
+	vertical-align: middle;
+}
+.fap-date {
+	width: 23%;
+}
+.board-contents-title {
+	max-width: 82.7%;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    vertical-align: middle;
+}
+.faq-contents-title {
+	max-width: 69%;
+}
+.boardArrow {
+	float: right;
 }
 .faq .board-contents-list > div {
 	max-width:286px;
 	font-weight: 500;
 }
-.board-contents-title {
-	background: url('/images/arrow-light.png') no-repeat right;
-	box-sizing: border-box;
-}
-.board-contents-title a {
-	padding-right:30px;
-	width:100%;
-	display: block;
-	overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-    font-weight: 400;
-    color: #6f6f6f;   
-}
-.board-contents-title::after {
-  display:block;
-  content: '';
-  border-bottom: solid 1px #000;  
-  transform: scaleX(0);  
-  transition: transform 1ms ease-in-out;
-}
-.board-contents-title:hover:after { 
-	transform: scaleX(1); 
-	}
-
 .board-contents-list:last-child {
 	margin:0;
-	padding:0;
-	border:none;
 }
 .idpw {
 	display: flex;
@@ -174,7 +177,7 @@
 }
 .main-menu-list-wrap {
 	padding:24px;
-	border:1px solid #E2E5EB;
+	box-shadow: 0px 2px 6px 0px rgb(11 35 71 / 19%);
 }
 .main-menu-list {
 	display: flex;
@@ -186,7 +189,7 @@
 	text-align: center;
 }
 .main-menu-list > div:hover .main-menu-list-title {
-	color:#00B595;
+	color:#2c77c5;
 }
 .main-menu-list-title {
 	margin-top:12px;
@@ -199,7 +202,7 @@
 }
 .board {
 	padding: 24px;
-	border: 1px solid #E2E5EB;
+	box-shadow: 0px 2px 6px 0px rgb(11 35 71 / 19%);
 	box-sizing: border-box;
 	border-radius: 40px;
 }
@@ -267,6 +270,9 @@
 	.board-contents-list > div {
 		max-width:85%;
 	}
+	.fap-date {
+		width: 13%;
+	}
 	.faq .board-contents-list > div {
 		max-width:85%;
 	}
@@ -330,11 +336,11 @@
 		flex-flow:column;
 		gap:22px;
 	}
-	.board-contents-list > div {
-		min-width:26%;
+	.board-date {
+		width: 29%;
 	}
-	.faq .board-contents-list > div {
-		min-width:26%;
+	.board-contents-title {
+		max-width: 61%;
 	}
 	.list-text {
 		display: flex;

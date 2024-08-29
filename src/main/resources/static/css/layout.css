@@ -35,8 +35,6 @@
 #header {
 	background: #fff;
 	border-bottom:1px solid #ebebeb;
-	position: relative;
-	z-index: 9;
 }
 #header-contents {
 	max-width:1200px;
@@ -44,8 +42,8 @@
 }
 #container {
 	max-width:1200px;
-	min-height:600px;
-	margin:40px auto;
+	min-height:800px;
+	margin:60px auto;
 }
 .sticky-wrapper {
 	width:auto !important;
@@ -72,18 +70,30 @@
 }
 .mobileMenuTitleWrap {
 	display: flex;
-	gap:10px;
 	align-items: center;
-	margin-bottom: 20px;
+	padding: 16px;
+	border-bottom: 1px solid #cacaca;
+	justify-content: space-between;
 }
-.mobileMenuTitleWrap span {
-	font-size:14px;
-	font-weight: 500;
-	color:#00967A;
+.mobileMenuTitleWrap.on {
+	background: #0069b7;
 }
-.mTitleBorder {
-	width:100%;
-	border:1px dashed #00967A;
+.mobile-title {
+	font-size:17px;
+	font-weight: 600;
+	color:#0069b7;
+}
+.mobile-title.on {
+	color: #fff;
+}
+.mobile-arrow {
+	width: 12px;
+	height: 7px;
+	background: url('/images/mobile-arrow.png') no-repeat center / cover;
+}
+.mobile-arrow.on {
+	transform: rotate(180deg);
+	background: url('/images/mobile-arrow-on.png') no-repeat center / cover;
 }
 #nav-drop-menu {
 	position: absolute;
@@ -124,39 +134,31 @@
 	transition: 0.5s;
  }
  /*모바일 메뉴*/
-#mobile-menu {
+#mobileMenu {
 	position: fixed;
-	top:0;
+	top:72px;
 	right:0;
 	width:100%;
 	height:100%;
-	background: rgba(0, 0, 0, 0.5);
+	background: white;
+    z-index: 99999;
+    display: none;
 }
- .mobile-nav-wrap {
-		background:#FFFFFF;
-		width:100%;
-		height:100%;
-		position: fixed;
-		right:0;
-	}
-.mobile-login-form {
-	padding: 20px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+.mobile-menu-icon {
+	width: 28px;
+	height: 23px;
+	background:url('/images/hamburger.png') no-repeat center / cover;
+	display: none;
 }
-.mobile-login h2 {
-	font-weight: 600;
-	font-size:20px;
+.mobile-menu-icon.on {
+	width: 23px;
+	background:url('/images/mobile_close.png') no-repeat center / cover;
 }
 .mobile-close img {
 	width:14px;
 }
-.mobile-nav-list {
-	padding: 22px;	
-}
-.mobile-nav-list > ul > li {
-	margin-bottom: 30px;
+.mobile-nav-list > ul {
+	border-top: 1px solid #cacaca;
 }
 .mobile-nav-list > ul > li:last-child {
 	margin-bottom: 0px;
@@ -168,10 +170,8 @@
 	display: block;
 }
 .mobile-nav-list ul li a {
-	display: flex;
-	align-items: center;
-	gap:8px;
-	flex-wrap: wrap;
+	padding: 16px;
+	display: block;
 }
 .mobile-nav-list ul li a span {
 	font-size:14px;
@@ -181,24 +181,20 @@
 	font-weight: bold;
 }
 .mobile-nav-sub-list {
-	display: flex;
-	flex-wrap:wrap;
-	align-items: center;
-	gap:20px;
+	background: #f6f6f6;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.3s ease-in;
+}
+.mobile-nav-sub-list.on {
+	max-height:400px;
 }
 .mobile-nav-sub-list li {
-	width:45%;
+	width:100%;
+	border-top: 1px solid #cacaca;
 }
-.mIconWrap {
-	width:33px;
-	height:33px;
-	background:#f0f0f0;
-	border-radius: 20px;
-	text-align: center;
-    line-height: 38px;
-}
-.mobile-nav-sub-list img {
-	width:16px;
+.mobile-nav-sub-list li:first-child {
+	border-top: none;
 }
 /*.mobile-nav-sub-list.on {*/
 /*	display: block;*/
@@ -262,32 +258,39 @@
 }
 #footer {
 	padding: 36px 0;
-	background: #F5FAF9;
+	background: #2c2f3c;
 }
 .footer-container {
 	display: flex;
 	justify-content: space-between;
-	align-items: center;
+	align-items: end;
 	max-width:1200px;
 	margin: auto;
 }
 #address {
 	line-height: 20px;
+	color: #fff;
+	font-weight: 300;
+}
+#copyright {
+	color: #fff;
+	font-weight: 300;
 }
 
 /*테블릭*/
 @media all and  (max-width: 1150px){
-	#header {
-		position: sticky;
-		top: 0;
-	}
 	#header-contents {
 		padding: 20px;
+	}
+	.mobile-menu-icon {
+		display: block;
 	}
 	#nav-list {
 		display: none;
 	}
-	
+	#mobileMenu {
+		top: 92px;
+	}
 	.drop-list {
 		display: none !important;	
 	}
@@ -295,12 +298,13 @@
 		display: block;
 		cursor: pointer;
 	}
-	#breadcrumb {
-		padding: 12px 20px;
-	}
 	#container {
 		margin:0px auto;
 		padding: 20px;
+		min-height: 550px;
+	}
+	#mapChartContainer {
+		width: 90% !important;
 	}
 	#footer {
 		padding:20px;
@@ -310,6 +314,9 @@
 
 /* 모바일 가로 & 테블릿 세로 (해상도 480px ~ 767px)*/ 
 @media all and (max-width:767px) {
+	#mobileMenu {
+		top: 71px;
+	}
 	.top-inner {
 		display: none;
 	}
@@ -318,6 +325,19 @@
 	}
 	#wrap {
 		overflow: hidden;
+	}
+	#mapChartContainer {
+		padding-top:0 !important;
+		width: 100% !important;
+	}
+	#map {
+		height: 400px !important;
+	}
+	#chartTitle {
+		display: none;
+	}
+	#chartAbout {
+		display: none;
 	}
 	 .footer-container {
 		 display: block;

@@ -84,7 +84,7 @@ let ModalBuilder = function(){
 		},
 		FOOTER : function(buttonText, callback){
 			let $footerWrap = $(`<div id="modal-footer"></div>`);
-			let $footerButton = $(`<button type="button" class="is-key-button">${buttonText}</button>`);
+			let $footerButton = $(`<button type="button" class="main-btn">${buttonText}</button>`);
 			$footerButton.on("click", function(){
 				if(!isNull(callback)){
 					 callback($(this), _self);
@@ -96,7 +96,7 @@ let ModalBuilder = function(){
 		},
 		FOOTER_CUSTOM : function(buttonText, callback){
 			let $footerWrap = $(`<div></div>`);
-			let $footerButton = $(`<button type="button" class="is-button footer-one-button">${buttonText}</button>`);
+			let $footerButton = $(`<button type="button" class="main-btn footer-one-button">${buttonText}</button>`);
 			$footerButton.on("click", function(){
 				if(!isNull(callback)){
 					 callback($(this), _self);
@@ -108,8 +108,8 @@ let ModalBuilder = function(){
 		},
 		FOOTER_TWO_BUTTON : function(buttonText, callback){
 			let $footerWrap = $(`<div id="modal-footer"></div>`);
-			let $footerButton = $(`<button type="button" class="is-button">${buttonText}</button>`);
-			let $footerCloseButton = $(`<button type="button" class="is-sub-button">닫기</button>`);
+			let $footerCloseButton = $(`<button type="button" class="sub-btn">닫기</button>`);
+			let $footerButton = $(`<button type="button" class="main-btn">${buttonText}</button>`);
 			$footerButton.on("click", function(){
 				if(!isNull(callback)){
 					callback($(this), _self);
@@ -126,8 +126,8 @@ let ModalBuilder = function(){
 		},
 		FOOTER_CUSTOM_TWO_BUTTON : function(OneButtonText, callback, TwoButtonText, callback2){
 			let $footerWrap = $(`<div id="modal-footer"></div>`);
-			let $footerButton = $(`<button type="button" class="is-key-button">${OneButtonText}</button>`);
-			let $footerCloseButton = $(`<button type="button" class="is-basic-button">${TwoButtonText}</button>`);
+			let $footerCloseButton = $(`<button type="button" class="sub-btn">${TwoButtonText}</button>`);
+			let $footerButton = $(`<button type="button" class="main-btn">${OneButtonText}</button>`);
 			
 			$footerButton.on("click", function(){
 				if(!isNull(callback)){

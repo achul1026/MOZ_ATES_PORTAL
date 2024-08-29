@@ -1,0 +1,215 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+
+<div layout:fragment="content">
+	<div id="container">
+		<h2 id="page-title" th:text="#{reception.complainDetail.title}">민원</h2>
+		<div class="cm-info-wrap">
+			<h1 th:text="#{reception.complainDetail.detail.txt.title}">민원 내용</h1>
+			<div class="cm-input-wrap cm-detail-input-wrap">
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.complainDetail.detail.title}">
+							제목
+						</dt>
+						<dd th:text="${complaintsDetail.postTtl}">
+							Request to paint vehicle entry guide lines
+						</dd>
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.complainDetail.detail.category}">
+							카테고리
+						</dt>
+						<dd th:text="${complaintsDetail.cmCd.cdNm}">
+							facility
+						</dd>
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.complainDetail.detail.person}">
+							민원인
+						</dt>
+						<dd th:text="${complaintsDetail.wrtrNm}">
+							Inki Moon
+						</dd>
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.complainDetail.detail.date}">
+							등록일
+						</dt>
+						<dd th:text="${#dates.format(complaintsDetail.crDt, 'yyyy-MM-dd')}">
+							2012-08-08
+						</dd>
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.complainDetail.detail.state}">
+							처리상태
+						</dt>
+						<dd th:text="${complaintsDetail.ansStts} == 'Y' ? #{reception.complainDetail.detail.completed} : #{reception.complainDetail.detail.incompleted}">
+							complete
+						</dd>
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list ">
+					<dl>
+						<dt th:text="#{reception.complainDetail.detail.file}">
+							첨부파일
+						</dt>
+						<dd th:if="${#lists.isEmpty(complaintsDetail.qstAtchFileList)}">Não há informações cadastradas.</dd>
+						<dd th:unless="${#lists.isEmpty(complaintsDetail.qstAtchFileList)}">
+							<div id="uploadListContainer">
+								<div class="uploadList">
+									<a class="listItem" th:each="fileItem : ${complaintsDetail.qstAtchFileList}"
+									 th:href="@{/common/file/download.do(fileId = ${fileItem.fileIdx})}">
+										<div class="fileList" th:text="${fileItem.fileOrgNm}">파일 이름</div>
+										<button type="button" class="download"></button>
+									</a>
+				                 </div>
+			                </div>
+						</dd>
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list cm-detail-col3">
+					<dl>
+						<dt th:text="#{reception.complainDetail.detail.txt}">
+							내용
+						</dt>
+						<dd class="text-pre-line" th:text="${complaintsDetail.postCn}">
+							Request that vehicle access ramps be painted at intersections.
+						</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+		
+		<div th:if="${complaintsDetail.ansStts == 'Y'}" class="cm-info-wrap">
+			<h1 th:text="#{reception.complainDetail.result.title}">민원 답변</h1>
+			<div class="cm-input-wrap cm-detail-input-wrap">
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.complainDetail.result.department}">
+							담당부서
+						</dt>
+						<dd th:text="${complaintsDetail.webOprtr.oprtrDeptNm}">
+							Maputo Facilities Management Corporation Facility Manager
+						</dd>
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list">
+					<dl>
+						<dt th:text="#{reception.complainDetail.result.answer.date}">
+							답변일자
+						</dt>
+						<dd th:text="${#dates.format(complaintsDetail.ansCrDt, 'yyyy-MM-dd')}">
+							2023-08-28
+						</dd>
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list cm-detail-col3">
+					<dl>
+						<dt th:text="#{reception.complainDetail.detail.file}">
+							첨부파일
+						</dt>
+						
+						<dd th:if="${#lists.isEmpty(complaintsDetail.ansAtchFileList)}">Não há informações cadastradas.</dd>
+						<dd th:unless="${#lists.isEmpty(complaintsDetail.ansAtchFileList)}">
+							<div id="uploadListContainer">
+								<div class="uploadList" th:each="fileItem : ${complaintsDetail.ansAtchFileList}">
+									<a class="listItem" th:href="@{/common/file/download.do(fileId = ${fileItem.fileIdx})}">
+										<div class="fileList" th:text="${fileItem.fileOrgNm}">파일 이름</div>
+										<button type="button" class="download"></button>
+									</a>
+								</div>
+							</div>
+						</dd>
+						
+					</dl>
+				</div>
+				<div class="cm-input-list cm-detail-input-list cm-detail-col3">
+					<dl>
+						<dt th:text="#{reception.complainDetail.result.answer.title}">
+							내용
+						</dt>
+						<dd class="text-pre-line" th:text="${complaintsDetail.ansContents}">
+							Hello citizen, how are you?<br>
+							First of all, we apologize for any inconvenience caused when using the automobile-only road.<br>
+							We will respond to the citizen's request to paint the intersection access road guide lines.
+						</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+		
+		<div th:unless="${complaintsDetail.ansStts == 'Y'}" class="cm-info-wrap">
+			<h1 th:text="#{reception.complainDetail.result.title}">민원 답변</h1>
+			<div class="cm-no-ans" th:text="#{reception.complainDetail.detail.incompleted}">
+				in progress
+			</div>
+		</div>
+
+
+		<div class="btn-wrap-between btnThree">
+			<button type="button" class="sub-btn out-btn" th:onclick="|location.href='@{/complain/list.do}'|"
+				th:text="#{reception.common.list.more}">List</button>
+			<div id="btnDelteAdd">
+				<th:block th:if="${complaintsDetail.ansStts == 'N'}">
+					<form id="deleteForm" class="deleteForm">
+						<input type="hidden" name="complaintsIdx" th:value="${complaintsDetail.complaintsIdx}">
+						<button type="button" class="delete-btn out-btn"
+							th:text="#{reception.complainDetail.button.delete}" onclick="deleteComplaint()">Delete</button>
+					</form>
+					<form class="modifyForm" method="post" th:action="@{/complain/update.do}">
+						<input type="hidden" name="complaintsIdx" th:value="${complaintsDetail.complaintsIdx}">
+						<button type="submit" class="main-btn out-btn"
+							th:text="#{reception.complainDetail.button.modify}">Modify</button>
+					</form>
+				</th:block>
+			</div>
+		</div>
+	</div>
+</div>
+
+</html>
+<script th:inline="javascript">
+	function deleteComplaint() {
+		// 삭제하시겠습니까?
+		new ModalBuilder().init().alertBody("Você tem certeza que deseja excluir?").footer(3, [[#{reception.common.btn.confirm}]], function (button, modal) {
+			modal.close();
+
+			const searchingMsg = /*[[#{reception.common.loading.processing}]]*/;
+			const loading = new PortalLoading().start(searchingMsg);
+
+			const formData = new FormData(document.getElementById('deleteForm'));
+			fetch(/*[[@{/complain/delete.ajax}]]*/, {
+				method: "post",
+				body: formData
+			})
+					.then(response => response.json())
+					.then((result) => {
+						if (result.code === 200) {
+							new ModalBuilder().init().successBody(result.message).footer(4, 'OK', function (button, modal) {
+								modal.close();
+								location.href = /*[[@{/complain/list.do}]]*/;
+							}).open();
+						} else {
+							new ModalBuilder().init().alertBody(result.message).footer(4, 'OK', function (button, modal) {
+								modal.close();
+								location.href = /*[[@{/complain/list.do}]]*/;
+							}).open();
+						}
+					})
+					.finally(() => {
+						loading.end();
+					});
+		}, [[#{reception.common.btn.cancel}]], function (button, modal) {
+			modal.close()
+		}).open();
+	}
+</script>

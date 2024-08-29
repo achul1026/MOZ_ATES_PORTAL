@@ -1,9 +1,11 @@
 package com.moz.ates.traffic.portal.common.service;
 
-import java.util.List;
-import java.util.Map;
-
 import com.moz.ates.traffic.common.entity.common.MozCmCd;
+import com.moz.ates.traffic.common.repository.common.MozCmCdRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @packageName : com.moz.ates.traffic.portal.common.service 
@@ -12,16 +14,22 @@ import com.moz.ates.traffic.common.entity.common.MozCmCd;
  * @date        : 2022.03.10 
  * @description : 최초 생성
  */
-public interface CommonService {
-	
+@Service
+public class CommonService {
+
+	@Autowired
+	MozCmCdRepository cmCdRepository;
+
 	/**
-	  * @Method Name : getCommonCdList
-	  * @Date : 2024. 3. 29.
-	  * @Author : IK.MOON
-	  * @Method Brief : 공통 코드 조뢰
-	  * @param cdGroupId
-	  * @return
-	  */
-	public List<MozCmCd> getCdList(String cdGroupId);
-	
+	 * @Method Name : getCdList
+	 * @Date : 2024. 3. 29.
+	 * @Author : IK.MOON
+	 * @Method Brief : 공통 코드 조회
+	 * @param cdGroupId
+	 * @return
+	 */
+	public List<MozCmCd> getCdList(String cdGroupId) {
+		return cmCdRepository.findAllCdList(cdGroupId);
+	}
+
 }

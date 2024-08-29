@@ -22,8 +22,8 @@ public class LocaleConfig implements WebMvcConfigurer{
 		
 		CookieLocaleResolver resolver = new CookieLocaleResolver(); // resolver.setDefaultLocale(Locale.KOREAN); // 기본값 강제 한국어 설정. 
 		resolver.setCookieName("lang");
-		resolver.setDefaultLocale(new Locale("por"));
-//		resolver.setDefaultLocale(new Locale("eng"));
+//		resolver.setDefaultLocale(new Locale("por"));
+		resolver.setDefaultLocale(new Locale("eng"));
 		return resolver;
 	}
 

@@ -1,6 +1,5 @@
 @charset 'utf-8';
 #billContainer {
-
 	width:750px;
 	margin:auto;
 	border:1px solid #efefef;
@@ -8,7 +7,7 @@
 }
 #billTitle {
 	padding: 20px;
-	background: #00967A;
+	background: #0069b7;
 	text-align: center;
 }
 #billTitle h1 {
@@ -22,18 +21,19 @@
 #billInfo {
 	display: flex;
 	flex-wrap:wrap;
-	border-top:2px solid #00967A;
+	border-top:2px solid #0069b7;
 }
 #billInfo dl {
 	display: table;
 	width:50%;
+	border-bottom: 1px solid #efefef;
 }
 #billInfo dl dt {
 	display: table-cell;
 	padding: 16px;
 	width:30%;
 	background: #f9f9f9;
-	border-bottom:1px solid #efefef;
+
 
 	font-weight: 500;
 	vertical-align: middle;
@@ -46,14 +46,14 @@
 	padding: 16px;
 	width:70%;
 	border-right:1px solid #efefef;
-	border-bottom:1px solid #efefef;
+
 	vertical-align: middle;
 }
 #billInfo dl:first-child dd {
 	border-top:1px solid #efefef;
 }
 #billInfo dl:nth-child(2) dd {
-	border-top:1px solid #efefef;
+	
 }
 #billDetailInfo {
 	margin-top:20px;
@@ -95,6 +95,15 @@
     margin-top: 20px;
     line-height: 21px;
 }
+.billDepartmentList {
+	display: flex;
+	flex-wrap:wrap;
+	gap:8px
+}
+.billDepartmentList p  {
+	width: 100%;
+	font-weight: 500;
+}
 #printBtnWrap {
 	margin-top:20px;
 	text-align: center;
@@ -102,7 +111,7 @@
 #PrintBtn {
 		padding: 10px;
 		border:none;
-		background: #00967A;
+		background: #0069b7;
 		min-width: 90px;
 		color: #fff;
 		margin:auto;
@@ -165,24 +174,19 @@
 	#billInfo dl dd {
 		width: 70%;
 	}
-	.main-btn {
-		padding: 16px 0;
-		font-size:15px;
-		font-weight: 500;
-		width:100%;
+	#billDepartmentContainer {
+		flex-wrap: wrap;
+		gap: 20px;
 	}
-	.sub-btn {
-		padding: 18px 0;
-		font-size:15px;
-		font-weight: 500;
-		width:100%;
+	#billDepartmentContainer > div {
+		width: 100%;
 	}
-	.btn-wrap-end {
-		margin-top:20px;
-		display: flex;
-		gap:8px;
-		justify-content: end;
-		flex-wrap:wrap;
+	#billDepartmentContainer > div:last-child {
+		text-align: center;
 	}
+	#PrintBtn {
+		width: 100%;
+	}
+	
 	
 }

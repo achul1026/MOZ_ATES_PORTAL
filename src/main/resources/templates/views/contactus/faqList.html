@@ -1,101 +1,79 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="layouts/layout">
+      layout:decorate="layouts/layout">
 
 <div layout:fragment="content">
-<!--	<div id="breadcrumb">-->
-<!--		<ul>-->
-<!--			<li>-->
-<!--				<a href="">-->
-<!--					<img th:src="@{/images/home.png}" alt="메인 페이지">-->
-<!--				</a>-->
-<!--			</li>-->
-<!--			<li>-->
-<!--				<img th:src="@{/images/arrow-right.png}" alt="다음">-->
-<!--			</li>-->
-<!--			<li>-->
-<!--				<a href="">-->
-<!--					서브페이지-->
-<!--				</a>-->
-<!--			</li>-->
-<!--			<li>-->
-<!--				<img th:src="@{/images/arrow-right.png}" alt="다음">-->
-<!--			</li>-->
-<!--			<li>-->
-<!--				<a href="">-->
-<!--					서브페이지-->
-<!--				</a>-->
-<!--			</li>-->
-<!--		</ul>-->
-<!--	</div>-->
-	<div id="container">
-		<div id="wrap">
-			<h2 id="page-title" th:text="#{contactus.faq.title}">FAQ</h2>
-			<div id="filterBox">
-				<dl>
-					<dt th:text="#{contactus.common.search}">Search</dt>
-					<dd>
-						<form id="faqSearchForm" method="get">
-							<input type="text" name="searchTxt" class="base-search"
-								th:value="${mozFaq.searchTxt}"
-								th:placeholder="#{contactus.common.search.placeholder}">
-							<input type="hidden" id="hdnStart" name="start" th:value="${mozFaq.start}">
-							<input type="hidden" id="page" name="page" value="1">
-							<button type="submit" class="sub-btn" th:text="#{contactus.common.search.button}"></button>
-						</form>
-					</dd>
-				</dl>
-			</div>
-			<div id="list-table-wrap" th:object="${faqList}">
-				<div th:if="${not #object.isEmpty()}">
-					<div id="listSearchTableOpiton">
-						<div id="listSearchTotal"><p th:text="#{contactus.faqList.total}"></p> <span th:text='|"${pagination.totalListCnt}"|'>"546465"</span></div>
-					</div>
-					<div id="base-table">
-						<ul class="base-table-th base-table-cm">
-							<li th:text="#{contactus.common.number}"></li>
-							<li th:text="#{contactus.common.title}">제목</li>
-							<li th:text="#{contactus.common.add.date}"></li>
-							<li th:text="#{contactus.common.view}">조회수</li>
-						</ul>
-						<ul>
-							<li th:each="faqItem : ${faqList}" >
-								<ul class="base-table-td base-table-cm faq-table"
-									th:onclick="moveDetailPage([[${faqItem.faqIdx}]])">
-									<li class="TableNumber" th:text="${faqItem.rnum}"></li>
-									<li class="TableTitle" th:text="${faqItem.postTitle}"></li>
-									<li class="TableCmDate" th:text="${#dates.format(faqItem.regDt, 'yyyy-MM-dd')}"></li>
-									<li class="TableView" th:text="${faqItem.viewCnt}"></li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-					<div class="page_wrap">
-						<div th:insert="tags/pagingTag :: pagingTag"></div>
-					</div>
-				</div>
-				<div th:unless="${not #object.isEmpty()}">
-					<span th:text="#{contactus.search.notFound}">등록된 FAQ가 없습니다</span>
-				</div>
-				
-			</div>
-		</div>
-	</div>
+    <div id="container">
+        <div id="wrap">
+            <h2 id="page-title" th:text="#{contactus.faq.title}">FAQ</h2>
+            <div id="filterBox">
+                <dl>
+                    <dt th:text="#{contactus.common.search}">Search</dt>
+                    <dd>
+                        <form id="faqSearchForm" method="get">
+                            <input type="text" name="searchTxt" class="base-search"
+                                   th:value="${mozFaq.searchTxt}"
+                                   th:placeholder="#{common.search.placeholder}"
+                                   maxlength="20">
+                            <input type="hidden" id="hdnStart" name="start" th:value="${mozFaq.start}">
+                            <input type="hidden" id="page" name="page" value="1">
+                            <button type="submit" class="sub-btn" th:text="#{contactus.common.search.button}"></button>
+                        </form>
+                    </dd>
+                </dl>
+            </div>
+            <div id="list-table-wrap" th:object="${faqList}">
+                <div th:if="${not #object.isEmpty()}">
+                    <div id="listSearchTableOpiton">
+                        <div id="listSearchTotal"><p th:text="#{contactus.faqList.total}"></p> <span
+                                th:text='|"${pagination.totalListCnt}"|'>"546465"</span></div>
+                    </div>
+                    <div id="base-table">
+                        <ul class="base-table-th base-table-cm">
+                            <li th:text="#{contactus.common.number}"></li>
+                            <li th:text="#{contactus.common.title}">제목</li>
+                            <li th:text="#{contactus.common.add.date}"></li>
+                            <li th:text="#{contactus.common.view}">조회수</li>
+                        </ul>
+                        <ul>
+                            <li th:each="faqItem : ${faqList}">
+                                <ul class="base-table-td base-table-cm faq-table"
+                                    th:onclick="moveDetailPage([[${faqItem.faqIdx}]])">
+                                    <li class="TableNumber" th:text="${faqItem.rnum}"></li>
+                                    <li class="TableTitle" th:text="${faqItem.postTitle}"></li>
+                                    <li class="TableCmDate"
+                                        th:text="${#dates.format(faqItem.regDt, 'yyyy-MM-dd')}"></li>
+                                    <li class="TableView cm-line" th:text="${faqItem.viewCnt}"></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="page_wrap">
+                        <div th:insert="tags/pagingTag :: pagingTag"></div>
+                    </div>
+                </div>
+                <div th:unless="${not #object.isEmpty()}">
+                    <span th:text="#{contactus.search.notFound}">등록된 FAQ가 없습니다</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
 </div>
 
 </html>
 <script>
-	
-	function moveDetailPage(faqIdx) {
-		let url = '/info/faq/detail.do?faqIdx=';
-		location.href = url + faqIdx;
-	}
-	
-	function fnPageMove(pageToMove) {
-		let pageElmnt = document.getElementById("page");
-		let faqSearchForm = document.getElementById("faqSearchForm");
-		pageElmnt.value = pageToMove;
-		
-		faqSearchForm.submit();
-	}
+
+    function moveDetailPage(faqIdx) {
+        let url = '/info/faq/detail.do?faqIdx=';
+        location.href = url + faqIdx;
+    }
+
+    function fnPageMove(pageToMove) {
+        let pageElmnt = document.getElementById("page");
+        let faqSearchForm = document.getElementById("faqSearchForm");
+        pageElmnt.value = pageToMove;
+
+        faqSearchForm.submit();
+    }
 </script>

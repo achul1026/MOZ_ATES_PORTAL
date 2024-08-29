@@ -33,7 +33,7 @@
 				<ul th:if="${not #lists.isEmpty(enfList)}" 
 					class="base-table-td base-table-cm driver-table"
 					th:each="enfItm : ${enfList}"
-					th:onclick="|location.href='@{/inquiry/licencestatus/detail.do}'|">
+					th:onclick="moveEnfDetail([[${enfItm.tfcEnfId}]])">
 					<li class="TableNumber" th:text="${enfItm.rnum}">1</li>
 					<li class="TableBillNumber" th:text="${enfItm.tfcEnfId}">E-20240401-1961-0</li>
 					
@@ -42,7 +42,7 @@
 					
 					<li class="TableState" th:if="${enfItm.finePymntInfo.pymntStts == 'Y'}" th:text="#{inquiry.licenceStatus.paid}">Paid</li>
 					<li class="TableState" th:unless="${enfItm.finePymntInfo.pymntStts == 'Y'}" th:text="#{inquiry.licenceStatus.unpaid}">Paid</li>
-					<li class="TableCmDate" th:text="${#dates.format(enfItm.tfcEnfDt, 'yyyy-MM-dd')}">2023-12-25</li>
+					<li class="TableCmDate TableBillDate" th:text="${#dates.format(enfItm.tfcEnfDt, 'yyyy-MM-dd')}">2023-12-25</li>
 				</ul>
 
 				<ul th:unless="${not #lists.isEmpty(enfList)}" 
@@ -52,6 +52,9 @@
 
 			</li>
 		</ul>
+	</div>
+	<div class="page_wrap">
+		<div th:insert="tags/pagingTag :: pagingTag"></div>
 	</div>
 </div>
 

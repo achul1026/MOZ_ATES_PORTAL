@@ -1,150 +1,264 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="layouts/layout">
+      layout:decorate="layouts/layout">
 
 <div layout:fragment="content">
-	<div id="container">
-		<div id="wrap">
-			<h2 id="page-title" th:text="#{inquiry.licenceStatus.title}">면허현황</h2>
+    <div id="container">
+        <div id="wrap">
+            <h2 id="page-title" th:text="#{inquiry.licenceStatus.title}">면허현황</h2>
 
-			<form id="searchFrm">
-				<div id="filterBox">
-					<dl>
-						<dt class="filterBoxRong" th:text="#{inquiry.pymntStatusSearch.licneceId}">Driving Licence I.D No</dt>
-						<dd>
-							<input type="text" name="dvrLcenId" id="dvrLcenId" class="base-search"
-								th:placeholder="#{inquiry.pymntStatusSearch.licneceId}">
-						</dd>
-					</dl>
-					<dl>
-						<dt class="filterBoxRong" th:text="#{inquiry.licenceStatus.birth.date}">Date of Birth</dt>
-						<dd>
-							<input type="text" name="vioBrth" id="vioBrth" class="base-search"
-								th:placeholder="#{inquiry.licenceStatus.birth.date}">
-							<button type="button" class="sub-btn" th:text="#{inquiry.pymntStatusSearch.button.search}"
-								onclick="searchDriverInfo()">Search</button>
-						</dd>
-					</dl>
-				</div>
-			</form>
+            <form id="searchFrm">
+                <div id="filterBox">
+                    <dl>
+                        <dt class="filterBoxRong" th:text="#{inquiry.pymntStatusSearch.licneceId}">Driving Licence I.D
+                            No
+                        </dt>
+                        <dd>
+                            <input type="text" name="dvrLcenId" id="dvrLcenId" class="base-search data-validate"
+                                   th:placeholder="#{inquiry.pymntStatusSearch.licneceId}"
+                                   th:data-valid-name="#{inquiry.pymntStatusSearch.licneceId}"
+                                   data-valid-minimum="5" data-valid-required
+                                   maxlength="20"
+                                   onkeyup="retainNumbers(this)">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt class="filterBoxRong" th:text="#{inquiry.licenceStatus.birth.date}">Date of Birth</dt>
+                        <dd>
+                            <input type="text" name="vioBrth" id="vioBrth" class="base-search data-validate"
+                                   placeholder="dd.mm.aaaa" maxlength="10"
+                                   onkeyup="keyupDateCheck(event, 'ddMMyyyy', '.')"
+                                   th:data-valid-name="#{inquiry.licenceStatus.birth.date}"
+                                   data-valid-brth data-valid-required>
+                            <input type="hidden" id="hdnStart" name="start" value="1">
+                            <input type="hidden" id="page" name="page" value="1">
+                            <button type="button" class="sub-btn" th:text="#{inquiry.pymntStatusSearch.button.search}"
+                                    onclick="searchDriverInfo()">Search
+                            </button>
+                        </dd>
+                    </dl>
+                </div>
+            </form>
 
-			<div id="resultWrap">
-				<div class="detail-info-wrap none" id="lcenResultWrap">
-					<div class="detail-title">
-						<h3 th:text="#{inquiry.licenceStatus.title}">면허정보</h3>
-					</div>
-					<div class="detail-table">
-						<dl>
-							<dt th:text="#{inquiry.licenceStatus.driver.number}"></dt>
-							<dd id="">1524815</dd>
-						</dl>
-						<dl>
-							<dt th:text="#{inquiry.licenceStatus.name}"></dt>
-							<dd id="">Mateus Chaves</dd>
-						</dl>
-						<dl>
-							<dt th:text="#{inquiry.licenceStatus.birth.date}"></dt>
-							<dd id="">1988-08-18</dd>
-						</dl>
-						<dl>
-							<dt th:text="#{inquiry.licenceStatus.phone}"></dt>
-							<dd id="">828152452</dd>
-						</dl>
-						<dl>
-							<dt th:text="#{inquiry.licenceStatus.address}"></dt>
-							<dd id="">Avenida Ahmed Sekou Touré 923 R/c, Maputo 1101</dd>
-						</dl>
-						<dl>
-							<dt th:text="#{inquiry.licenceStatus.driver.state}"></dt>
-							<dd id="">Active</dd>
-						</dl>
+            <div id="resultWrap">
+                <div class="detail-info-wrap none" id="lcenResultWrap">
 
-						<dl>
-							<dt th:text="#{inquiry.licenceStatus.validity.start.date}"></dt>
-							<dd id="">2020-11-02</dd>
-						</dl>
-						<dl>
-							<dt th:text="#{inquiry.licenceStatus.expiration.date}"></dt>
-							<dd id="">2025-11-02</dd>
-						</dl>
-						<dl>
-							<dt th:text="#{inquiry.licenceStatus.class}"></dt>
-							<dd id="">C - Veículo Pesado - acima de 16000Kg (PB)</dd>
-						</dl>
-						<dl>
-							<dt th:text="#{inquiry.licenceStatus.categories.carta}"></dt>
-							<dd id="">-</dd>
-						</dl>
+                </div>
+                <div id="list-table-wrap">
 
-					</div>
-				</div>
+                </div>
+            </div><!-- resultWrap -->
 
-				<div id="list-table-wrap">
-
-				</div>
-			</div><!-- resultWrap -->
-
-		</div><!-- wrap -->
-	</div><!-- container -->
+        </div><!-- wrap -->
+    </div><!-- container -->
 </div>
 
 </html>
 <script th:inline="javascript">
+    let dvrLcenIdVar, vioBrthVar;
+    const ajaxContent = document.getElementById("list-table-wrap");
 
-	const ajaxContent = document.getElementById("list-table-wrap");
+    function createAddress(enderesso1, enderesso2, enderesso3, enderesso4) {
+        const addressParts = [enderesso1, enderesso2, enderesso3, enderesso4].filter(part => part != null);
+        return addressParts.join(' , ');
+    }
 
-	// TODO :: API 작업	
-	function searchDriverInfo() {
-		let searchingTxt = /*[[#{inquiry.licenceStatus.searching}]]*/;
-		ajaxContent.innerText = searchingTxt;
-		
-		let searchValue = document.getElementById("vioBrth").value;
-		if (searchValue == '') {
-			alert("Please enter value");
-			ajaxContent.innerText = "";
-			document.getElementById('lcenResultWrap').classList.add('none');
-			document.getElementById("vioBrth").focus();
-			return false;
-		}
+    function parseDateFromString(dateString, format) {
+        const dateParts = dateString.split(/[\.\-\/]/);
+        let day, month, year;
 
-		let dvrLcenId = document.getElementById("dvrLcenId").value;
-		if (dvrLcenId == '') {
-			alert("Please enter value");
-			ajaxContent.innerText = "";
-			document.getElementById('lcenResultWrap').classList.add('none');
-			document.getElementById("dvrLcenId").focus();
-			return false;
-		}
+        if (format === "dd.MM.yyyy") {
+            [day, month, year] = dateParts;
+        } else if (format === "yyyy-MM-dd") {
+            [year, month, day] = dateParts;
+        } else {
+            throw new Error("Unsupported date format");
+        }
 
-		// dvrLcenId
-		let searchType = "birthDtAndLcenId";
-
-		const fetcher = new DriverSelectAPI();
-
-		fetcher.fetchData(searchType, searchValue, function (data) {
-			// TODO :: API 작업
-			console.log(data);
-			document.getElementById('lcenResultWrap').classList.remove('none');
-
-			// 단속이력 조회
-			const formData = new FormData(document.getElementById("searchFrm"));
-			
-			fetch('/inquiry/licencestatus/enf/list.ajax', {
-				method: 'post',
-				body: formData
-			})
-				.then(response => response.text())
-				.then((html) => {
-					ajaxContent.innerHTML = html;
-				});
-		});
+        return `${year}-${month}-${day}`;
+    }
 
 
-	}
+    function isDatesEqual(dateStr1, format1, dateStr2, format2) {
+        const parsedDate1 = parseDateFromString(dateStr1, format1);
+        const parsedDate2 = parseDateFromString(dateStr2, format2);
 
-	// TODO::시연&개발 끝나면 삭제
-	$("#page-title").click(function () {
-		$("#vioBrth").val("1988-08-18");
-		$("#dvrLcenId").val("1524815");
-	});
+        return parsedDate1 === parsedDate2;
+    }
+
+    function convertClasses(map) {
+        return Object.entries(map)
+            .map(([key, value]) => `<h4 class="mb8">${key}: ${value}</h4>`)
+            .join('');
+    }
+
+    function apiResultHTML(searchInfo) {
+        let title = /*[[#{inquiry.licenceStatus.title}]]*/;
+        let dvrLcenId = /*[[#{inquiry.licenceStatus.driver.number}]]*/;
+        let name = /*[[#{inquiry.licenceStatus.name}]]*/;
+        let brth = /*[[#{inquiry.licenceStatus.birth.date}]]*/;
+        let phone = /*[[#{inquiry.licenceStatus.phone}]]*/;
+        let addr = /*[[#{inquiry.licenceStatus.address}]]*/;
+        let startDate = /*[[#{inquiry.licenceStatus.validity.start.date}]]*/;
+        let endDate = /*[[#{inquiry.licenceStatus.expiration.date}]]*/;
+        let classes = /*[[#{inquiry.licenceStatus.class}]]*/;
+
+        let resultHtml = "";
+
+        if (searchInfo != null) {
+            let birthday = new Date(searchInfo.data_de_nascimento);
+
+            let birthdayFormat = `${birthday.getDate()}.${birthday.getMonth() + 1}.${birthday.getFullYear()}`;
+            let fullAddress = createAddress(searchInfo.enderesso1, searchInfo.enderesso2, searchInfo.enderesso3, searchInfo.enderesso4);
+            let classesVal = convertClasses(searchInfo.classes);
+
+            resultHtml =
+                `<div class="detail-title">
+				<h3>${title}</h3>
+			</div>
+			<div class="detail-table">
+				<dl class="brNone">
+					<dt>${dvrLcenId}</dt>
+					<dd>${searchInfo.codigo}</dd>
+				</dl>
+				<dl>
+					<dt>${name}</dt>
+					<dd>${searchInfo.nome}</dd>
+				</dl>
+				<dl class="brNone">
+					<dt>${brth}</dt>
+					<dd>${birthdayFormat}</dd>
+				</dl>
+				<dl>
+					<dt>${phone}</dt>
+					<dd>${searchInfo.phone1}</dd>
+				</dl>
+				<dl class="brNone">
+					<dt>${addr}</dt>
+					<dd>${fullAddress}</dd>
+				</dl>
+				<dl >
+					<dt>${startDate}</dt>
+					<dd>${searchInfo.incio_validade_classe}</dd>
+				</dl>
+				<dl class="brNone boder-bottom">
+					<dt>${endDate}</dt>
+					<dd>${searchInfo.fim_validade_classe}</dd>
+				</dl>
+				<dl class="boder-bottom">
+					<dt>${classes}</dt>
+					<dd>${classesVal}</dd>
+				</dl>
+			</div>`;
+        } else {
+            let noResultMsg = /*[[#{inquiry.licenceStatus.search.no.result}]]*/;
+            resultHtml = `<div>${noResultMsg}</div>`;
+        }
+        return resultHtml;
+    }
+
+    function searchDriverInfo() {
+        if (soValid('searchFrm')) {
+            let searchingTxt = /*[[#{inquiry.licenceStatus.searching}]]*/;
+            const loading = new PortalLoading().start(searchingTxt);
+
+            let searchValue = document.getElementById("vioBrth").value;
+            let dvrLcenId = document.getElementById("dvrLcenId").value;
+
+            const lcenResultWrap = document.getElementById('lcenResultWrap');
+            const fetcher = new DriverSelectAPI();
+
+            fetcher.driverSearchData(dvrLcenId, function (searchInfo) {
+                lcenResultWrap.empty();
+
+                let resultHtml = "";
+
+                if (searchInfo != null && isDatesEqual(searchValue, 'dd.MM.yyyy', searchInfo.data_de_nascimento, 'yyyy-MM-dd')) {
+                    resultHtml = apiResultHTML(searchInfo);
+                    lcenResultWrap.innerHTML = resultHtml;
+
+                    lcenResultWrap.classList.remove('none');
+
+                    // 단속이력 조회
+                    const formData = new FormData(document.getElementById("searchFrm"));
+
+                    fetch(/*[[@{/inquiry/licencestatus/enf/list.ajax}]]*/, {
+                        method: 'post',
+                        body: formData
+                    })
+                        .then(response => response.text())
+                        .then((html) => {
+                            ajaxContent.innerHTML = html;
+                        })
+                        .finally(() => {
+                            loading.end();
+                        });
+
+                    vioBrthVar = searchValue;
+                    dvrLcenIdVar = dvrLcenId;
+                } else {
+                    resultHtml = apiResultHTML(null);
+                    lcenResultWrap.classList.remove('none');
+                    lcenResultWrap.innerHTML = resultHtml;
+                    ajaxContent.innerHTML = '';
+                    loading.end();
+                }
+            });
+        } else {
+            document.getElementById('lcenResultWrap').classList.add('none');
+            ajaxContent.innerText = "";
+        }
+    }
+
+    function moveEnfDetail(tfcEnfId) {
+
+        let url = /*[[@{/inquiry/licencestatus/detail.do}]]*/;
+        let form = document.createElement('form');
+        form.setAttribute('method', 'post');
+        form.setAttribute('action', url);
+
+        let input1 = document.createElement('input');
+        input1.setAttribute('type', 'hidden');
+        input1.setAttribute('name', 'tfcEnfId');
+        input1.setAttribute('value', tfcEnfId);
+        form.appendChild(input1);
+
+        let input2 = document.createElement('input');
+        input2.setAttribute('type', 'hidden');
+        input2.setAttribute('name', 'dvrLcenId');
+        input2.setAttribute('value', dvrLcenIdVar);
+        form.appendChild(input2);
+
+        let input3 = document.createElement('input');
+        input3.setAttribute('type', 'hidden');
+        input3.setAttribute('name', 'vioBrth');
+        input3.setAttribute('value', vioBrthVar);
+        form.appendChild(input3);
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+    function fnPageMove(pageToMove) {
+        let searchingTxt = /*[[#{inquiry.licenceStatus.searching}]]*/;
+        const loading = new PortalLoading().start(searchingTxt);
+        let pageElmnt = document.getElementById("page");
+        let noticeSearchForm = document.getElementById("noticeSearchForm");
+        pageElmnt.value = pageToMove;
+
+        // 단속이력 조회
+        const formData = new FormData(document.getElementById("searchFrm"));
+
+        fetch(/*[[@{/inquiry/licencestatus/enf/list.ajax}]]*/, {
+            method: 'post',
+            body: formData
+        })
+            .then(response => response.text())
+            .then((html) => {
+                ajaxContent.innerHTML = html;
+            })
+            .finally(() => {
+                loading.end();
+            });
+    }
 
 </script>

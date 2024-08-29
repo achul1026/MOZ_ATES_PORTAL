@@ -32,8 +32,8 @@
 								<dd>Não há informações cadastradas.</dd>
 							</th:block>
 							<th:block th:unless="${#lists.isEmpty(noticeDetail.atchFileList)}">
-								<dd class="listItem">
-									<a class="detailFile" th:href="@{/common/file/download.do(fileId=${itm.fileIdx})}" 
+								<dd class="uploadList">
+									<a class="listItem" th:href="@{/common/file/download.do(fileId=${itm.fileIdx})}" 
 										th:each="itm : ${noticeDetail.atchFileList}">
 										<div th:text="${itm.fileOrgNm}">File Og Name</div>
 										<button class="download"></button>
@@ -48,12 +48,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="search-wrap btn-wrap">
-				<div class="form-group">
-					<button type="button" class="sub-btn out-btn" 
-						th:text="#{contactus.common.list}" th:onclick="|location.href='@{/info/notice/list.do}'|">List</button>
-				</div>
+			<div class="btn-wrap-end">
+				<button type="button" class="sub-btn out-btn" 
+					th:text="#{contactus.common.list}" th:onclick="|location.href='@{/info/notice/list.do}'|">List</button>
 			</div>
+			
     </div>
 	</div>
 </html>

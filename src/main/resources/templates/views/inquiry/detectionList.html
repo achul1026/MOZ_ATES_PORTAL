@@ -1,0 +1,81 @@
+<html xmlns:th="http://www.thymeleaf.org"  
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+	
+	<div layout:fragment="content">
+		<div id="container">
+			<div id="wrap">
+				<h2 id="page-title" th:text="#{inquiry.detectionStatus.common.title}">교통 단속 카메라 감지상태</h2>
+				<div id="filterBox">
+						<dl>
+							<dt th:text="#{inquiry.detectionList.search.title}">Search</dt>
+							<dd>
+								<form id="searchForm" method="get">
+									<input type="text" class="base-search cm-long-saearch" name="searchTxt"
+										th:value="${cameraEnfOrg.searchTxt}"
+										   th:placeholder="#{inquiry.detectionList.search.placeholder}"
+									maxlength="20">
+									<input type="hidden" id="start" name="start" th:value="${cameraEnfOrg.start}">
+									<input type="hidden" id="page" name="page" value="1">
+									<input type="submit" class="sub-btn" th:value="#{inquiry.detectionList.btn.search}">
+								</form>
+							</dd>
+						</dl>
+				</div>
+				<div id="list-table-wrap" th:object="${detectionList}">
+					
+					<div th:if="${not #object.isEmpty()}">
+						<div id="listSearchTableOpiton">
+							<div id="listSearchTotal">
+								<p th:text="#{inquiry.detectionList.total}"></p> <span th:text='|"${pagination.totalListCnt}"|'>"546465"</span>
+							</div>
+						</div>
+						
+						<div id="base-table">
+							<ul class="base-table-th base-table-cm">
+								<li th:text="#{inquiry.detectionList.table.head.rowNumber}">No.</li>
+								<li th:text="#{inquiry.detectionStatus.common.vehicleNo}">차량번호</li>
+								<li th:text="#{inquiry.detectionStatus.common.location}">위치</li>
+								<li th:text="#{inquiry.detectionStatus.common.date}">시간</li>
+							</ul>
+							
+							<ul>	
+								<li th:each="itm : ${detectionList}">
+									<ul class="base-table-td base-table-cm notice-table" 
+											th:onclick="|location.href='@{/inquiry/detection/detail.do(idx=${itm.idx})}'|">
+										<li class="TableNumber" th:text="${itm.rnum}">1</li>
+										<li class="TableTitle" th:text="${itm.carPlate}">차량 번호</li>
+										<li class="TableView cm-line" th:text="${itm.addr}">위치</li>
+										<li class="TableCmDate" th:text="${#dates.format(itm.enforceTime, 'yyyy-MM-dd')}">2023-12-25</li>
+									</ul>
+								</li>
+							</ul>
+				    </div>
+					    
+					<div class="page_wrap">
+						<div th:insert="tags/pagingTag :: pagingTag"></div>
+					</div>
+						
+					</div>
+					
+					<div th:unless="${not #object.isEmpty()}">
+						<span th:text="#{inquiry.detectionList.result.empty}">Nothing found.</span>
+					</div>
+
+				</div>			
+			</div>		
+		</div>    
+	</div>
+</html>
+<script type="text/javascript">
+	
+	function fnPageMove(pageToMove) {
+		let pageElmnt = document.getElementById("page");
+		let noticeSearchForm = document.getElementById("searchForm");
+		pageElmnt.value = pageToMove;
+		
+		noticeSearchForm.submit();
+	}
+	
+</script>
+

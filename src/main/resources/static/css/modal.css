@@ -33,7 +33,7 @@
     align-items:center;
     padding: 16px;
     border-radius: 8px 8px 0 0;
-    background-color:#00967a;
+    background-color:#0069b7;
 }
 #modal-title {
     font-size: 16px;
@@ -41,39 +41,40 @@
     color:#fff;
 }
 #modal-body {
-	padding:16px;
+	padding: 32px;	
 }
 #modal-footer {
 	display:flex;
-	justify-content:center;
-	gap:16px;
-	padding:0 16px 16px 16px;
+}
+#modal-footer .main-btn {
+	order: 2;
+}
+#modal-footer .sub-btn {
+	order: 1;
+}
+#modal-footer button {
+	padding: 18px;
+	width: 100%;
+	border-radius: 0;
 }
 #alert-img {
-	width:32px;
-	height:32px;
-	margin:16px auto;
-}
-#alert-img img {
-	width:100%;
-	height:100%;
+	text-align: center;
 }
 #modal-txt {
-	font-size:16px;
+	margin-top:16px;
+	font-size:18px;
 	font-weight:600;
 	text-align:center;
 }
-.is-button.footer-one-button {
+.footer-one-button {
 	width:100%;
-	margin-top:16px;
 	border-radius:0;
 	padding: 16px;
-    background: #00856C;
+    background: #0069b7;
     color: #ffff;
     font-size: 16px;
     font-weight: 600;
 }
-
 #modalTable {
 	border-top:1px solid #000;
 	border-bottom:1px solid #000;
@@ -124,13 +125,13 @@
 }
 #successTxt {
 	padding:20px;
-	color:#00967a;
+	color:#0069b7;
 	font-weight:600;
 	border:1px solid #ddd;
 	text-align:center;
 }
 #successPwTxt {
-	color:#00967a;
+	color:#0069b7;
 	font-weight:600;
 	text-align:center;
 }
@@ -164,24 +165,43 @@
 .modal-input-text {
 	margin-left:0;
 }
-.modal-pay-box {
-	width:160px;
-	border-radius:6px;
-	background-color:#00967a;
-	text-align:center;
+#payWrap {
+	display: flex;
+	gap: 20px;
+	flex-wrap:wrap;
+	width: 400px;
 }
-.modal-pay-box button, .modal-pay-box a {
-	display:inline-block;
-	width:100%;
-	line-height:1.6;
-	padding:40px 0;
-	font-size:18px;
-	color:#fff;
+.pay__btn {
+	padding: 20px;
+    width: 100%;
+    border-radius: 6px;
+    font-size: 18px;
+    color: #fff;
+    background: #f9f9f9;
+    display: flex;
+    gap: 10px;
+    min-width: 200px;
+    align-items: center;
+    justify-content: space-between;
 }
-.modal-pay-box:hover {
-	opacity:0.9;
+.pay__btn:hover {
+	background: gold;
 }
-
+.pay__modal_img {
+	width: 30px;
+}
+.pay__modal_text {
+	font-weight: 500;
+}
+.modal-pay-title {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+}
+.modal-pay-arrow {
+	transform: rotate(180deg);
+	width: 8px;
+}
 #listTableContainer, .list-table-container {
 	margin-bottom:36px;
 }
@@ -192,7 +212,7 @@
 }
 #listTable th, .list-table th{
 	color:#fff;
-	background-color:#00967a;
+	background-color:#0069b7;
 }
 #listTable td, .list-table td{
 	font-weight:500;
@@ -203,4 +223,10 @@
 }
 .table-link:hover td {
 	background-color:#ededed;
+}
+
+@media all and (max-width: 767px) {
+	#modal-wrap {
+		min-width: 70% ;
+	}
 }

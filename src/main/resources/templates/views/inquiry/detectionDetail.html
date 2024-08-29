@@ -1,0 +1,131 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/layout">
+
+<div layout:fragment="content">
+	<div id="container">
+		<div>
+			<h2 id="page-title" th:text="#{inquiry.detectionStatus.common.title}">교통 단속 카메라 감지상태</h2>
+		</div>
+
+		<div class="detail-table detail-table-dection">
+			<dl class="brNone">
+				<dt th:text="#{inquiry.detectionStatus.common.vehicleNo}">차량번호</dt>
+				<dd th:text="${detectionDetail.carPlate}">AAA 111 MP</dd>
+			</dl>
+			<dl class="brNone">
+				<dt th:text="#{inquiry.detectionStatus.common.date}">단속시간</dt>
+				<dd th:text="${#dates.format(detectionDetail.enforceTime, 'yyyy-MM-dd HH:mm:ss')}">2024-08-01 13:11:01
+				</dd>
+			</dl>
+			<dl class="brNone">
+				<dt th:text="#{inquiry.detectionStatus.common.location}">위치</dt>
+				<dd th:text="${detectionDetail.addr}">위치</dd>
+			</dl>
+
+			<dl class="brNone">
+				<dt th:text="#{inquiry.detectionStatus.common.violationSpeed}">위반속도</dt>
+				<dd th:text="${detectionDetail.enforceSpeed}">110</dd>
+			</dl>
+			<dl>
+				<dt th:text="#{inquiry.detectionStatus.common.averageSpeed}">평균속도</dt>
+				<dd th:text="${detectionDetail.avgSpeed}">108</dd>
+			</dl>
+
+			<dl class="brNone">
+				<dt th:text="#{inquiry.detectionStatus.common.speedLimit}">제한속도</dt>
+				<dd th:text="${detectionDetail.speedLimit}">100</dd>
+			</dl>
+			<dl>
+				<dt th:text="#{inquiry.detectionStatus.common.lane}">위반도로라인</dt>
+				<dd th:text="${detectionDetail.enforceLane}">2</dd>
+			</dl>
+
+			<dl>
+				<dt th:text="#{inquiry.detectionDetail.enforceCode}">단속코드</dt>
+				<th:block th:switch="${detectionDetail.enforceCode}">
+					<dd th:case="0" th:text="#{inquiry.detectionDetail.enforceCode.0}"></dd>
+					<dd th:case="1" th:text="#{inquiry.detectionDetail.enforceCode.1}"></dd>
+					<dd th:case="2" th:text="#{inquiry.detectionDetail.enforceCode.2}"></dd>
+				</th:block>
+			</dl>
+			<dl>
+				<dt th:text="#{inquiry.detectionDetail.enforceMode}">단속모드</dt>
+				<th:block th:switch="${detectionDetail.enforceMode}">
+					<dd th:case="0" th:text="#{inquiry.detectionDetail.enforceMode.0}"></dd>
+					<dd th:case="1" th:text="#{inquiry.detectionDetail.enforceMode.1}"></dd>
+					<dd th:case="2" th:text="#{inquiry.detectionDetail.enforceMode.2}"></dd>
+				</th:block>
+			</dl>
+			<dl>
+				<dt th:text="#{inquiry.detectionDetail.signalInfo}">신호정보</dt>
+				<th:block th:switch="${detectionDetail.signalInfo}">
+					<dd th:case="0" th:text="#{inquiry.detectionDetail.signalInfo.0}"></dd>
+					<dd th:case="1" th:text="#{inquiry.detectionDetail.signalInfo.1}"></dd>
+					<dd th:case="2" th:text="#{inquiry.detectionDetail.signalInfo.2}"></dd>
+					<dd th:case="3" th:text="#{inquiry.detectionDetail.signalInfo.3}"></dd>
+				</th:block>
+			</dl>
+		</div>
+
+		<div class="detail-info-wrap">
+			<div class="detail-title">
+				<h3 th:text="#{inquiry.detectionDetail.images.title}">이미지</h3>
+			</div>
+
+<!--			<div class="detection-inquery-wrap">-->
+<!--				<div class="detection-inquery-con">-->
+<!--					<div class="detection-inquiry-item">-->
+<!--						<img src="/images/testimg.jpg" class="cm-dection-img" alt="detection image" onclick="imgModal()">-->
+<!--					</div>-->
+<!--					<div class="detection-inquiry-item">-->
+<!--						<img src="/images/error_img.png" class="cm-dection-img" alt="detection image" onclick="imgModal()">-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
+
+			<th:block th:if="${#lists.isEmpty(detectionImgList)}">
+				<div class="no-picture" th:text="#{inquiry.detectionDetail.images.empty}">등록된 사진이 없습니다.</div>
+			</th:block>
+			<th:block th:unless="${#lists.isEmpty(detectionImgList)}">
+				<div class="fines-inquiry detection-inquery-wrap">
+					<div class="detection-inquery-con">
+						<div class="detection-inquiry-item" th:each="itm : ${detectionImgList}">
+							<img th:src="@{/inquiry/detection/image.do(fileId = ${itm.idx})}" class="cm-dection-img"  alt="detection image" onclick="imgModal()">
+						</div>
+					</div>
+				</div>
+			</th:block>
+		</div>
+
+		<div class="btn-wrap-end">
+			<button type="button" class="sub-btn out-btn" th:onclick="|location.href='@{/inquiry/detection/list.do}'|"
+				th:text="#{inquiry.detectionDetail.btn.list}">List</button>
+			<a th:href="@{/info/penaltyplace/list.do}" class="main-btn"
+				th:text="#{inquiry.detectionDetail.notes.line2}">납부처 찾아보기</a>
+		</div>
+	</div>
+	<div id="imgModal">
+	    <span class="close" onclick="closeModal()">&times;</span>
+	    <img id="imgModalCon" src="" alt="Modal Image">
+	</div>
+</div>
+
+</html>
+<script>
+function imgModal() {
+    const modal = document.getElementById("imgModal");
+    const modalImg = document.getElementById("imgModalCon");
+    modal.style.display = "block";
+    modalImg.src = event.target.src;
+}
+function closeModal() {
+    const modal = document.getElementById("imgModal");
+    modal.style.display = "none";
+}
+window.onclick = function(event) {
+    const modal = document.getElementById("imgModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>

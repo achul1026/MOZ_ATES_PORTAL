@@ -11,7 +11,7 @@
 					<div class="cm-input-list cm-detail-input-list">
 						<dl>
 							<dt>
-								<label class="control-label" for="postTtl"	th:text="#{contactus.common.title}">제목</label>
+								<label for="postTtl"	th:text="#{contactus.common.title}">제목</label>
 							</dt>
 							<dd class="" th:text="${qnaDetail.postTtl}">
 								Title
@@ -21,7 +21,7 @@
 					<div class="cm-input-list cm-detail-input-list">
 						<dl>
 							<dt>
-								<label class="control-label" for="wrtrEmail" th:text="#{contactus.common.category}">카테고리</label>
+								<label th:text="#{contactus.common.category}">카테고리</label>
 							</dt>
 							<dd class="" th:text="${qnaDetail.cmCd.cdNm}">
 								Road
@@ -31,7 +31,7 @@
 					<div class="cm-input-list cm-detail-input-list">
 						<dl>
 							<dt>
-								<label class="control-label" for="wrtrEmail" th:text="#{contactus.common.add.date}">등록일</label>
+								<label th:text="#{contactus.common.add.date}">등록일</label>
 							</dt>
 							<dd class="" th:text="${#dates.format(qnaDetail.crDt, 'yyyy-MM-dd')}">
 								2023-08-18
@@ -41,7 +41,7 @@
 					<div class="cm-input-list cm-detail-input-list">
 						<dl>
 							<dt>
-								<label class="control-label" for="wrtrEmail" th:text="#{contactus.common.answer}">답변상태</label>
+								<label for="wrtrEmail" th:text="#{contactus.common.answer}">답변상태</label>
 							</dt>
 							<dd class="" th:switch="${qnaDetail.ansYn}">
 								<span th:case="Y" th:text="#{contactus.qna.answer.complete}"></span>
@@ -49,16 +49,16 @@
 							</dd>
 						</dl>
 					</div>
-					<div class="cm-input-list cm-detail-input-list">
+					<div class="cm-input-list cm-detail-input-list cm-atch-list">
 						<dl>
 							<dt>
-								<label class="control-label" th:text="#{contactus.common.file}">첨부파일</label>
+								<label th:text="#{contactus.common.file}">첨부파일</label>
 							</dt>
 							
 							<dd th:if="${#lists.isEmpty(qnaDetail.qstAtchFileList)}">Não há informações cadastradas.</dd>
-							<dd th:unless="${#lists.isEmpty(qnaDetail.qstAtchFileList)}" class="flex-center">
-								<div class="detailFile" th:each="fileItem : ${qnaDetail.qstAtchFileList}">
-									<a th:href="@{/common/file/download.do(fileId = ${fileItem.fileIdx})}">
+							<dd th:unless="${#lists.isEmpty(qnaDetail.qstAtchFileList)}">
+								<div class="uploadList">
+									<a class="listItem" th:each="fileItem : ${qnaDetail.qstAtchFileList}" th:href="@{/common/file/download.do(fileId = ${fileItem.fileIdx})}">
 										<div th:text="${fileItem.fileOrgNm}">파일 이름</div>
 										<button type="button" class="download"></button>
 									</a>
@@ -70,7 +70,7 @@
 					<div class="cm-input-list cm-detail-input-list">
 						<dl>
 							<dt class="">
-								<label class="control-label" for="postCn" th:text="#{contactus.common.text}">내용 타이틀</label>
+								<label for="postCn" th:text="#{contactus.common.text}">내용 타이틀</label>
 							</dt>
 							<dd>
 								<div class="text-pre-line" th:text="${qnaDetail.postCn}">내용</div>
@@ -82,8 +82,8 @@
 			<th:block th:if="${qnaDetail.ansYn} == 'Y'">
 			<div class="cm-info-wrap">
 				<h1 th:text="#{contactus.qna.answer}">문의 답변</h1>
-				<div class="cm-input-wrap">
-					<div class="cm-input-list">
+				<div class="cm-input-wrap cm-detail-input-wrap">
+					<div class="cm-input-list cm-detail-input-list">
 						<dl>
 							<dt th:text="#{contactus.qna.department}">담당부서</dt>
 							<dd class="" th:text="${qnaDetail.webOprtr.oprtrDeptNm}">
@@ -91,7 +91,7 @@
 							</dd>
 						</dl>
 					</div>
-					<div class="cm-input-list">
+					<div class="cm-input-list cm-detail-input-list">
 						<dl>
 							<dt th:text="#{contactus.qna.result.date}">답변일자</dt>
 							<dd class="" th:text="${#dates.format(qnaDetail.ansCrDt, 'yyyy-MM-dd')}">
@@ -99,7 +99,7 @@
 							</dd>
 						</dl>
 					</div>
-					<div class="cm-input-list">
+					<div class="cm-input-list cm-detail-input-list cm-atch-list">
 						<dl>
 							<dt th:text="#{contactus.common.file}">첨부파일</dt>
 							<dd th:if="${#lists.isEmpty(qnaDetail.ansAtchFileList)}">Não há informações cadastradas.</dd>
@@ -113,7 +113,7 @@
 							</dd>
 						</dl>
 					</div>
-					<div class="cm-input-list">
+					<div class="cm-input-list cm-detail-input-list">
 						<dl>
 							<dt th:text="#{contactus.common.text}">내용</dt>
 							<dd class="text-pre-line" th:text="${qnaDetail.ansCn}">
@@ -129,7 +129,7 @@
 			<div class="btn-wrap-end">
 				<input type="submit" class="sub-btn out-btn" th:value="#{contactus.common.list}" onclick="location.href='/info/qna/list.do'" >
 				<th:block th:if="${qnaDetail.ansYn} == 'N'">
-					<input type="button" class="sub-btn out-btn" th:onclick="deleteQna([[${qnaDetail.inqryId}]])" th:value="#{contactus.common.delete}">
+					<input type="button" class="delete-btn out-btn" th:onclick="deleteQna([[${qnaDetail.inqryId}]])" th:value="#{contactus.common.delete}">
 				</th:block>
 			</div>
         </div>
@@ -137,19 +137,40 @@
 </html>
 <script th:inline="javascript">
 function deleteQna(inqryId){
-	new ModalBuilder().init().alertBody(/*[[#{contactus.qnaDetail.confirmMessage}]]*/).footer(3,/*[[#{contactus.qnaDetail.confirm}]]*/,function(button, modal){
-		$.ajax({
-			url: __contextPath__+"/info/qna/delete.ajax",
-	        type: "post",
-	        data: {inqryId : inqryId},
-	        success: function(data){
-	            if(data.code == 200){
-	                location.href= __contextPath__+"/info/qna/list.do";
-	            } else {
-	            }
-	        }
+	new ModalBuilder().init().alertBody(/*[[#{contactus.qnaDetail.confirmMessage}]]*/).footer(3, [[#{contactus.qnaDetail.confirm}]],function(button, modal){
+		modal.close();
+
+		const searchingMsg = /*[[#{contactus.common.loading.processing}]]*/;
+		const loading = new PortalLoading().start(searchingMsg);
+
+		const data = {"inqryId" : inqryId};
+
+		fetch(/*[[@{/info/qna/delete.ajax}]]*/, {
+			method: "post",
+			headers: {
+				'Content-Type': 'application/json'  // 요청의 Content-Type을 JSON으로 설정
+			},
+			body: JSON.stringify(data)
 		})
-	}, /*[[#{contactus.qnaDetail.cancel}]]*/, function(button, modal){
+				.then(response => response.json())
+				.then((result) => {
+					if (result.code === 200) {
+						new ModalBuilder().init().successBody(result.message).footer(4, 'OK', function (button, modal) {
+							modal.close();
+							location.href = /*[[@{/info/qna/list.do}]]*/;
+						}).open();
+					} else {
+						new ModalBuilder().init().alertBody(result.message).footer(4, 'OK', function (button, modal) {
+							modal.close();
+							location.href = /*[[@{/info/qna/list.do}]]*/;
+						}).open();
+					}
+				})
+				.finally(() => {
+					loading.end();
+				});
+
+	}, [[#{contactus.qnaDetail.cancel}]], function(button, modal){
 		modal.close();
 	}).open();
 }

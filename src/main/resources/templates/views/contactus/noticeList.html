@@ -1,104 +1,88 @@
-<html xmlns:th="http://www.thymeleaf.org"  
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="layouts/layout">
-	
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layouts/layout">
+
 <div layout:fragment="content">
-<!--	<div id="breadcrumb">-->
-<!--		<ul>-->
-<!--			<li>-->
-<!--				<a href="">-->
-<!--					<img th:src="@{/images/home.png}" alt="메인 페이지">-->
-<!--				</a>-->
-<!--			</li>-->
-<!--			<li>-->
-<!--				<img th:src="@{/images/arrow-right.png}" alt="다음">-->
-<!--			</li>-->
-<!--			<li>-->
-<!--				<a href="">-->
-<!--					서브페이지-->
-<!--				</a>-->
-<!--			</li>-->
-<!--			<li>-->
-<!--				<img th:src="@{/images/arrow-right.png}" alt="다음">-->
-<!--			</li>-->
-<!--			<li>-->
-<!--				<a href="">-->
-<!--					서브페이지-->
-<!--				</a>-->
-<!--			</li>-->
-<!--		</ul>-->
-<!--	</div>-->
-	<div id="container">
-		<div id="wrap">
-			<h2 id="page-title" th:text="#{contactus.notice.title}">공지사항</h2>
-			<div id="filterBox">
-				<dl>
-					<dt th:text="#{contactus.common.search}">Search</dt>
-					<dd>
-						<form id="noticeSearchForm" method="get">
-							<input type="text" name="searchTxt" class="base-search" 
-								th:value="${mozBrd.searchTxt}"
-								th:placeholder="#{contactus.common.search.placeholder}">
-							<input type="hidden" id="hdnStart" name="start" th:value="${mozBrd.start}">
-							<input type="hidden" id="page" name="page" value="1">
-							<button type="submit" class="sub-btn" th:text="#{contactus.common.search.button}"></button>
-						</form>
-					</dd>
-				</dl>
-			</div>
-			<div id="list-table-wrap" th:object="${noticeList}">
-				<div th:if="${not #object.isEmpty()}">
-					
-					<div id="listSearchTableOpiton">
-						<div id="listSearchTotal"><p th:text="#{contactus.noticeList.total}"></p> <span th:text='|"${pagination.totalListCnt}"|'>"546465"</span></div>
-					</div>
-					<div id="base-table">
-						<ul class="base-table-th base-table-cm">
-							<li th:text="#{contactus.common.number}"></li>
-							<li th:text="#{contactus.common.title}"></li>
-							<li th:text="#{contactus.common.add.date}"></li>
-							<li th:text="#{contactus.common.hits}"></li>
-						</ul>
-						<ul>	
-							<li th:each="noticeItm : ${noticeList}">
-								<ul class="base-table-td base-table-cm notice-table" 
-										th:onclick="moveDetailPage([[${noticeItm.boardIdx}]])">
-									<li class="TableNumber" th:text="${noticeItm.rnum}"></li>
-									<li class="TableTitle" th:text="${noticeItm.boardTitle}">주차 개선 요청</li>
-									<li class="TableCmDate" th:text="${#dates.format(noticeItm.crDt, 'yyyy-MM-dd')}">2023-12-25</li>
-									<li class="TableView" th:text="${noticeItm.viewCnt}">256</li>
-								</ul>
-							</li>
-						</ul>
-				  </div>
-					<div class="page_wrap">
-						<div th:insert="tags/pagingTag :: pagingTag"></div>
-					</div>
-				</div>
-				<div th:unless="${not #object.isEmpty()}">
-					<span th:text="#{contactus.search.notFound}">등록된 공지사항이 없습니다.</span>
-				</div>
-			</div>		
-			
-			
-		</div>    
-	</div>
+    <div id="container">
+        <div id="wrap">
+            <h2 id="page-title" th:text="#{contactus.notice.title}">공지사항</h2>
+            <div id="filterBox">
+                <dl>
+                    <dt th:text="#{contactus.common.search}">Search</dt>
+                    <dd>
+                        <form id="noticeSearchForm" method="get">
+                            <input type="text" name="searchTxt" class="base-search"
+                                   th:value="${mozBrd.searchTxt}"
+                                   th:placeholder="#{common.search.placeholder}"
+                                   maxlength="20">
+                            <input type="hidden" id="hdnStart" name="start" th:value="${mozBrd.start}">
+                            <input type="hidden" id="page" name="page" value="1">
+                            <button type="submit" class="sub-btn" th:text="#{contactus.common.search.button}"></button>
+                        </form>
+                    </dd>
+                </dl>
+            </div>
+            <div id="list-table-wrap" th:object="${noticeList}">
+                <div th:if="${not #object.isEmpty()}">
+
+                    <div id="listSearchTableOpiton">
+                        <div id="listSearchTotal"><p th:text="#{contactus.noticeList.total}"></p> <span
+                                th:text='|"${pagination.totalListCnt}"|'>"546465"</span></div>
+                    </div>
+                    <div id="base-table">
+                        <ul class="base-table-th base-table-cm">
+                            <li th:text="#{contactus.common.number}"></li>
+                            <li th:text="#{contactus.common.title}"></li>
+                            <li th:text="#{contactus.common.add.date}"></li>
+                            <li th:text="#{contactus.common.hits}"></li>
+                        </ul>
+                        <ul>
+                            <li th:each="noticeItm : ${noticeList}">
+                                <ul class="base-table-td base-table-cm notice-table"
+                                    th:onclick="moveDetailPage([[${noticeItm.boardIdx}]])">
+                                    <li class="TableNumber" th:if="${noticeItm.imprtYn == 'Y'}">
+                                        <span class="noticeIp"
+                                              th:text="#{contactus.noticeList.important}">Important</span>
+                                    </li>
+                                    <li class="TableNumber" th:unless="${noticeItm.imprtYn == 'Y'}"
+                                        th:text="${noticeItm.rnum}"></li>
+                                    <li class="TableTitle" th:text="${noticeItm.boardTitle}">주차 개선 요청</li>
+                                    <li class="TableCmDate" th:text="${#dates.format(noticeItm.crDt, 'yyyy-MM-dd')}">
+                                        2023-12-25
+                                    </li>
+                                    <li class="TableView cm-line" th:text="${noticeItm.viewCnt}">256</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="page_wrap">
+                        <div th:insert="tags/pagingTag :: pagingTag"></div>
+                    </div>
+                </div>
+                <div th:unless="${not #object.isEmpty()}">
+                    <span th:text="#{contactus.search.notFound}">등록된 공지사항이 없습니다.</span>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
 </div>
 
 </html>
 <script>
-	function moveDetailPage(boardIdx) {
-		let url = '/info/notice/detail.do?boardIdx=';
-		location.href = url + boardIdx;
-	}
-	
-	function fnPageMove(pageToMove) {
-		let pageElmnt = document.getElementById("page");
-		let noticeSearchForm = document.getElementById("noticeSearchForm");
-		pageElmnt.value = pageToMove;
-		
-		noticeSearchForm.submit();
-	}
-	
+    function moveDetailPage(boardIdx) {
+        let url = '/info/notice/detail.do?boardIdx=';
+        location.href = url + boardIdx;
+    }
+
+    function fnPageMove(pageToMove) {
+        let pageElmnt = document.getElementById("page");
+        let noticeSearchForm = document.getElementById("noticeSearchForm");
+        pageElmnt.value = pageToMove;
+
+        noticeSearchForm.submit();
+    }
+
 </script>
 

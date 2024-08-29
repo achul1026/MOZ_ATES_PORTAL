@@ -31,8 +31,8 @@
 								<dd>Não há informações cadastradas.</dd>
 							</th:block>
 							<th:block th:unless="${tfcSftyEdctnDetail.atchFile == null}">
-								<dd class="flex-center">
-									<a class="detailFile" th:href="@{/common/file/download.do(fileId=${tfcSftyEdctnDetail.atchFile.fileIdx})}">
+								<dd class="uploadList">
+									<a class="listItem" th:href="@{/common/file/download.do(fileId=${tfcSftyEdctnDetail.atchFile.fileIdx})}">
 										<div th:text="${tfcSftyEdctnDetail.atchFile.fileOrgNm}">File Og Name</div>
 										<button class="download"></button>
 									</a>

@@ -110,7 +110,7 @@ button {
     cursor: pointer;
 }
 /* 넓이설계 */
-.wdat {width:auto;}
+.wdat {width:auto !important;}
 .wd26 {width:26.33% !important;}
 .wd100 {width:100% !important;}
 .w336 {max-width:21rem;} /* 대쉬보드 */
@@ -236,3 +236,4 @@ h6 {font-size:0.67rem;}
 
 /* z-index */
  .zin_99 {z-index: 99999;}
+ 

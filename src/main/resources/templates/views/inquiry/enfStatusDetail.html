@@ -3,17 +3,18 @@
 
 <div layout:fragment="content">
 	<div id="container">
+		<h2 id="page-title" th:text="#{inquiry.enfStatusSearch.mainTitle}">단속 상태 조회</h2>
 		<div id="wrap">
 			<div class="detail-info-wrap nt-detail-info-wrap">
 				<div class="detail-title">
 					<h3 th:text="#{inquiry.enfStatusDetail.crackdownDetail}"></h3>
-					<div>
-						<span th:text="#{inquiry.enfStatusDetail.enforcementId}" id="billNumber"></span>
-						<span th:text="${tfcEnfStatusDetail.tfcEnfId}">M1318-2023-90010893</span>
+					<div id="billWrap">
+						<span th:text="#{inquiry.enfStatusDetail.enforcementId}"></span>
+						<span th:text="${tfcEnfStatusDetail.tfcEnfId}" id="billNumber">M1318-2023-90010893</span>
 					</div>
 				</div>
 				<div class="detail-table detail-table-7">
-					<dl>
+					<dl class="brNone">
 						<dt th:text="#{inquiry.enfStatusDetail.vehicleNumber}"></dt>
 						<dd th:text="${tfcEnfStatusDetail.vhRegNo}">CA 688-566</dd>
 					</dl>
@@ -21,7 +22,7 @@
 						<dt th:text="#{inquiry.enfStatusDetail.violatorName}"></dt>
 						<dd th:text="${tfcEnfStatusDetail.vioInfo.vioNm}">Inki Moon</dd>
 					</dl>
-					<dl>
+					<dl class="brNone">
 						<dt th:text="#{inquiry.enfStatusDetail.violationPlace}"></dt>
 						<dd th:text="${tfcEnfStatusDetail.roadAddr}">Street 50</dd>
 					</dl>
@@ -29,23 +30,15 @@
 						<dt th:text="#{inquiry.enfStatusDetail.violationDate}"></dt>
 						<dd th:text="${#dates.format(tfcEnfStatusDetail.tfcEnfDt, 'yyyy-MM-dd')}">15.01.2024</dd>
 					</dl>
-
-<!--					<dl>-->
-<!--						<dt th:text="#{inquiry.enfStatusDetail.violationType}"></dt>-->
-<!--						<dd>Speeding</dd>-->
-<!--					</dl>-->
 					<dl class="detail-content">
-						<dt class="detail19" th:text="#{inquiry.enfStatusDetail.violationLaw}"></dt>
+						<dt class="detail19" th:text="#{inquiry.enfStatusDetail.violationLaw}">위반 법률</dt>
 						<dd class="detail80">
-							<th:block th:each="tfcLwInfo : ${tfcEnfStatusDetail.tfcLwInfoList}">
-								<div th:text="|[${tfcLwInfo.cdNm}] ${tfcLwInfo.lawArticleNo}|">Article 13, Paragraph 7
-									of the Road Traffic Act</div>
-							</th:block>
+							<p th:each="item : ${fineList}" th:text="${item.tfcLwInfo.lawNm}"></p>
 						</dd>
 					</dl>
 
 					<dl class="detail-content">
-						<dt th:text="#{inquiry.enfStatusDetail.violationContent}"></dt>
+						<dt th:text="#{inquiry.enfStatusDetail.violationContent}">위반 상세</dt>
 						<dd th:text="${tfcEnfStatusDetail.tfcEnfDetail}">Speed ​​(speed limit 80km/h, driving speed
 							120km/h, speed exceeding 40km/h)</dd>
 					</dl>
@@ -57,7 +50,7 @@
 					<h3 th:text="#{inquiry.enfStatusDetail.paymentAndPeriod}"></h3>
 				</div>
 				<div class="detail-table">
-					<dl>
+					<dl class="brNone">
 						<dt th:text="#{inquiry.enfStatusDetail.firstPaymentDueDate}"></dt>
 						<dd th:text="${#dates.format(tfcEnfStatusDetail.fineNtcInfo.firstFineNtcDdln, 'yyyy-MM-dd')}">01.01.2024
 						</dd>
@@ -68,7 +61,7 @@
 							th:text="${@mozatesCommonUtils.priceFmt(tfcEnfStatusDetail.fineNtcInfo.firstFineNtcPrice ,'MOZAMBIQUE_METICAL')}">
 							500 MT</dd>
 					</dl>
-					<dl>
+					<dl class="brNone">
 						<dt th:text="#{inquiry.enfStatusDetail.secondPaymentDueDate}"></dt>
 						<th:block th:if="${tfcEnfStatusDetail.fineNtcInfo.secondFineNtcDdln == null}">
 							<dd>-</dd>
@@ -85,7 +78,7 @@
 							500 MT</dd>
 					</dl>
 
-					<dl>
+					<dl class="brNone">
 						<dt th:text="#{inquiry.enfStatusDetail.paymentAmount}">납부 금액</dt>
 						<dd
 							th:text="${tfcEnfStatusDetail.finePymntInfo.pymntStts == 'Y' ? @mozatesCommonUtils.priceFmt(tfcEnfStatusDetail.finePymntInfo.totalPrice ,'MOZAMBIQUE_METICAL') : '-'}">
@@ -97,10 +90,10 @@
 							th:text="${tfcEnfStatusDetail.finePymntInfo.pymntStts == 'Y' ? tfcEnfStatusDetail.finePymntInfo.payerNm : '-'}">
 							Name</dd>
 					</dl>
-					<dl>
+					<dl class="brNone">
 						<dt th:text="#{inquiry.enfStatusDetail.paymentDate}"></dt>
 						<dd
-							th:text="${tfcEnfStatusDetail.finePymntInfo.pymntStts == 'Y' ? #dates.format(tfcEnfStatusDetail.finePymntInfo.pymntDt, 'dd.MM.yyyy') : '-'}">
+							th:text="${tfcEnfStatusDetail.finePymntInfo.pymntStts == 'Y' ? #dates.format(tfcEnfStatusDetail.finePymntInfo.pymntDt, 'yyyy-MM-dd') : '-'}">
 							asdasd</dd>
 					</dl>
 					<dl>
@@ -115,21 +108,24 @@
 				<div class="detail-title">
 					<h3 th:text="#{inquiry.enfStatusDetail.vehiclePhoto}"></h3>
 				</div>
-<!--				<div class="fines-inquiry">-->
-<!--					<div class="fines-inquiry-item"><img th:src="@{/images/slide_img1.png}" alt="가상이미지"></div>-->
-<!--					<div class="fines-inquiry-item"><img th:src="@{/images/slide_img2.png}" alt="가상이미지"></div>-->
-<!--					<div class="fines-inquiry-item"><img th:src="@{/images/slide_img3.png}" alt="가상이미지"></div>-->
-<!--					<div class="fines-inquiry-item"><img th:src="@{/images/slide_img4.png}" alt="가상이미지"></div>-->
-<!--					<div class="fines-inquiry-item"><img th:src="@{/images/slide_img5.png}" alt="가상이미지"></div>-->
-<!--					<div class="fines-inquiry-item"><img th:src="@{/images/slide_img2.png}" alt="가상이미지"></div>-->
-<!--					<div class="fines-inquiry-item"><img th:src="@{/images/slide_img3.png}" alt="가상이미지"></div>-->
-<!--				</div>-->
-								<div class="fines-inquiry" th:text="#{inquiry.enfStatusDetail.vehiclePhotoNone}"></div>
+				
+				<th:block th:if="${#lists.isEmpty(tfcEnfStatusDetail.tfcEnfFileInfoList)}">
+					<div class="fines-inquiry" th:text="#{inquiry.enfStatusDetail.vehiclePhotoNone}"></div>
+				</th:block>
+				<th:block th:unless="${#lists.isEmpty(tfcEnfStatusDetail.tfcEnfFileInfoList)}">
+					<div class="fines-inquiry">
+						<div class="fines-inquiry-item" th:each="itm : ${tfcEnfStatusDetail.tfcEnfFileInfoList}">
+							<img th:src="@{/inquiry/enf/image.do(fileId = ${itm.vioFileNo})}">
+						</div>
+					</div>
+				</th:block>
+				
+				
 			</div>
-			<div id="backLinkBox">
-				<button class="main-btn out-btn" onclick="openBill2()">MULTA</button>
-				<a th:href="@{/inquiry/enfstatus/search.do}" class="sub-btn out-btn"
-					th:text="#{inquiry.enfStatusDetail.search}"></a>
+			<div class="btn-wrap-end">
+				<a th:href="@{/inquiry/enfstatus/search.do}" class="sub-btn"
+					th:text="#{inquiry.enfStatusSearch.button.list}"></a>
+				<button th:if="${tfcEnfStatusDetail.fineNtcInfo.ntcTy == 'NTT001'}" class="main-btn" onclick="openBill()">Multa</button>
 			</div>
 		</div>
 	</div>
@@ -137,12 +133,8 @@
 
 </html>
 <script th:inline="javascript">
-	function openBill() {
-		let url = /*[[@{/inquiry/enfstatus/bill/detail.do}]]*/;
-		window.open(url, "new", width=500,height=500);
-	}
 	
-  function openBill2() {
+  function openBill() {
       let url = /*[[@{/inquiry/enfstatus/bill/detail.do}]]*/;
   		let tfcEnfId = /*[[${paramMap.tfcEnfId}]]*/;
 			let dvrLcenId = /*[[${paramMap.dvrLcenId}]]*/;

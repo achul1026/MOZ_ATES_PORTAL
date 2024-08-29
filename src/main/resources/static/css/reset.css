@@ -20,7 +20,7 @@ time, mark, audio, video {
 	letter-spacing: -1px;
 	vertical-align: baseline;
 	list-style: none;
-	color: #000;
+	color: #333;
 	text-decoration: none;
 }
 /* HTML5 display-role reset for older browsers */
